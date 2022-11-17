@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           'aud' => WEBURL,
           'iat' => time(),
           'type' => $user->type,
-          'username' => $username,
+          'username' => $user->username,
           'userid' => $userid,
           'name' => $user->name
         ];
