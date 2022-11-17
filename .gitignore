@@ -2,4 +2,6 @@
 /userdata/imgs/*
 !/userdata/imgs/0.png
 /userdata/products/*
+
+!.gitkeep
 config.json
