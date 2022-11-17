@@ -1,0 +1,22 @@
+
+body {
+  background-color: var(--color-secondary);
+}
+
+#form-login {
+  display: flex;
+  flex-direction: column;
+  width: 460px;
+  margin: 36px auto;
+}
+
+.login-logo {
+  margin: auto;
+  margin-bottom: 24px;
+}
+
+.login-title {
+  font-family: 'Inika';
+  font-weight: 400;
+  font-size: 60px;
+}

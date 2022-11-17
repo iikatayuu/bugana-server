@@ -1,0 +1,12 @@
+
+.form-group {
+  font-family: 'Inika';
+  font-size: 17.5px;
+  font-weight: 700;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background-color: #fff;
+}

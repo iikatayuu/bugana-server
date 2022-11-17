@@ -1,0 +1,9 @@
+{
+    "name": "bugana/server",
+    "description": "BUGANA Web (Admin) Server",
+    "type": "project",
+    "require": {
+        "firebase/php-jwt": "^6.3"
+    },
+    "license": "UNLICENSED"
+}

@@ -1,0 +1,19 @@
+
+.item-stock-in,
+.item-stock-in-date,
+.item-stock-out,
+.item-stock-out-date {
+  cursor: pointer;
+}
+
+#modal-stock-in .card,
+#modal-stock-out .card {
+  width: 350px;
+  border: 1px solid #000;
+}
+
+#farmer-search {
+  width: 300px;
+  padding: 8px;
+  border-radius: 12px;
+}

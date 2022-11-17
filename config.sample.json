@@ -1,0 +1,10 @@
+{
+  "mysql": {
+    "host": "localhost",
+    "user": "root",
+    "pass": "",
+    "db": "bugana",
+    "port": 3306,
+    "ssl": false
+  }
+}
