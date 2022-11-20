@@ -44,7 +44,7 @@ if ($products_res->num_rows > 0) {
   $farmer = [];
   $expose = [
     'id', 'username', 'email', 'mobile', 'name', 'gender', 'birthday',
-    'addressstreet', 'addressbrgy', 'addresscity', 'type', 'created', 'lastlogin',
+    'addressstreet', 'addresspurok', 'addressbrgy', 'type', 'created', 'lastlogin',
     'products', 'transactions'
   ];
 

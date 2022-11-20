@@ -35,8 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $email = $conn->real_escape_string($POST['email']);
   $mobile = $conn->real_escape_string($POST['mobile']);
   $address_street = $conn->real_escape_string($POST['address-street']);
+  $address_purok = $conn->real_escape_string($POST['address-purok']);
   $address_brgy = $conn->real_escape_string($POST['address-brgy']);
-  $address_city = $conn->real_escape_string($POST['address-city']);
 
   if (!preg_match('/^([a-zA-Z0-9\-_]{8,32})$/', $password)) {
     $result['message'] = 'Invalid password';
@@ -56,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $user_res = $conn->query("SELECT * FROM users WHERE username='$username' LIMIT 1");
   if ($user_res->num_rows === 0) {
     $hash = password_hash($password, PASSWORD_BCRYPT);
-    $conn->query("INSERT INTO users (username, password, email, mobile, name, gender, birthday, addressstreet, addressbrgy, addresscity, type)
-                  VALUES ('$username', '$hash', '$email', '$mobile', '$name', '$gender', '$birthday', '$address_street', '$address_brgy', '$address_city', '$type')");
+    $conn->query("INSERT INTO users (username, password, email, mobile, name, gender, birthday, addressstreet, addresspurok, addressbrgy, type)
+                  VALUES ('$username', '$hash', '$email', '$mobile', '$name', '$gender', '$birthday', '$address_street', '$address_purok', '$address_brgy', '$type')");
 
     $result['success'] = true;
     $result['message'] = 'Registered successfully';

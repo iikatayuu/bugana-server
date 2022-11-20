@@ -37,7 +37,7 @@ out_header('BUGANA Edit Product', $styles, $scripts);
       <h1 class="dashboard-title m-3">Product Information</h1>
 
       <form action="/api/admin/product/edit.php" method="post" id="form-product-edit">
-        <div class="card card-secondary card-rect p-3">
+        <div class="card card-tertiary card-rect p-3">
           <div class="d-flex mb-2">
             <div class="form-group flex-1 m-1">
               <label for="product-name">Edit Product Name:</label>

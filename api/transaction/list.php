@@ -43,8 +43,8 @@ if (!empty($_GET['token'])) {
         (SELECT users.name FROM users WHERE users.id=farmerid) AS userfullname,
         (SELECT users.username FROM users WHERE users.id=farmerid) AS username,
         (SELECT users.addressstreet FROM users WHERE users.id=farmerid) AS addressstreet,
-        (SELECT users.addressbrgy FROM users WHERE users.id=farmerid) AS addressbrgy,
-        (SELECT users.addresscity FROM users WHERE users.id=farmerid) AS addresscity
+        (SELECT users.addresspurok FROM users WHERE users.id=farmerid) AS addresspurok,
+        (SELECT users.addressbrgy FROM users WHERE users.id=farmerid) AS addressbrgy
       FROM transactions
       JOIN products ON products.id=transactions.product
       WHERE transactions.user=$userid";
@@ -53,11 +53,11 @@ if (!empty($_GET['token'])) {
       $query = "SELECT
           transactions.*,
           products.id AS productid, products.name, products.user AS farmerid,
-          (SELECT users.name FROM users WHERE users.id=farmerid) AS userfullname,
-          (SELECT users.username FROM users WHERE users.id=farmerid) AS username,
-          (SELECT users.addressstreet FROM users WHERE users.id=farmerid) AS addressstreet,
-          (SELECT users.addressbrgy FROM users WHERE users.id=farmerid) AS addressbrgy,
-          (SELECT users.addresscity FROM users WHERE users.id=farmerid) AS addresscity
+          (SELECT users.name FROM users WHERE users.id=transactions.user) AS userfullname,
+          (SELECT users.username FROM users WHERE users.id=transactions.user) AS username,
+          (SELECT users.addressstreet FROM users WHERE users.id=transactions.user) AS addressstreet,
+          (SELECT users.addresspurok FROM users WHERE users.id=transactions.user) AS addresspurok,
+          (SELECT users.addressbrgy FROM users WHERE users.id=transactions.user) AS addressbrgy
         FROM products
         JOIN transactions ON transactions.product=products.id
         WHERE products.user=$userid";
@@ -86,19 +86,20 @@ if (!empty($_GET['token'])) {
           'name' => $transaction->userfullname,
           'username' => $transaction->username,
           'addressstreet' => $transaction->addressstreet,
-          'addressbrgy' => $transaction->addressbrgy,
-          'addresscity' => $transaction->addresscity
+          'addresspurok' => $transaction->addresspurok,
+          'addressbrgy' => $transaction->addressbrgy
         ],
-        'quantity' => $transaction->quantity,
-        'date' => $transaction->date,
-        'amount' => $transaction->amount,
-        'paymentoption' => $transaction->paymentoption,
         'product' => [
           'id' => $transaction->productid,
           'name' => $transaction->name,
           'user' => $transaction->farmerid,
           'photos' => $photos
-        ]
+        ],
+        'quantity' => $transaction->quantity,
+        'date' => $transaction->date,
+        'amount' => $transaction->amount,
+        'paymentoption' => $transaction->paymentoption,
+        'status' => $transaction->status
       ];
 
       $transactions[] = $transactionitem;

@@ -38,9 +38,7 @@ out_header('BUGANA Sales Monthly Report', $styles, $scripts);
       <span class="admin-name"></span>
     </header>
 
-    <div class="d-flex">
-      <h6 class="dashboard-title flex-1 my-2 mx-3">This Monthly Sales</h6>
-    </div>
+    <h6 class="dashboard-title flex-1 my-2 mx-3">This Monthly Sales</h6>
 
     <table class="dashboard-table dashboard-table-borderless">
       <thead>

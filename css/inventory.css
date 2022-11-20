@@ -12,8 +12,9 @@
   border: 1px solid #000;
 }
 
-#farmer-search {
-  width: 300px;
+#limit-page {
+  width: 150px;
   padding: 8px;
-  border-radius: 12px;
+  border: 0;
+  border-radius: 8px;
 }

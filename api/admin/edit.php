@@ -30,8 +30,8 @@ if (!empty($_POST['token'])) {
   $email = $conn->real_escape_string($_POST['email']);
   $mobile = $conn->real_escape_string($_POST['mobile']);
   $address_street = $conn->real_escape_string($_POST['address-street']);
+  $address_purok = $conn->real_escape_string($_POST['address-purok']);
   $address_brgy = $conn->real_escape_string($_POST['address-brgy']);
-  $address_city = $conn->real_escape_string($_POST['address-city']);
 
   try {
     $decoded = JWT::decode($_POST['token'], new Key(JWT_KEY, JWT_ALGO));
@@ -69,7 +69,7 @@ if (!empty($_POST['token'])) {
       }
 
       $conn->query("UPDATE users SET name='$name', gender='$gender', birthday='$birthday', email='$email', mobile='$mobile',
-                    addressstreet='$address_street', addressbrgy='$address_brgy', addresscity='$address_city' WHERE id=$id");
+                    addressstreet='$address_street', addresspurok='$address_purok', addressbrgy='$address_brgy' WHERE id=$id");
 
       $result['success'] = true;
       $result['message'] = '';

@@ -1,5 +1,6 @@
 
-.products-views {
-  display: flex;
-  align-items: center;
+#farmer-search {
+  width: 300px;
+  padding: 8px;
+  border-radius: 12px;
 }

@@ -41,18 +41,18 @@ if (!empty($_GET['token'])) {
         transactions.*,
         products.id AS productid, products.name, products.user AS farmerid, products.price
       FROM transactions
-      JOIN products ON products.id=transactions.product";
+      JOIN products ON products.id=transactions.product WHERE transactions.status='success'";
 
     if ($date === 'weekly') {
       $current_day = date('w');
       $week_start = date('Y-m-d 00:00:00', strtotime("-$current_day days"));
       $week_end = date('Y-m-d 23:59:59', strtotime('+' . (6 - intval($current_day)) . ' days'));
-      $query .= " WHERE transactions.date BETWEEN '$week_start' AND '$week_end'";
+      $query .= " AND transactions.date BETWEEN '$week_start' AND '$week_end'";
     } else if ($date === 'monthly') {
       $month_days = date('t');
       $month_start = date('Y-m-01 00:00:00');
       $month_end = date("Y-m-$month_days 23:59:59");
-      $query .= " WHERE transactions.date BETWEEN '$month_start' AND '$month_end'";
+      $query .= " AND transactions.date BETWEEN '$month_start' AND '$month_end'";
     }
 
     $query .= " ORDER BY transactions.date DESC";

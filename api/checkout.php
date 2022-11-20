@@ -86,8 +86,8 @@ if (!empty($POST['token'])) {
 
         if ($itemid !== '0') $conn->query("DELETE FROM carts WHERE id=$itemid");
         $conn->query("INSERT INTO stocks (product, quantity) VALUES ($productid, -$quantity)");
-        $conn->query("INSERT INTO transactions (transaction_code, user, product, quantity, amount, paymentoption, status)
-          VALUES ('$trans_code', $userid, $productid, $quantity, $amount, '$paymentoption', 'success')");
+        $conn->query("INSERT INTO transactions (transaction_code, user, product, quantity, amount, paymentoption)
+          VALUES ('$trans_code', $userid, $productid, $quantity, $amount, '$paymentoption')");
       }
     }
 

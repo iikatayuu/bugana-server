@@ -1,0 +1,15 @@
+
+.dashboard-statistics button {
+  padding-left: 52px;
+  padding-right: 52px;
+  font-weight: 700;
+  background-color: var(--color-primary);
+}
+
+.dashboard-statistics button.active {
+  background-color: var(--color-background-secondary);
+}
+
+.new-customers {
+  width: 20%;
+}

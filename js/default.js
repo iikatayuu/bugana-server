@@ -37,4 +37,16 @@ $(document).ready(function () {
     $('.modal-container').toggleClass('d-none')
     $('.modal-open').removeClass('modal-open')
   })
+
+  $('[data-dropdown="toggle"]').click(function (event) {
+    event.preventDefault()
+
+    $(this).parents('.dropdown').find('.dropdown-content').toggleClass('active')
+  })
+
+  $(document).click(function (event) {
+    const targets = event.originalEvent.composedPath()
+    const isDropdown = $(targets).hasClass('dropdown')
+    if (!isDropdown) $('.dropdown-content.active').removeClass('active')
+  })
 })

@@ -1,13 +1,4 @@
 
-.users-views {
-  display: flex;
-  align-items: center;
-}
-
-.users-views .dashboard-title {
-  flex: 1;
-}
-
 #modal-register input,
 #modal-register select,
 #modal-edit input,

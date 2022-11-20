@@ -19,14 +19,17 @@ $result = [
   'message' => 'Invalid request',
   'products' => null,
   'next' => false,
-  'prev' => false
+  'prev' => false,
+  'pages' => 0
 ];
 
 $page = !empty($_GET['page']) ? $_GET['page'] : '1';
+$limit = !empty($_GET['limit']) ? $conn->real_escape_string($_GET['limit']) : '10';
 $category = !empty($_GET['category']) ? $conn->real_escape_string($_GET['category']) : 'all';
 $farmer = !empty($_GET['farmer']) ? $conn->real_escape_string($_GET['farmer']) : null;
 $search = !empty($_GET['search']) ? $conn->real_escape_string($_GET['search']) : null;
-$limit = 20;
+$productsort = !empty($_GET['product_sort']) ? $conn->real_escape_string($_GET['product_sort']) : null;
+$pricesort = !empty($_GET['price_sort']) ? $conn->real_escape_string($_GET['price_sort']) : null;
 
 if (!preg_match('/^(\d+)$/', $page)) {
   $result['message'] = 'Invalid page';
@@ -53,7 +56,15 @@ $add_q = count($wheres) > 0 ? ' WHERE ' . implode(' AND ', $wheres) : '';
 $query .= $add_q;
 $count_query .= $add_q;
 
-$page_q = (intval($page) - 1) * $limit;
+$orders = [];
+if ($productsort && $productsort === 'asc') $orders[] = 'name ASC';
+if ($productsort && $productsort === 'desc') $orders[] = 'name DESC';
+if ($pricesort && $pricesort === 'asc') $orders[] = 'price ASC';
+if ($pricesort && $pricesort === 'desc') $orders[] = 'price DESC';
+$add_q = ' ORDER BY ' . (count($orders) > 0 ? implode(', ', $orders) : 'created DESC');
+$query .= $add_q;
+
+$page_q = (intval($page) - 1) * intval($limit);
 $products_res = $conn->query("$query LIMIT $page_q, $limit");
 $count_res = $conn->query($count_query);
 $count = $count_res->fetch_object()->count;
@@ -109,8 +120,9 @@ while ($product = $products_res->fetch_object()) {
 $result['success'] = true;
 $result['message'] = '';
 $result['products'] = $products;
-$result['next'] = ($page_q + $limit) < $count;
+$result['next'] = ($page_q + intval($limit)) < $count;
 $result['prev'] = $page !== '1';
+$result['pages'] = ceil($count / intval($limit));
 
 echo json_encode($result);
 

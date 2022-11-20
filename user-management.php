@@ -35,19 +35,23 @@ $view = !empty($_GET['view']) ? $_GET['view'] : 'all';
       <span class="admin-name"></span>
     </header>
 
-    <div class="users-views mt-4 mx-2">
+    <div class="d-flex flex-align-center mt-4 mx-2">
       <h6 class="dashboard-title my-2 mx-3">Users</h6>
+      <div class="flex-1">
+        <input type="text" id="user-search" name="q" placeholder="Search User Code" class="form-control form-control-white box-shadow table-search" />
+      </div>
+
       <div class="headadmin-btns d-none">
-        <button type="button" class="btn btn-sm mr-2 text-md <?= $view !== 'customers' ? 'd-none' : '' ?>" data-modal="#modal-register">Register Customer</button>
+        <button type="button" class="btn btn-sm btn-secondary mr-2 text-md <?= $view !== 'customers' ? 'd-none' : '' ?>" data-modal="#modal-register">Register Customer</button>
 
         <a href="/user-management.php?view=all" class="mr-2 text-none <?= $view === 'all' ? 'd-none' : '' ?>">
-          <button type="button" class="btn btn-sm btn-tertiary">View All</button>
+          <button type="button" class="btn btn-sm btn-secondary">View All</button>
         </a>
         <a href="/user-management.php?view=customers" class="mr-2 text-none <?= $view === 'customers' ? 'd-none' : '' ?>">
-          <button type="button" class="btn btn-sm btn-tertiary">Customers</button>
+          <button type="button" class="btn btn-sm btn-secondary">Customers</button>
         </a>
         <a href="/user-management.php?view=farmers" class="mr-2 text-none <?= $view === 'farmers' ? 'd-none' : '' ?>">
-          <button type="button" class="btn btn-sm btn-tertiary">Farmers</button>
+          <button type="button" class="btn btn-sm btn-secondary">Farmers</button>
         </a>
       </div>
 
@@ -72,184 +76,253 @@ $view = !empty($_GET['view']) ? $_GET['view'] : 'all';
       </tbody>
     </table>
 
-    <div class="d-flex flex-space-between mx-5 mb-2">
-      <button type="button" class="btn btn-text" data-prev>
-        <img src="/imgs/prev.svg" alt="Previous" />
-      </button>
-      <button type="button" class="btn btn-text" data-next>
-        <img src="/imgs/next.svg" alt="Next" />
-      </button>
+    <div class="d-flex flex-space-between flex-align-center mx-5 mb-2">
+      <div>
+        <span>Page Limit: </span>
+        <input type="number" id="limit-page" value="10" />
+      </div>
+
+      <div class="pagination d-flex flex-align-center flex-center">
+        <button type="button" class="btn btn-text mr-2" data-page="" data-prev>
+          <img src="/imgs/prev.svg" alt="Previous" width="18" />
+        </button>
+
+        <button type="button" class="btn btn-background-secondary btn-round-sm btn-sm mr-2" data-page="1">1</button>
+        <div id="pages" class="d-content"></div>
+
+        <button type="button" class="btn btn-text mr-2" data-page="" data-next>
+          <img src="/imgs/next.svg" alt="Next" width="18" />
+        </button>
+      </div>
     </div>
-
-    <div class="modal-container d-none"></div>
-    <div id="modal-register" class="modal">
-      <form action="/api/register.php" method="post" id="form-register" class="card card-secondary p-4">
-        <h3 class="card-title mb-2 text-center">
-          REGISTER
-          <span class="headadmin-btns d-none">CUSTOMER</span>
-          <span class="admin-btns d-none">FARMER</span>
-        </h3>
-
-        <div class="d-flex">
-          <div class="mx-1">
-            <div class="form-group mb-2">
-              <label for="register-name">Name:</label>
-              <input type="text" id="register-name" name="name" placeholder="Name" class="form-control mt-1" required />
-            </div>
-
-            <div class="form-group mb-2">
-              <label for="register-gender">Gender:</label>
-              <select id="register-gender" name="gender" class="form-control mt-1" required />
-                <option value="" selected>Select gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="others">Others</option>
-              </select>
-            </div>
-
-            <div class="form-group mb-2">
-              <label for="register-birthday">Birthday:</label>
-              <input type="text" id="register-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
-            </div>
-
-            <div class="form-group mb-2">
-              <label for="register-email">Email:</label>
-              <input type="email" id="register-email" name="email" placeholder="Email" class="form-control mt-1" required />
-            </div>
-
-            <div class="form-group mb-2">
-              <label for="register-mobile">Mobile Number:</label>
-              <input type="text" id="register-mobile" name="mobile" placeholder="Mobile Number" class="form-control mt-1" required />
-            </div>
-          </div>
-
-          <div class="d-flex flex-column mx-1">
-            <div class="form-group mb-2">
-              <label for="register-username">Username:</label>
-              <input type="text" id="register-username" name="username" placeholder="Username" class="form-control mt-1" required />
-            </div>
-
-            <div class="form-group mb-2">
-              <label for="register-password">Password:</label>
-              <input type="password" id="register-password" name="password" placeholder="Password" class="form-control mt-1" required />
-            </div>
-           <div class="form-group mb-2">
-              <label for="register-address-street">Purok/Street:</label>
-              <input type="text" id="register-address-street" name="address-street" placeholder="Purok/Street" class="form-control mt-1" required />
-            </div>
-
-            <div class="form-group mb-2">
-              <label for="register-address-brgy">Barangay:</label>
-              <input type="text" id="register-address-brgy" name="address-brgy" placeholder="Barangay" class="form-control mt-1" required />
-            </div>
-
-            <div class="form-group mb-2">
-              <label for="register-address-city">City:</label>
-              <input type="text" id="register-address-city" name="address-city" placeholder="City" class="form-control mt-1" required />
-            </div>
-
-            <div class="align-self-end mt-2">
-              <div id="form-register-error" class="text-danger mb-1"></div>
-              <button type="submit" class="btn btn-primary">Register Account</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <div id="modal-edit" class="modal">
-      <form action="/api/admin/edit.php" method="post" id="form-edit" class="card card-secondary p-4">
-        <h3 class="card-title mb-2 text-center">Edit <span id="edit-type-text"></span> Details</h3>
-
-        <div class="d-flex">
-          <div class="mx-1">
-            <input type="hidden" id="edit-id" name="id" value="" required />
-
-            <div class="form-group mb-2">
-              <label for="edit-name">Name:</label>
-              <input type="text" id="edit-name" name="name" placeholder="Name" class="form-control mt-1" required />
-            </div>
-
-            <div class="form-group mb-2">
-              <label for="edit-gender">Gender:</label>
-              <select id="edit-gender" name="gender" class="form-control mt-1" required />
-                <option value="" selected>Select gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="others">Others</option>
-              </select>
-            </div>
-
-            <div class="form-group mb-2">
-              <label for="edit-birthday">Birthday:</label>
-              <input type="text" id="edit-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
-            </div>
-
-            <div class="form-group mb-2">
-              <label for="edit-email">Email:</label>
-              <input type="email" id="edit-email" name="email" placeholder="Email" class="form-control mt-1" required />
-            </div>
-
-            <div class="form-group mb-2">
-              <label for="edit-mobile">Mobile Number:</label>
-              <input type="text" id="edit-mobile" name="mobile" placeholder="Mobile Number" class="form-control mt-1" required />
-            </div>
-          </div>
-
-          <div class="d-flex flex-column mx-1">
-            <div class="form-group mb-2">
-              <label for="edit-username">Username:</label>
-              <input type="text" id="edit-username" name="username" placeholder="Username" class="form-control mt-1" readonly />
-            </div>
-
-            <div class="form-group mb-2">
-              <label for="edit-password">New Password:</label>
-              <input type="password" id="edit-password" name="password" placeholder="Password" class="form-control mt-1" />
-            </div>
-           <div class="form-group mb-2">
-              <label for="edit-address-street">Purok/Street:</label>
-              <input type="text" id="edit-address-street" name="address-street" placeholder="Purok/Street" class="form-control mt-1" required />
-            </div>
-
-            <div class="form-group mb-2">
-              <label for="edit-address-brgy">Barangay:</label>
-              <input type="text" id="edit-address-brgy" name="address-brgy" placeholder="Barangay" class="form-control mt-1" required />
-            </div>
-
-            <div class="form-group mb-2">
-              <label for="edit-address-city">City:</label>
-              <input type="text" id="edit-address-city" name="address-city" placeholder="City" class="form-control mt-1" required />
-            </div>
-
-            <div class="align-self-end mt-2">
-              <div id="form-edit-error" class="text-danger mb-1"></div>
-              <button type="submit" class="btn btn-primary">Save Changes</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <template id="temp-user">
-      <tr>
-        <td class="user-code"></td>
-        <td class="user-name"></td>
-        <td class="user-email"></td>
-        <td class="user-created"></td>
-        <td class="user-lastlogin"></td>
-        <td class="user-actions">none</td>
-      </tr>
-    </template>
-
-    <template id="temp-user-actions">
-      <button type="button" class="btn btn-text user-action-edit">
-        <img src="/imgs/edit.svg" alt="Edit button" />
-      </button>
-      <button type="button" class="btn btn-text user-action-archive">
-        <img src="/imgs/archive.svg" alt="Archive button" />
-      </button>
-    </template>
   </div>
+
+  <div class="modal-container d-none"></div>
+  <div id="modal-register" class="modal">
+    <form action="/api/register.php" method="post" id="form-register" class="card card-tertiary p-4">
+      <h3 class="card-title mb-2 text-center">
+        REGISTER
+        <span class="headadmin-btns d-none">CUSTOMER</span>
+        <span class="admin-btns d-none">FARMER</span>
+      </h3>
+
+      <div class="d-flex">
+        <div class="mx-1">
+          <div class="form-group mb-2">
+            <label for="register-name">Name:</label>
+            <input type="text" id="register-name" name="name" placeholder="Name" class="form-control mt-1" required />
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="register-gender">Gender:</label>
+            <select id="register-gender" name="gender" class="form-control mt-1" required>
+              <option value="" selected>Select gender</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Others</option>
+            </select>
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="register-birthday">Birthday:</label>
+            <input type="text" id="register-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="register-email">Email:</label>
+            <input type="email" id="register-email" name="email" placeholder="Email" class="form-control mt-1" required />
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="register-mobile">Mobile Number:</label>
+            <input type="text" id="register-mobile" name="mobile" placeholder="Mobile Number" class="form-control mt-1" required />
+          </div>
+        </div>
+
+        <div class="d-flex flex-column mx-1">
+          <div class="form-group mb-2">
+            <label for="register-username">Username:</label>
+            <input type="text" id="register-username" name="username" placeholder="Username" class="form-control mt-1" required />
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="register-password">Password:</label>
+            <input type="password" id="register-password" name="password" placeholder="Password" class="form-control mt-1" required />
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="register-address-street">Street:</label>
+            <input type="text" id="register-address-street" name="address-street" placeholder="Street" class="form-control mt-1" required />
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="register-address-purok">Purok:</label>
+            <input type="text" id="register-address-purok" name="address-purok" placeholder="Purok" class="form-control mt-1" required />
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="register-address-brgy">Barangay:</label>
+            <select id="register-brgy" name="address-brgy" class="form-control mt-1" required>
+              <option value="">Select barangay</option>
+              <option>Abuanan</option>
+              <option>Alianza</option>
+              <option>Atipuluan</option>
+              <option>Bacong-Montilla</option>
+              <option>Bagroy</option>
+              <option>Balingasag</option>
+              <option>Binubuhan</option>
+              <option>Busay</option>
+              <option>Calumangan</option>
+              <option>Caridad</option>
+              <option>Don Jorge L. Araneta</option>
+              <option>Dulao</option>
+              <option>Ilijan</option>
+              <option>Lag-Asan</option>
+              <option>Ma-ao</option>
+              <option>Mailum</option>
+              <option>Malingin</option>
+              <option>Napoles</option>
+              <option>Pacol</option>
+              <option>Poblacion</option>
+              <option>Sagasa</option>
+              <option>Tabunan</option>
+              <option>Taloc</option>
+              <option>Sampinit</option>
+            </select>
+          </div>
+
+          <div class="align-self-end mt-2">
+            <div id="form-register-error" class="text-danger mb-1"></div>
+            <button type="submit" class="btn btn-primary">Register Account</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div id="modal-edit" class="modal">
+    <form action="/api/admin/edit.php" method="post" id="form-edit" class="card card-tertiary p-4">
+      <h3 class="card-title mb-2 text-center">Edit <span id="edit-type-text"></span> Details</h3>
+
+      <div class="d-flex">
+        <div class="mx-1">
+          <input type="hidden" id="edit-id" name="id" value="" required />
+
+          <div class="form-group mb-2">
+            <label for="edit-name">Name:</label>
+            <input type="text" id="edit-name" name="name" placeholder="Name" class="form-control mt-1" required />
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="edit-gender">Gender:</label>
+            <select id="edit-gender" name="gender" class="form-control mt-1" required>
+              <option value="" selected>Select gender</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Others</option>
+            </select>
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="edit-birthday">Birthday:</label>
+            <input type="text" id="edit-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="edit-email">Email:</label>
+            <input type="email" id="edit-email" name="email" placeholder="Email" class="form-control mt-1" required />
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="edit-mobile">Mobile Number:</label>
+            <input type="text" id="edit-mobile" name="mobile" placeholder="Mobile Number" class="form-control mt-1" required />
+          </div>
+        </div>
+
+        <div class="d-flex flex-column mx-1">
+          <div class="form-group mb-2">
+            <label for="edit-username">Username:</label>
+            <input type="text" id="edit-username" name="username" placeholder="Username" class="form-control mt-1" readonly />
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="edit-password">New Password:</label>
+            <input type="password" id="edit-password" name="password" placeholder="Password" class="form-control mt-1" />
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="edit-address-street">Street:</label>
+            <input type="text" id="edit-address-street" name="address-street" placeholder="Street" class="form-control mt-1" required />
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="edit-address-purok">Purok:</label>
+            <input type="text" id="edit-address-purok" name="address-purok" placeholder="Purok" class="form-control mt-1" required />
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="edit-address-brgy">Barangay:</label>
+            <select id="edit-address-brgy" name="address-brgy" class="form-control mt-1" required>
+              <option value="">Select barangay</option>
+              <option>Abuanan</option>
+              <option>Alianza</option>
+              <option>Atipuluan</option>
+              <option>Bacong-Montilla</option>
+              <option>Bagroy</option>
+              <option>Balingasag</option>
+              <option>Binubuhan</option>
+              <option>Busay</option>
+              <option>Calumangan</option>
+              <option>Caridad</option>
+              <option>Don Jorge L. Araneta</option>
+              <option>Dulao</option>
+              <option>Ilijan</option>
+              <option>Lag-Asan</option>
+              <option>Ma-ao</option>
+              <option>Mailum</option>
+              <option>Malingin</option>
+              <option>Napoles</option>
+              <option>Pacol</option>
+              <option>Poblacion</option>
+              <option>Sagasa</option>
+              <option>Tabunan</option>
+              <option>Taloc</option>
+              <option>Sampinit</option>
+            </select>
+          </div>
+
+          <div class="align-self-end mt-2">
+            <div id="form-edit-error" class="text-danger mb-1"></div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <template id="temp-page-btn">
+    <button type="button" class="btn btn-background-secondary btn-round-sm btn-sm mr-2" data-page=""></button>
+  </template>
+
+  <template id="temp-user">
+    <tr>
+      <td class="user-code"></td>
+      <td class="user-name"></td>
+      <td class="user-email"></td>
+      <td class="user-created"></td>
+      <td class="user-lastlogin"></td>
+      <td class="user-actions">none</td>
+    </tr>
+  </template>
+
+  <template id="temp-user-actions">
+    <button type="button" class="btn btn-text user-action-edit">
+      <img src="/imgs/edit.svg" alt="Edit button" />
+    </button>
+    <button type="button" class="btn btn-text user-action-archive">
+      <img src="/imgs/archive.svg" alt="Archive button" />
+    </button>
+  </template>
 </main>
 <?php
 
