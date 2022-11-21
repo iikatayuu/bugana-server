@@ -259,10 +259,12 @@ select.btn {
 .p-5, .px-5, .pr-5 { padding-right: 48px !important; }
 
 .text-left { text-align: left; }
+.text-right { text-align: right; }
 .text-center { text-align: center; }
 .text-sm { font-size: 11px; }
 .text-md { font-size: 15px; }
 .text-lg { font-size: 20px; }
+.text-bold { font-weight: 700; }
 .text-danger { color: var(--color-danger); }
 .text-none { text-decoration: none; }
 
