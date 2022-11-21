@@ -2,7 +2,7 @@
 
 require_once 'includes/html.php';
 
-$styles = ['/css/dashboard.css', '/css/sales-report.css'];
+$styles = ['/css/dashboard.css', '/css/sales-report.css', '/css/sales-report-farmer.css'];
 $scripts = ['/js/dashboard.js', '/js/sales-report-farmers.js'];
 out_header('BUGANA Individual Farmers Sales Report', $styles, $scripts);
 
@@ -94,8 +94,7 @@ out_header('BUGANA Individual Farmers Sales Report', $styles, $scripts);
         </tr>
       </thead>
 
-      <tbody id="farmers">
-      </tbody>
+      <tbody id="farmers"></tbody>
     </table>
 
     <div class="d-flex flex-space-between flex-align-center mx-5">
@@ -114,6 +113,29 @@ out_header('BUGANA Individual Farmers Sales Report', $styles, $scripts);
     </div>
   </div>
 
+  <div class="modal-container d-none"></div>
+  <div id="modal-farmer" class="modal">
+    <div class="card card-background p-4">
+      <h4 class="card-title mb-2 text-center farmer-name"></h4>
+      <h3 class="card-title mb-2 text-center">This Months Report</h3>
+
+      <table class="dashboard-table">
+        <thead>
+          <tr>
+            <th>Buyer's Name</th>
+            <th>Date</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total Amount</th>
+          </tr>
+        </thead>
+        
+        <tbody id="transactions"></tbody>
+      </table>
+    </div>
+  </div>
+
   <template id="temp-page-btn">
     <button type="button" class="btn btn-background-secondary btn-round-sm btn-xs mr-2" data-page=""></button>
   </template>
@@ -123,9 +145,20 @@ out_header('BUGANA Individual Farmers Sales Report', $styles, $scripts);
       <td class="farmer-code"></td>
       <td class="farmer-name"></td>
       <td class="total-sales"></td>
-      <td class="action">
-        <a href="#">View Details</a>
+      <td>
+        <a href="#" class="farmer-actions">View Details</a>
       </td>
+    </tr>
+  </template>
+
+  <template id="temp-transaction">
+    <tr>
+      <td class="buyer-name"></td>
+      <td class="transaction-date"></td>
+      <td class="product-name"></td>
+      <td class="product-price"></td>
+      <td class="product-quantity"></td>
+      <td class="total-amount"></td>
     </tr>
   </template>
 </main>

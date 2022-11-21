@@ -35,7 +35,9 @@ if (!empty($_GET['token'])) {
   }
 
   if ($decoded !== null) {
-    $userid = $decoded->userid;
+    $usertype = $decoded->type;
+    $is_admin = $usertype === 'admin' || $usertype === 'headadmin';
+    $userid = !empty($_GET['id']) && $is_admin ? $conn->real_escape_string($_GET['id']) : $decoded->userid;
     $type = !empty($_GET['type']) ? $conn->real_escape_string($_GET['type']) : null;
     $query = "SELECT
         transactions.*,

@@ -32,6 +32,19 @@ out_header('BUGANA Customer Violation Reports', $styles, $scripts);
       <img src="" alt="Admin image" class="admin-pp mr-2" width="60" />
       <span class="admin-name"></span>
     </header>
+
+    <table class="dashboard-table">
+      <thead>
+        <th>CODE</th>
+        <th>Full Name</th>
+        <th>Address</th>
+        <th>Contact Number</th>
+        <th>Email Address</th>
+        <th>Transaction ID</th>
+        <th>Counts</th>
+        <th>Actions</th>
+      </thead>
+    </table>
   </div>
 </main>
 <?php

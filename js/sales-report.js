@@ -14,7 +14,7 @@ $(document).ready(function () {
     const params = new URLSearchParams()
     params.set('token', token)
     params.set('date', 'weekly')
-    const response = await $.ajax('/api/transaction/sales.php?' + params.toString(), {
+    const response = await $.ajax('/api/admin/transaction/sales.php?' + params.toString(), {
       method: 'get',
       dataType: 'json'
     })

@@ -1,9 +1,9 @@
 <?php
 
-require_once '../../vendor/autoload.php';
-require_once '../../includes/config.php';
-require_once '../../includes/database.php';
-require_once '../../includes/utils.php';
+require_once '../../../vendor/autoload.php';
+require_once '../../../includes/config.php';
+require_once '../../../includes/database.php';
+require_once '../../../includes/utils.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\SignatureInvalidException;
@@ -36,6 +36,12 @@ if (!empty($_GET['token'])) {
 
   if ($decoded !== null) {
     $userid = $decoded->userid;
+    $usertype = $decoded->type;
+    if ($usertype !== 'admin' && $usertype !== 'headadmin') {
+      $result['message'] = 'No access';
+      die(json_encode($result));
+    }
+
     $date = !empty($_GET['date']) ? $_GET['date'] : null;
     $query = "SELECT
         transactions.*,

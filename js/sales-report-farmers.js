@@ -8,12 +8,12 @@ $(document).ready(function () {
 
   const tempItem = $('#temp-farmer').prop('content')
   const tempPageBtn = $('#temp-page-btn').prop('content')
+  const tempTransaction = $('#temp-transaction').prop('content')
   let userSort = ''
   let salesSort = ''
   let page = 1
   let userCode = $('#user-search').val()
   let farmers = []
-  let currentFarmer = null
 
   async function displayFarmers () {
     $('#farmers').empty()
@@ -69,9 +69,48 @@ $(document).ready(function () {
       $(elem).find('.farmer-code').text(farmer.code)
       $(elem).find('.farmer-name').text(farmer.name)
       $(elem).find('.total-sales').text(sales)
-      $(elem).find('.action')
+      $(elem).find('.farmer-actions').attr({
+        'data-id': farmer.id,
+        'data-index': i
+      }).click(showDetails)
       $('#farmers').append(elem)
     }
+  }
+
+  async function showDetails (event) {
+    event.preventDefault()
+
+    const farmerId = $(this).attr('data-id')
+    const index = $(this).attr('data-index')
+    const farmer = farmers[index]
+    const params = new URLSearchParams()
+    params.set('token', token)
+    params.set('id', farmerId)
+    params.set('farmer', '1')
+    const response = await $.getJSON(`/api/transaction/list.php?${params.toString()}`)
+    if (!response.success) return
+
+    $('.farmer-name').text(farmer.name)
+    $('#transactions').empty()
+
+    const transactions = response.transactions
+    for (let i = 0; i < transactions.length; i++) {
+      const elem = $(tempTransaction).clone(true, true)
+      const transaction = transactions[i]
+      const user = transaction.user
+      const product = transaction.product
+      const priceEach = parseFloat(transaction.amount) / parseInt(transaction.quantity)
+
+      $(elem).find('.buyer-name').text(user.name)
+      $(elem).find('.transaction-date').text(transaction.date)
+      $(elem).find('.product-name').text(product.name)
+      $(elem).find('.product-price').text(priceEach.toFixed(2))
+      $(elem).find('.product-quantity').text(transaction.quantity)
+      $(elem).find('.total-amount').text(transaction.amount)
+      $('#transactions').append(elem)
+    }
+
+    modal('open', '#modal-farmer')
   }
 
   let codeTimer = null
