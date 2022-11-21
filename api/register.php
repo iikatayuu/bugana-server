@@ -56,8 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $user_res = $conn->query("SELECT * FROM users WHERE username='$username' LIMIT 1");
   if ($user_res->num_rows === 0) {
     $hash = password_hash($password, PASSWORD_BCRYPT);
-    $conn->query("INSERT INTO users (username, password, email, mobile, name, gender, birthday, addressstreet, addresspurok, addressbrgy, type)
-                  VALUES ('$username', '$hash', '$email', '$mobile', '$name', '$gender', '$birthday', '$address_street', '$address_purok', '$address_brgy', '$type')");
+    $verified = $type === 'farmer' ? 1 : 0;
+    $conn->query("INSERT INTO users (username, password, email, mobile, name, gender, birthday, addressstreet, addresspurok, addressbrgy, type, verified)
+                  VALUES ('$username', '$hash', '$email', '$mobile', '$name', '$gender', '$birthday', '$address_street', '$address_purok', '$address_brgy', '$type', $verified)");
 
     $result['success'] = true;
     $result['message'] = 'Registered successfully';
