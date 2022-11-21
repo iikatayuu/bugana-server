@@ -7,6 +7,8 @@ $(document).ready(function () {
   }
 
   const tempTransaction = $('#temp-transaction').prop('content')
+  const tempDetails = $('#temp-transaction-details').prop('content')
+  const tempDetailsTotal = $('#temp-details-total').prop('content')
   const tempPageBtn = $('#temp-page-btn').prop('content')
   let category = 'all'
   let page = 1
@@ -75,8 +77,78 @@ $(document).ready(function () {
         alt: transaction.status === 'success' ? 'Successful' : 'Pending'
       })
 
+      $(elem).find('.transaction-action').attr('data-code', transaction.code).click(showOrder)
+
       $('#transactions').append(elem)
     }
+  }
+
+  async function showOrder (event) {
+    event.preventDefault()
+
+    const code = $(this).attr('data-code')
+    const response = await $.ajax('/api/admin/transaction/get.php', {
+      method: 'post',
+      dataType: 'json',
+      data: { code, token }
+    })
+    if (!response.success) return
+
+    const transactions = response.transactions
+    const tx = transactions[0]
+    const user = tx.user
+    let grandTotal = 0
+
+    $('#order-customer-name').text(user.name)
+    $('#transaction-id').text(code)
+    $('#transaction-date').text(tx.date)
+    $('#order-customer-code').text(user.code)
+    $('#order-customer-address').text(user.addressstreet + ', ' + user.addresspurok + ', ' + user.addressbrgy)
+    $('#order-type').text(tx.paymentoption === 'delivery' ? 'Cash On Delivery' : 'Cash On Pickup')
+    $('#orders').empty()
+
+    const displayed = []
+    for (let i = 0; i < transactions.length; i++) {
+      const elem = $(tempDetails).clone(true, true)
+      const transaction = transactions[i]
+      const product = transaction.product
+      const amountEach = parseFloat(transaction.amount) / parseInt(transaction.quantity)
+      grandTotal += parseFloat(transaction.amount)
+
+      if (!displayed.includes(product.code)) {
+        displayed.push(product.code)
+        $(elem).find('.farmer-code').text(product.code)
+      }
+
+      $(elem).find('.product-name').text(product.name)
+      $(elem).find('.order-quantity').text(transaction.quantity)
+      $(elem).find('.order-price').text(amountEach.toFixed(2))
+      $(elem).find('.order-amount').text(transaction.amount)
+      $('#orders').append(elem)
+    }
+
+    const totalAmountElem = $(tempDetailsTotal).clone(true, true)
+    const grandTotalElem = $(tempDetailsTotal).clone(true, true)
+
+    $(totalAmountElem).find('.total-name').text('Total Name:')
+    $(totalAmountElem).find('.total-value').text(grandTotal.toFixed(2))
+    $('#orders').append(totalAmountElem)
+
+    if (tx.paymentoption === 'delivery') {
+      const deliveryElem = $(tempDetailsTotal).clone(true, true)
+      $(deliveryElem).find('.total-name').text('Delivery Fee:')
+      $(deliveryElem).find('.total-value').text('50.00')
+      $('#orders').append(deliveryElem)
+
+      $('.delivery').removeClass('d-none')
+      grandTotal += 50
+    } else $('.delivery').addClass('d-none')
+
+    $(grandTotalElem).find('.total-name').text('Total Order Amount:')
+    $(grandTotalElem).find('.total-value').text(grandTotal.toFixed(2))
+    $('#orders').append(grandTotalElem)
+
+    modal('open', '#modal-order')
   }
 
   $('#transactions-category-select').on('change', function () {

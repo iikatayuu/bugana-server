@@ -86,6 +86,60 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
     </div>
   </div>
 
+  <div class="modal-container d-none"></div>
+  <div id="modal-order" class="modal">
+    <div class="card card-background p-4">
+      <h3 class="card-title mb-2 text-center">ORDER DETAILS</h3>
+      <table class="table-details">
+        <tr>
+          <td>Customer Name:</td>
+          <td id="order-customer-name"></td>
+        </tr>
+
+        <tr>
+          <td>Transaction ID:</td>
+          <td id="transaction-id"></td>
+        </tr>
+
+        <tr>
+          <td>Transaction Date:</td>
+          <td id="transaction-date"></td>
+        </tr>
+
+        <tr>
+          <td>Customer Code:</td>
+          <td id="order-customer-code"></td>
+        </tr>
+
+        <tr>
+          <td>Address:</td>
+          <td id="order-customer-address"></td>
+        </tr>
+
+        <tr>
+          <td>Order Type:</td>
+          <td id="order-type"></td>
+        </tr>
+      </table>
+
+      <table class="table-products">
+        <thead>
+          <th class="px-2 text-center">Farmer Code</th>
+          <th class="px-2 text-center">Product Name</th>
+          <th class="px-2 text-center">Quantity</th>
+          <th class="px-2 text-center">Price</th>
+          <th class="px-2 text-center">Total Amount</th>
+        </thead>
+
+        <tbody id="orders"></tbody>
+      </table>
+
+      <div class="text-center">
+        <button type="button" class="btn btn-primary px-5" data-modal="#modal-order">OK</button>
+      </div>
+    </div>
+  </div>
+
   <template id="temp-page-btn">
     <button type="button" class="btn btn-background-secondary btn-round-sm btn-sm mr-2" data-page=""></button>
   </template>
@@ -101,6 +155,24 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
       <td>
         <img class="order-status" alt="" width="18" />
       </td>
+    </tr>
+  </template>
+
+  <template id="temp-transaction-details">
+    <tr>
+      <td class="farmer-code text-center"></td>
+      <td class="product-name text-center"></td>
+      <td class="order-quantity text-center"></td>
+      <td class="order-price text-center"></td>
+      <td class="order-amount text-center"></td>
+    </tr>
+  </template>
+
+  <template id="temp-details-total">
+    <tr>
+      <td colspan="2" class="text-center"></td>
+      <td colspan="2" class="total-name text-right"></td>
+      <td class="total-value text-center text-bold"></td>
     </tr>
   </template>
 </main>

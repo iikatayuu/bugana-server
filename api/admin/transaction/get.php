@@ -17,16 +17,13 @@ cors();
 $result = [
   'success' => false,
   'message' => 'Invalid request',
-  'transactions' => [],
-  'next' => false,
-  'prev' => false,
-  'pages' => 0
+  'transactions' => []
 ];
 
-if (!empty($_GET['token'])) {
+if (!empty($_POST['token'])) {
   $decoded = null;
   try {
-    $decoded = JWT::decode($_GET['token'], new Key(JWT_KEY, JWT_ALGO));
+    $decoded = JWT::decode($_POST['token'], new Key(JWT_KEY, JWT_ALGO));
   } catch (InvalidArgumentException $e) {
     $result['message'] = 'Invalid token';
   } catch (SignatureInvalidException $e)  {
@@ -40,41 +37,28 @@ if (!empty($_GET['token'])) {
   if ($decoded !== null) {
     $usertype = $decoded->type;
     if ($usertype === 'headadmin') {
-      $page = !empty($_GET['page']) ? $_GET['page'] : '1';
-      $limit = !empty($_GET['limit']) ? $conn->real_escape_string($_GET['limit']) : '10';
-      $category = !empty($_GET['category']) ? $conn->real_escape_string($_GET['category']) : 'all';
-      $search = !empty($_GET['search']) ? $conn->real_escape_string($_GET['search']) : null;
-
-      if (!preg_match('/^(\d+)$/', $page)) {
-        $result['message'] = 'Invalid page';
-        die(json_encode($result));
+      $code = !empty($_POST['code']) ? $conn->real_escape_string($_POST['code']) : null;
+      if (!$code) {
+        $response['message'] = 'Invalid code';
+        die(json_encode($response));
       }
 
-      $count_query = "SELECT COUNT(DISTINCT transaction_code) AS count FROM transactions";
       $query = "SELECT
           transactions.*,
-          users.id AS userid,
           users.name AS userfullname,
           users.username AS username,
           users.addressstreet AS addressstreet,
           users.addresspurok AS addresspurok,
           users.addressbrgy AS addressbrgy,
-          COALESCE(SUM(transactions.amount), 0) AS total_amount
+          products.name AS productname,
+          products.user AS farmerid,
+          products.price AS price
         FROM transactions
-        JOIN users ON users.id=transactions.user";
+        JOIN users ON users.id=transactions.user
+        JOIN products ON products.id=transactions.product
+        WHERE transactions.transaction_code='$code'";
 
-      $wheres = [];
-      if ($category !== 'all' && $category !== '') $wheres[] = "transactions.status='$category'";
-      if ($search) $wheres[] = "transactions.transaction_code LIKE '%$search%'";
-
-      $add_q = count($wheres) > 0 ? ' WHERE ' . implode(' AND ', $wheres) : '';
-      $query .= $add_q;
-      $count_query .= $add_q;
-
-      $page_q = (intval($page) - 1) * intval($limit);
-      $transactions_res = $conn->query("$query GROUP BY transactions.transaction_code ORDER BY transactions.date DESC LIMIT $page_q, $limit");
-      $count_res = $conn->query($count_query);
-      $count = $count_res->fetch_object()->count;
+      $transactions_res = $conn->query($query);
       $transactions = [];
 
       while ($transaction = $transactions_res->fetch_object()) {
@@ -82,11 +66,15 @@ if (!empty($_GET['token'])) {
         while (strlen($usercode) < 2) $usercode = "0$usercode";
         $usercode = "C$usercode";
 
+        $farmercode = $transaction->farmerid;
+        while (strlen($farmercode) < 2) $farmercode = "0$farmercode";
+        $farmercode = "F$farmercode";
+
         $transactionitem = [
           'id' => $transaction->id,
           'code' => $transaction->transaction_code,
           'user' => [
-            'id' => $transaction->userid,
+            'id' => $transaction->user,
             'code' => $usercode,
             'name' => $transaction->userfullname,
             'username' => $transaction->username,
@@ -94,10 +82,15 @@ if (!empty($_GET['token'])) {
             'addresspurok' => $transaction->addresspurok,
             'addressbrgy' => $transaction->addressbrgy
           ],
+          'product' => [
+            'id' => $transaction->product,
+            'code' => $farmercode,
+            'name' => $transaction->productname,
+            'price' => $transaction->price
+          ],
           'quantity' => $transaction->quantity,
           'date' => $transaction->date,
           'amount' => $transaction->amount,
-          'total_amount' => $transaction->total_amount,
           'paymentoption' => $transaction->paymentoption,
           'status' => $transaction->status
         ];
@@ -108,9 +101,6 @@ if (!empty($_GET['token'])) {
       $result['success'] = true;
       $result['message'] = '';
       $result['transactions'] = $transactions;
-      $result['next'] = ($page_q + intval($limit)) < $count;
-      $result['prev'] = $page !== '1';
-      $result['pages'] = ceil($count / intval($limit));
     } else {
       $result['message'] = 'User is not admin';
     }

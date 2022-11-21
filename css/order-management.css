@@ -1,0 +1,25 @@
+
+#modal-order .card {
+  background-color: var(--color-background);
+  color: var(--color-background-contrast);
+  border-radius: 0;
+  border: 1px solid #000;
+}
+
+.transaction-action {
+  cursor: pointer;
+}
+
+.table-details tr td:first-child {
+  padding-bottom: 18px;
+  width: 200px;
+}
+
+.table-details tr td:last-child {
+  font-weight: 700;
+}
+
+.table-products tr th,
+.table-products tr td {
+  padding-bottom: 18px;
+}
