@@ -30,6 +30,7 @@ $farmer = !empty($_GET['farmer']) ? $conn->real_escape_string($_GET['farmer']) :
 $search = !empty($_GET['search']) ? $conn->real_escape_string($_GET['search']) : null;
 $productsort = !empty($_GET['product_sort']) ? $conn->real_escape_string($_GET['product_sort']) : null;
 $pricesort = !empty($_GET['price_sort']) ? $conn->real_escape_string($_GET['price_sort']) : null;
+$random = isset($_GET['random']);
 
 if (!preg_match('/^(\d+)$/', $page)) {
   $result['message'] = 'Invalid page';
@@ -61,7 +62,8 @@ if ($productsort && $productsort === 'asc') $orders[] = 'name ASC';
 if ($productsort && $productsort === 'desc') $orders[] = 'name DESC';
 if ($pricesort && $pricesort === 'asc') $orders[] = 'price ASC';
 if ($pricesort && $pricesort === 'desc') $orders[] = 'price DESC';
-$add_q = ' ORDER BY ' . (count($orders) > 0 ? implode(', ', $orders) : 'created DESC');
+$default_order = $random ? 'rand()' : 'created DESC';
+$add_q = ' ORDER BY ' . (count($orders) > 0 ? implode(', ', $orders) : $default_order);
 $query .= $add_q;
 
 $page_q = (intval($page) - 1) * intval($limit);
