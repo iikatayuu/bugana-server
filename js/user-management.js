@@ -73,7 +73,8 @@ $(document).ready(function () {
       if ((payload.type === 'headadmin' && user.type === 'customer') || (payload.type === 'admin' && user.type === 'farmer')) {
         const actionsElem = $(tempAction).clone(true, true)
         $(actionsElem).find('.user-action-edit').attr('data-index', i).click(editUser)
-        $(actionsElem).find('.user-action-archive').attr('data-index', i).click(archiveUser)
+        if (user.verified === '1') $(actionsElem).find('.user-action-verify').addClass('d-none')
+        else $(actionsElem).find('.user-action-verify').attr('data-index', i).click(verifyUser)
         $(elem).find('.user-actions').empty().append(actionsElem)
       }
 
@@ -100,9 +101,43 @@ $(document).ready(function () {
     modal('open', '#modal-edit')
   }
 
-  async function archiveUser (event) {
+  async function verifyUser (event) {
     event.preventDefault()
+
+    const index = $(this).attr('data-index')
+    const user = users[index]
+    $('#verify-id').val(user.id)
+    $('#verify-validid').attr('src', '/api/admin/validid.php?id=' + user.id)
+    modal('open', '#modal-verify')
   }
+
+  $('#form-verify').submit(async function (event) {
+    event.preventDefault()
+
+    const form = $(this).get(0)
+    const action = $(form).attr('action')
+    const method = $(form).attr('method')
+    const token = sessionStorage.getItem('token')
+    const formData = new FormData(form)
+    formData.append('token', token)
+
+    $(form).find('[type="submit"]').attr('disabled', true).text('Verifying...')
+
+    const response = await $.ajax(action, {
+      method: method,
+      dataType: 'json',
+      data: formData,
+      processData: false,
+      contentType: false
+    })
+
+    $(form).find('[type="submit"]').attr('disabled', null).text('Verify')
+    if (response.success) {
+      $(form).trigger('reset')
+      await displayUsers()
+      modal('close')
+    }
+  })
 
   $('#form-register').submit(async function (event) {
     event.preventDefault()

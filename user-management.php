@@ -200,6 +200,17 @@ $view = !empty($_GET['view']) ? $_GET['view'] : 'all';
     </form>
   </div>
 
+  <div id="modal-verify" class="modal">
+    <form action="/api/admin/users/verify.php" method="post" id="form-verify" class="card card-tertiary p-4">
+      <input type="hidden" id="verify-id" name="id" value="" required />
+      <div class="form-group">
+        <img src="" alt="" id="verify-validid" width="300" />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Verify</button>
+    </form>
+  </div>
+
   <div id="modal-edit" class="modal">
     <form action="/api/admin/edit.php" method="post" id="form-edit" class="card card-tertiary p-4">
       <h3 class="card-title mb-2 text-center">Edit <span id="edit-type-text"></span> Details</h3>
@@ -316,11 +327,11 @@ $view = !empty($_GET['view']) ? $_GET['view'] : 'all';
   </template>
 
   <template id="temp-user-actions">
-    <button type="button" class="btn btn-text user-action-edit">
-      <img src="/imgs/edit.svg" alt="Edit button" />
+    <button type="button" class="btn btn-text user-action-verify">
+      <img src="/imgs/check.svg" alt="Verify button" width="20" />
     </button>
-    <button type="button" class="btn btn-text user-action-archive">
-      <img src="/imgs/archive.svg" alt="Archive button" />
+    <button type="button" class="btn btn-text user-action-edit">
+      <img src="/imgs/edit.svg" alt="Edit button" width="20" />
     </button>
   </template>
 </main>

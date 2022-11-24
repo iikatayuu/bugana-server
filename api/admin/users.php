@@ -110,13 +110,12 @@ if (!empty($_GET['token'])) {
 
       $page_q = (intval($page) - 1) * intval($limit);
       $users_res = $conn->query("$query LIMIT $page_q, $limit");
-      $result['debug'] = "$query LIMIT $page_q, $limit";
       $count_res = $conn->query($count_query);
       $count = $count_res->fetch_object()->count;
       $users = [];
       $expose = [
         'id', 'username', 'email', 'mobile', 'name', 'gender', 'birthday',
-        'addressstreet', 'addresspurok', 'addressbrgy', 'type', 'created', 'lastlogin'
+        'addressstreet', 'addresspurok', 'addressbrgy', 'type', 'created', 'lastlogin', 'verified'
       ];
 
       if (!empty($_GET['sales'])) $expose[] = 'sales';

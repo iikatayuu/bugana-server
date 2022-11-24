@@ -1,0 +1,6 @@
+
+#modal-add .card {
+  background-color: var(--color-background);
+  border: 1px solid #000000;
+  border-radius: 0;
+}

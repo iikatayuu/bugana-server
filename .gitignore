@@ -1,6 +1,7 @@
 /vendor/
 /userdata/imgs/*
 !/userdata/imgs/0.png
+/userdata/ids/*
 /userdata/products/*
 
 !.gitkeep

@@ -45,6 +45,18 @@ if (!empty($POST['token'])) {
   if ($decoded !== null) {
     $userid = $decoded->userid;
     $error = false;
+
+    $user_res = $conn->query("SELECT * FROM users WHERE id=$userid");
+    if ($user_res->num_rows > 0) {
+      $user = $user_res->fetch_object();
+      if ($user->verified === '0') {
+        $result['message'] = 'You are not verified';
+        $error = true;
+      }
+    } else {
+      $result['message'] = 'No user found';
+      $error = true;
+    }
     foreach ($items as $item) {
       $itemid = $item['id'];
       $productid = $item['product']['id'];

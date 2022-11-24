@@ -57,8 +57,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($user_res->num_rows === 0) {
     $hash = password_hash($password, PASSWORD_BCRYPT);
     $verified = $type === 'farmer' ? 1 : 0;
+
     $conn->query("INSERT INTO users (username, password, email, mobile, name, gender, birthday, addressstreet, addresspurok, addressbrgy, type, verified)
                   VALUES ('$username', '$hash', '$email', '$mobile', '$name', '$gender', '$birthday', '$address_street', '$address_purok', '$address_brgy', '$type', $verified)");
+
+    if ($type === 'customer') {
+      $imgpath = __DIR__ . '/../userdata/ids';
+      $validid = $_FILES['valid-id'];
+      $userid = $conn->insert_id;
+      $ext = pathinfo($validid['name'], PATHINFO_EXTENSION);
+      $success = move_uploaded_file($validid['tmp_name'], "$imgpath/$userid.$ext");
+
+      if (!$success) {
+        $conn->query("DELETE FROM users WHERE id=$userid");
+        $result['message'] = 'Unable to upload ID';
+        die(json_encode($result));
+      }
+    }
 
     $result['success'] = true;
     $result['message'] = 'Registered successfully';
