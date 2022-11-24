@@ -37,6 +37,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $address_street = $conn->real_escape_string($POST['address-street']);
   $address_purok = $conn->real_escape_string($POST['address-purok']);
   $address_brgy = $conn->real_escape_string($POST['address-brgy']);
+  $verified = 0;
+
+  if ($token === null && $type === 'farmer') {
+    $result['message'] = 'Token is required';
+    die(json_encode($result));
+  }
+
+  if ($token !== null) {
+    $decoded = null;
+    try {
+      $decoded = JWT::decode($token, new Key(JWT_KEY, JWT_ALGO));
+    } catch (InvalidArgumentException $e) {
+      $result['message'] = 'Invalid token';
+    } catch (SignatureInvalidException $e)  {
+      $result['message'] = 'Invalid signature';
+    } catch (BeforeValidException $e) {
+      $result['message'] = 'Token is no longer valid';
+    } catch (ExpiredException $e) {
+      $result['message'] = 'Token already expired';
+    }
+
+    if ($decoded === null) die(json_encode($result));
+    if ($decoded->type === 'headadmin' || $decoded->type === 'admin') $verified = 1;
+    else {
+      $result['message'] = 'User is not admin';
+      die(json_encode($result));
+    }
+  }
 
   if (!preg_match('/^([a-zA-Z0-9\-_]{8,32})$/', $password)) {
     $result['message'] = 'Invalid password';
@@ -56,12 +84,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $user_res = $conn->query("SELECT * FROM users WHERE username='$username' LIMIT 1");
   if ($user_res->num_rows === 0) {
     $hash = password_hash($password, PASSWORD_BCRYPT);
-    $verified = $type === 'farmer' ? 1 : 0;
-
     $conn->query("INSERT INTO users (username, password, email, mobile, name, gender, birthday, addressstreet, addresspurok, addressbrgy, type, verified)
                   VALUES ('$username', '$hash', '$email', '$mobile', '$name', '$gender', '$birthday', '$address_street', '$address_purok', '$address_brgy', '$type', $verified)");
 
-    if ($type === 'customer') {
+    if ($type === 'customer' && $verified === 0) {
       $imgpath = __DIR__ . '/../userdata/ids';
       $validid = $_FILES['valid-id'];
       $userid = $conn->insert_id;

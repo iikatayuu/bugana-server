@@ -146,6 +146,7 @@ $(document).ready(function () {
     const action = $(form).attr('action')
     const method = $(form).attr('method')
     const formData = new FormData(form)
+    formData.append('token', token)
     if (payload.type === 'admin') formData.append('type', 'farmer')
 
     $('#form-register-error').empty()
