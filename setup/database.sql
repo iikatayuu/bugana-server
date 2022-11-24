@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 21, 2022 at 01:13 PM
+-- Generation Time: Nov 24, 2022 at 09:26 AM
 -- Server version: 8.0.27
 -- PHP Version: 7.4.26
 
@@ -114,9 +114,24 @@ CREATE TABLE IF NOT EXISTS `users` (
   `lastlogin` timestamp NULL DEFAULT NULL COMMENT 'Last Login Date',
   `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'customer' COMMENT 'User Type',
   `active` int NOT NULL DEFAULT '1' COMMENT 'Account Active',
-  `verified` int NOT NULL DEFAULT '0',
+  `verified` int NOT NULL DEFAULT '0' COMMENT 'Account verification status',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `violations`
+--
+
+DROP TABLE IF EXISTS `violations`;
+CREATE TABLE IF NOT EXISTS `violations` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'Violation ID',
+  `user` int NOT NULL COMMENT 'User ID',
+  `transaction_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Transaction Code',
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date added',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
