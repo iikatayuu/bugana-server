@@ -5,7 +5,7 @@ This repository contains the backend API and Web Admin GUI codes.
 
 ### Prerequisites
  * MySQL 8.0+
- * PHP 5.0+
+ * [PHP 5.0+](https://www.php.net/)
  * [Composer 2.4+](https://getcomposer.org)
 
 
