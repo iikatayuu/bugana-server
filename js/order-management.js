@@ -136,12 +136,15 @@ $(document).ready(function () {
 
     if (tx.paymentoption === 'delivery') {
       const deliveryElem = $(tempDetailsTotal).clone(true, true)
+      const feeRes = await $.getJSON('/api/shipping.php?brgy=' + user.addressbrgy)
+      const fee = feeRes.fee
+
       $(deliveryElem).find('.total-name').text('Delivery Fee:')
-      $(deliveryElem).find('.total-value').text('50.00')
+      $(deliveryElem).find('.total-value').text(fee.toFixed(2))
       $('#orders').append(deliveryElem)
 
       $('.delivery').removeClass('d-none')
-      grandTotal += 50
+      grandTotal += fee
     } else $('.delivery').addClass('d-none')
 
     $(grandTotalElem).find('.total-name').text('Total Order Amount:')
