@@ -3,8 +3,8 @@
 require_once 'includes/html.php';
 
 $styles = ['/css/dashboard.css', '/css/sales-report.css'];
-$scripts = ['/js/dashboard.js', '/js/sales-report-monthly.js'];
-out_header('BUGANA Sales Monthly Report', $styles, $scripts);
+$scripts = ['/js/dashboard.js', '/js/sales-report-annual.js'];
+out_header('BUGANA Sales Annual Report', $styles, $scripts);
 
 ?>
 <main>
@@ -19,8 +19,8 @@ out_header('BUGANA Sales Monthly Report', $styles, $scripts);
     <a href="/sales-report.php" class="sidebar-link active">Sales Report</a>
     <nav class="sales-report">
       <a href="/sales-report.php">Weekly</a>
-      <a href="/sales-report-monthly.php" class="active">Monthly</a>
-      <a href="/sales-report-annual.php">Annual</a>
+      <a href="/sales-report-monthly.php">Monthly</a>
+      <a href="/sales-report-annual.php" class="active">Annual</a>
       <a href="/sales-report-farmers.php">Farmers</a>
     </nav>
     <a href="/user-management.php" class="sidebar-link">User Management</a>
@@ -39,7 +39,7 @@ out_header('BUGANA Sales Monthly Report', $styles, $scripts);
       <span class="admin-name"></span>
     </header>
 
-    <h6 class="dashboard-title flex-1 my-2 mx-3">This Monthly Sales</h6>
+    <h6 class="dashboard-title flex-1 my-2 mx-3">This Annual Sales</h6>
 
     <table class="dashboard-table dashboard-table-borderless">
       <thead>

@@ -59,6 +59,10 @@ if (!empty($_GET['token'])) {
       $month_start = date('Y-m-01 00:00:00');
       $month_end = date("Y-m-$month_days 23:59:59");
       $query .= " AND transactions.date BETWEEN '$month_start' AND '$month_end'";
+    } else if ($date === 'annual') {
+      $year_start = date('Y-01-01 00:00:00');
+      $year_end = date("Y-12-31 23:59:59");
+      $query .= " AND transactions.date BETWEEN '$year_start' AND '$year_end'";
     }
 
     $query .= " ORDER BY transactions.date DESC";
