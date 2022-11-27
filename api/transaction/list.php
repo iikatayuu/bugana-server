@@ -99,6 +99,7 @@ if (!empty($_GET['token'])) {
         ],
         'quantity' => $transaction->quantity,
         'date' => $transaction->date,
+        'shipping' => $transaction->shipping,
         'amount' => $transaction->amount,
         'paymentoption' => $transaction->paymentoption,
         'status' => $transaction->status

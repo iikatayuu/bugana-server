@@ -28,6 +28,7 @@ $POST = !empty($_SERVER['CONTENT_TYPE']) && explode(';', $_SERVER['CONTENT_TYPE'
 if (!empty($POST['token'])) {
   $decoded = null;
   $items = $POST['items'];
+  $shipping = $conn->real_escape_string($POST['shipping']);
   $paymentoption = $conn->real_escape_string($POST['paymentoption']);
 
   try {
@@ -98,8 +99,8 @@ if (!empty($POST['token'])) {
 
         if ($itemid !== '0') $conn->query("DELETE FROM carts WHERE id=$itemid");
         $conn->query("INSERT INTO stocks (product, quantity) VALUES ($productid, -$quantity)");
-        $conn->query("INSERT INTO transactions (transaction_code, user, product, quantity, amount, paymentoption)
-          VALUES ('$trans_code', $userid, $productid, $quantity, $amount, '$paymentoption')");
+        $conn->query("INSERT INTO transactions (transaction_code, user, product, quantity, shipping, amount, paymentoption)
+          VALUES ('$trans_code', $userid, $productid, $quantity, $shipping, $amount, '$paymentoption')");
       }
     }
 

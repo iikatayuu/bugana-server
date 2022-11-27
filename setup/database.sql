@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 24, 2022 at 09:26 AM
+-- Generation Time: Nov 27, 2022 at 03:54 AM
 -- Server version: 8.0.27
 -- PHP Version: 7.4.26
 
@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `user` int NOT NULL COMMENT 'Customer ID',
   `product` int NOT NULL COMMENT 'Product ID',
   `quantity` int NOT NULL COMMENT 'Quantity',
+  `shipping` float(6,2) NOT NULL COMMENT 'Shipping Fee',
   `amount` float(12,2) NOT NULL COMMENT 'Amount paid',
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending' COMMENT 'Transaction Status',
   `paymentoption` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Payment Option',
