@@ -72,9 +72,16 @@ out_header('BUGANA New Product', $styles, $scripts);
               <textarea id="product-description" name="description" class="form-control mt-2" rows="7" required></textarea>
             </div>
 
-            <div class="form-group flex-1 m-1">
-              <label for="product-price">Product Price:</label>
-              <input type="text" id="product-price" name="price" placeholder="Price" class="form-control mt-2" required />
+            <div class="flex-1 m-1">
+              <div class="form-group">
+                <label for="product-price">Product Price:</label>
+                <input type="text" id="product-price" name="price" placeholder="Price" class="form-control mt-2" required />
+              </div>
+
+              <div class="form-group">
+                <label for="perish-days">Days to Perish:</label>
+                <input type="number" id="perish-days" name="perish-days" placeholder="Days to Perish" class="form-control mt-2" required />
+              </div>
             </div>
           </div>
 

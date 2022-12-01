@@ -26,6 +26,7 @@ if (!empty($_POST['token'])) {
   $category = $conn->real_escape_string($_POST['category']);
   $description = $conn->real_escape_string($_POST['description']);
   $price = $conn->real_escape_string($_POST['price']);
+  $perish = $conn->real_escape_string($_POST['perish-days']);
   $photos = [];
 
   $i = 0;
@@ -74,7 +75,7 @@ if (!empty($_POST['token'])) {
         die(json_encode($result));
       }
 
-      $conn->query("INSERT INTO products (name, user, category, description, price) VALUES ('$name', $userid, '$category', '$description', $price)");
+      $conn->query("INSERT INTO products (name, user, category, description, price, perish) VALUES ('$name', $userid, '$category', '$description', $price, $perish)");
       $productid = $conn->insert_id;
       $imgpath = __DIR__ . '/../../../userdata/products';
       for ($i = 0; $i < count($photos); $i++) {
