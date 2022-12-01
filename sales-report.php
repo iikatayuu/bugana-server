@@ -3,8 +3,28 @@
 require_once 'includes/html.php';
 
 $styles = ['/css/dashboard.css', '/css/sales-report.css'];
-$scripts = ['/js/dashboard.js', '/js/sales-report.js'];
-out_header('BUGANA Sales Report', $styles, $scripts);
+$scripts = ['/js/dashboard.js'];
+
+$date = !empty($_GET['date']) ? $_GET['date'] : 'weekly';
+$is_detailed = isset($_GET['detailed']);
+$date_name = '';
+$date_base = '';
+
+if ($date === 'weekly') {
+  $date_name = 'Weekly';
+  $date_base = 'Week';
+} else if ($date === 'monthly') {
+  $date_name = 'Monthly';
+  $date_base = 'Month';
+} else if ($date === 'annual') {
+  $date_name = 'Annual';
+  $date_base = 'annual';
+}
+
+if ($is_detailed) $scripts[] = '/js/sales-report.js';
+else $scripts[] = '/js/sales-report-summary.js';
+
+out_header("BUGANA $date_name Sales Report", $styles, $scripts);
 
 ?>
 <main>
@@ -18,9 +38,9 @@ out_header('BUGANA Sales Report', $styles, $scripts);
     <a href="/inventory.php" class="sidebar-link">Inventory</a>
     <a href="/sales-report.php" class="sidebar-link active">Sales Report</a>
     <nav class="sales-report">
-      <a href="/sales-report.php" class="active">Weekly</a>
-      <a href="/sales-report-monthly.php">Monthly</a>
-      <a href="/sales-report-annual.php">Annual</a>
+      <a href="/sales-report.php?date=weekly" class="<?= $date === 'weekly' ? 'active' : '' ?>">Weekly</a>
+      <a href="/sales-report.php?date=monthly" class="<?= $date === 'monthly' ? 'active' : '' ?>">Monthly</a>
+      <a href="/sales-report.php?date=annual" class="<?= $date === 'annual' ? 'active' : '' ?>">Annual</a>
       <a href="/sales-report-farmers.php">Farmers</a>
     </nav>
     <a href="/user-management.php" class="sidebar-link">User Management</a>
@@ -39,37 +59,39 @@ out_header('BUGANA Sales Report', $styles, $scripts);
       <span class="admin-name"></span>
     </header>
 
-    <h6 class="dashboard-title my-2 mx-3">This Weeks Sales</h6>
-    <table class="dashboard-table dashboard-table-borderless">
-      <thead>
+    <?php if ($is_detailed) { ?>
+      <h6 class="dashboard-title my-2 mx-3">This <?= $date_base ?> Sales</h6>
+      <table class="dashboard-table dashboard-table-borderless">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Product Price</th>
+            <th>Quantity Sold</th>
+            <th>Product Revenue</th>
+          </tr>
+        </thead>
+
+        <tbody id="sales">
+        </tbody>
+      </table>
+
+      <template id="temp-sale">
         <tr>
-          <th>Product Name</th>
-          <th>Product Price</th>
-          <th>Quantity Sold</th>
-          <th>Product Revenue</th>
+          <td class="product-name"></td>
+          <td class="product-price"></td>
+          <td class="quantity-sold"></td>
+          <td class="product-revenue"></td>
         </tr>
-      </thead>
+      </template>
 
-      <tbody id="sales">
-      </tbody>
-    </table>
-
-    <template id="temp-sale">
-      <tr>
-        <td class="product-name"></td>
-        <td class="product-price"></td>
-        <td class="quantity-sold"></td>
-        <td class="product-revenue"></td>
-      </tr>
-    </template>
-
-    <template id="temp-total">
-      <tr class="sales-report-total">
-        <td colspan="2"></td>
-        <td>TOTAL</td>
-        <td class="sales-report-total-amount"></td>
-      </tr>
-    </template>
+      <template id="temp-total">
+        <tr class="sales-report-total">
+          <td colspan="2"></td>
+          <td>TOTAL</td>
+          <td class="sales-report-total-amount"></td>
+        </tr>
+      </template>
+    <?php } ?>
   </div>
 </main>
 <?php

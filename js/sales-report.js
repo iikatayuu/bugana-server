@@ -6,6 +6,8 @@ $(document).ready(function () {
     return
   }
 
+  const searchParams = new URLSearchParams(window.location.search);
+  const date = searchParams.get('date')
   const tempSale = $('#temp-sale').prop('content')
   const tempTotal = $('#temp-total').prop('content')
   async function displayTransactions () {
@@ -13,7 +15,7 @@ $(document).ready(function () {
 
     const params = new URLSearchParams()
     params.set('token', token)
-    params.set('date', 'weekly')
+    params.set('date', date)
     const response = await $.ajax('/api/admin/transaction/sales.php?' + params.toString(), {
       method: 'get',
       dataType: 'json'
