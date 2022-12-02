@@ -48,6 +48,25 @@ main {
   color: var(--color-tertiary-contrast);
 }
 
+.sidebar-nav {
+  background-color: var(--color-tertiary);
+  padding-bottom: 8px;
+}
+
+.sidebar-nav a {
+  display: block;
+  padding: 4px;
+  background-color: #fff;
+  color: #000;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid #000;
+}
+
+.sidebar-nav a.active {
+  border: 2px solid var(--color-primary);
+}
+
 .dashboard-main {
   flex: 1;
 }

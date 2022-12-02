@@ -17,7 +17,7 @@ out_header('BUGANA Individual Farmers Sales Report', $styles, $scripts);
     <a href="/dashboard.php" class="sidebar-link">Dashboard</a>
     <a href="/inventory.php" class="sidebar-link">Inventory</a>
     <a href="/sales-report.php" class="sidebar-link active">Sales Report</a>
-    <nav class="sales-report">
+    <nav class="sidebar-nav">
       <a href="/sales-report.php?date=weekly">Weekly</a>
       <a href="/sales-report.php?date=monthly">Monthly</a>
       <a href="/sales-report.php?date=annual">Annual</a>

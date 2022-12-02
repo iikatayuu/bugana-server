@@ -1,23 +1,4 @@
 
-.sales-report {
-  background-color: var(--color-tertiary);
-  padding-bottom: 8px;
-}
-
-.sales-report a {
-  display: block;
-  padding: 4px;
-  background-color: #fff;
-  color: #000;
-  font-weight: 700;
-  text-decoration: none;
-  border: 2px solid #000;
-}
-
-.sales-report a.active {
-  border: 2px solid var(--color-primary);
-}
-
 .sales-report-total {
   font-weight: 700;
 }
