@@ -60,7 +60,7 @@ if (!empty($_GET['token'])) {
       $total_products_res = $conn->query("SELECT COALESCE(SUM(quantity), 0) AS total FROM transactions WHERE status='success'");
       $total_products = $total_products_res->fetch_object()->total;
 
-      $total_products_unsold_res = $conn->query("SELECT COALESCE(SUM(quantity), 0) AS total FROM stocks");
+      $total_products_unsold_res = $conn->query("SELECT COALESCE(SUM(quantity), 0) AS total FROM stocks WHERE status='perished'");
       $total_products_unsold = $total_products_unsold_res->fetch_object()->total;
 
       $total_orders_res = $conn->query("SELECT COUNT(DISTINCT(transaction_code)) AS total FROM transactions WHERE status='success'");
@@ -124,7 +124,7 @@ if (!empty($_GET['token'])) {
       $result['message'] = '';
       $result['stats'] = [
         'totalProductsSold' => $total_products,
-        'totalProductsUnsold' => $total_products_unsold,
+        'totalProductsUnsold' => intval($total_products_unsold) * -1,
         'totalOrders' => $total_orders,
         'totalUsers' => $total_users,
         'users' => $new_users,
