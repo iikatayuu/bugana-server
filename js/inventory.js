@@ -8,6 +8,7 @@ $(document).ready(function () {
 
   const tempItem = $('#temp-item').prop('content')
   const tempStock = $('#temp-stock').prop('content')
+  const tempNotification = $('#temp-perish').prop('content')
   const tempPageBtn = $('#temp-page-btn').prop('content')
   let category = 'all'
   let page = 1
@@ -15,6 +16,27 @@ $(document).ready(function () {
   let farmerCode = $('#farmer-search').val()
   let products = []
   let currentProduct = null
+
+  async function getNotifications () {
+    const params = new URLSearchParams()
+    params.set('token', token)
+    const response = await $.ajax(`/api/admin/notifications.php`, {
+      method: 'post',
+      dataType: 'json',
+      data: params,
+      processData: false,
+      contentType: false
+    })
+
+    if (!response.success) return
+    for (let i = 0; i < response.notifications.length; i++) {
+      const notification = response.notifications[i]
+      const elem = $(tempNotification).clone(true, true)
+
+      $(elem).find('.perish-details').text(notification.message)
+      $('#perish-products').append(elem)
+    }
+  }
 
   async function displayStocks () {
     $('#inventory').empty()
@@ -63,6 +85,8 @@ $(document).ready(function () {
     for (let i = 0; i < products.length; i++) {
       const product = products[i]
       const elem = $(tempItem).clone(true, true)
+      let stocks = 0
+      let totalStocks = 0
       let category = ''
       switch (product.category) {
         case 'vegetable':
@@ -78,14 +102,23 @@ $(document).ready(function () {
           break
       }
 
+      product.stocksIn.forEach(stockIn => {
+        const quantity = parseFloat(stockIn.quantity)
+        totalStocks += quantity
+      })
+
+      stocks = totalStocks
+      product.stocksOut.forEach(stockOut => {
+        const quantity = parseFloat(stockOut.quantity)
+        stocks += quantity;
+      })
+
       $(elem).find('.item-farmer-code').text(product.code)
       $(elem).find('.item-category').text(category)
       $(elem).find('.item-product-name').text(product.name)
-      $(elem).find('.item-stock-in').text(product.stocksIn.length > 0 ? product.stocksIn[0].quantity : 0).attr('data-index', i).click(showStocksIn)
       $(elem).find('.item-stock-in-date').text(product.stocksIn.length > 0 ? product.stocksIn[0].date : '').attr('data-index', i).click(showStocksIn)
-      $(elem).find('.item-stock-out').text(product.stocksOut.length > 0 ? parseFloat(product.stocksOut[0].quantity) * -1 : 0).attr('data-index', i).click(showStocksOut)
-      $(elem).find('.item-stock-out-date').text(product.stocksOut.length > 0 ? product.stocksOut[0].date : '').attr('data-index', i).click(showStocksOut)
-      $(elem).find('.item-stock').text(product.currentStocks)
+      $(elem).find('.item-stocks').text(stocks).attr('data-index', i).click(showStocksIn)
+      $(elem).find('.item-total-stocks').text(totalStocks).attr('data-index', i).click(showStocksIn)
       $('#inventory').append(elem)
     }
   }
@@ -96,36 +129,32 @@ $(document).ready(function () {
     const index = $(this).attr('data-index')
     const product = products[index]
     currentProduct = product
+
     $('#table-stock-in').empty()
 
-    for (let i = 0; i < product.stocksIn.length; i++) {
+    let code = product.user
+    while (code.length < 2) code = `0${code}`
+
+    const params = new URLSearchParams()
+    params.set('token', token)
+    params.set('user', `F${code}`)
+    const farmers = await $.getJSON(`/api/admin/users.php?${params.toString()}`)
+    const farmer = farmers.users[0]
+    $('#stock-farmer').text(farmer.name)
+    $('#stock-product-name').text(currentProduct.name)
+    $('#stock-product-price').text(currentProduct.price)
+
+    for (let i = 0; i < product.stocksIn.length && i < 10; i++) {
       const stocks = product.stocksIn[i]
       const elem = $(tempStock).clone(true, true)
       $(elem).find('.stock-date').text(stocks.date)
       $(elem).find('.stock-quantity').text(stocks.quantity)
+      $(elem).find('.stock-revenue').text(stocks.revenue)
+      $(elem).find('.stock-perish-left').text(stocks.perishDays > 0 ? stocks.perishDays + ' days' : 'Perished')
       $('#table-stock-in').append(elem)
     }
 
     modal('open', '#modal-stock-in')
-  }
-
-  async function showStocksOut (event) {
-    event.preventDefault()
-
-    const index = $(this).attr('data-index')
-    const product = products[index]
-    currentProduct = product
-    $('#table-stock-out').empty()
-
-    for (let i = 0; i < product.stocksOut.length; i++) {
-      const stocks = product.stocksOut[i]
-      const elem = $(tempStock).clone(true, true)
-      $(elem).find('.stock-date').text(stocks.date)
-      $(elem).find('.stock-quantity').text(parseFloat(stocks.quantity) * -1)
-      $('#table-stock-out').append(elem)
-    }
-
-    modal('open', '#modal-stock-out')
   }
 
   let codeTimer = null
@@ -205,5 +234,6 @@ $(document).ready(function () {
     displayStocks()
   })
 
+  getNotifications()
   displayStocks()
 })

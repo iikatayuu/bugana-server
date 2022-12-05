@@ -26,6 +26,7 @@ $(document).ready(function () {
       $('.modal-container').addClass('d-none')
       $(target).removeClass('modal-open')
     } else {
+      modal('close')
       $('.modal-container').removeClass('d-none')
       $(target).addClass('modal-open')
     }

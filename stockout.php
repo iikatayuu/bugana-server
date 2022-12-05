@@ -2,8 +2,8 @@
 
 require_once 'includes/html.php';
 
-$styles = ['/css/dashboard.css', '/css/inventory.css'];
-$scripts = ['/js/dashboard.js', '/js/inventory.js'];
+$styles = ['/css/dashboard.css'];
+$scripts = ['/js/dashboard.js', '/js/stockout.js'];
 out_header('BUGANA Inventory', $styles, $scripts);
 
 ?>
@@ -28,8 +28,8 @@ out_header('BUGANA Inventory', $styles, $scripts);
       <span>Inventory</span>
     </a>
     <nav class="sidebar-nav">
-      <a href="/inventory.php" class="active">Stock In</a>
-      <a href="/stockout.php">Stock Out</a>
+      <a href="/inventory.php">Stock In</a>
+      <a href="/stockout.php" class="active">Stock Out</a>
     </nav>
 
     <a href="/sales-report.php" class="sidebar-link">
@@ -83,38 +83,23 @@ out_header('BUGANA Inventory', $styles, $scripts);
     </header>
 
     <div class="d-flex flex-space-between flex-align-center mt-4 mx-3">
-      <div class="flex-1">
-        <input type="text" id="farmer-search" name="q" placeholder="Search Farmer Code" class="form-control form-control-white box-shadow table-search" />
-      </div>
-
-      <div class="mr-4">
-        <div class="dropdown">
-          <button type="button" class="btn btn-text" data-dropdown="toggle">
-            <img src="/imgs/bell.svg" alt="Notifications" width="24" height="24" />
-          </button>
-          <div id="perish-products" class="dropdown-content"></div>
-        </div>
-      </div>
-
       <div>
-        <select id="products-category-select" class="btn btn-sm btn-tertiary text-md py-1">
-          <option value="all" selected>Sort By: All</option>
-          <option value="vegetable">Sort By: Vegetable</option>
-          <option value="root-crops">Sort By: Root Crops</option>
-          <option value="fruits">Sort By: Fruits</option>
-        </select>
+        <input type="text" id="transaction-search" name="q" placeholder="Search Transaction Code" class="form-control form-control-white box-shadow table-search" />
       </div>
     </div>
 
     <table class="dashboard-table">
       <thead>
         <tr>
-          <th>Farmer Code</th>
+          <th>Transaction ID</th>
+          <th>Farmer ID</th>
           <th>Category</th>
           <th>Product Name</th>
-          <th>Recent Stock In Date</th>
-          <th>Available Stocks</th>
-          <th>Total Stock In</th>
+          <th>Stock Out Date</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Product Revenue</th>
+          <th>Status</th>
         </tr>
       </thead>
 
@@ -142,71 +127,22 @@ out_header('BUGANA Inventory', $styles, $scripts);
     </div>
   </div>
 
-  <div class="modal-container d-none"></div>
-  <div id="modal-stock-in" class="modal">
-    <div class="card card-rect text-center p-0">
-      <h3 class="card-title-tertiary text-center">Stock In History</h3>
-      <div class="pb-2">
-        <div class="d-flex">
-          <div class="flex-1 py-1 border border-left-0">Farmer: <span id="stock-farmer"></span></div>
-          <div class="flex-1 py-1 border">Product: <span id="stock-product-name"></span></div>
-          <div class="flex-1 py-1 border border-right-0">Price: <span id="stock-product-price"></span></div>
-        </div>
-        <table class="dashboard-table w-100 mx-0 mt-0 mb-2">
-          <thead>
-            <tr>
-              <th class="text-sm">Date</th>
-              <th class="text-sm">Quantity (KG)</th>
-              <th class="text-sm">Product Revenue</th>
-              <th class="text-sm">Remaining Days to Perish</th>
-            </tr>
-          </thead>
-
-          <tbody id="table-stock-in"></tbody>
-        </table>
-
-        <button type="button" class="btn btn-primary btn-sm" data-modal="#modal-stock-add">Add Stock</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="modal-stock-add" class="modal">
-    <form action="/api/admin/stock/add.php" method="post" id="form-stock-add" class="card card-rect card-tertiary text-center p-3">
-      <h3 class="mb-2 text-center">QUANTITY</h3>
-      <div class="form-group">
-        <input type="number" id="stock-add-quantity" name="quantity" placeholder="Quantity" class="form-control" required />
-      </div>
-      <div id="form-stock-add-error" class="text-danger"></div>
-      <button type="submit" class="btn btn-primary btn-sm">CONFIRM</button>
-    </form>
-  </div>
-
   <template id="temp-page-btn">
     <button type="button" class="btn btn-background-secondary btn-round-sm btn-sm mr-2" data-page=""></button>
   </template>
 
   <template id="temp-item">
     <tr>
-      <td class="item-farmer-code"></td>
+      <td class="item-tx-code"></td>
+      <td class="item-farmer-id"></td>
       <td class="item-category"></td>
       <td class="item-product-name"></td>
-      <td class="item-stock-in-date"></td>
-      <td class="item-stocks"></td>
-      <td class="item-total-stocks"></td>
+      <td class="item-stock-out-date"></td>
+      <td class="item-quantity"></td>
+      <td class="item-price"></td>
+      <td class="item-product-revenue"></td>
+      <td class="item-status"></td>
     </tr>
-  </template>
-
-  <template id="temp-stock">
-    <tr>
-      <td class="stock-date"></td>
-      <td class="stock-quantity"></td>
-      <td class="stock-revenue"></td>
-      <td class="stock-perish-left"></td>
-    </tr>
-  </template>
-
-  <template id="temp-perish">
-    <div class="perish-details p-2 border-bottom"></div>
   </template>
 </main>
 <?php

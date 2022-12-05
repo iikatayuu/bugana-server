@@ -1,14 +1,25 @@
 
-.item-stock-in,
 .item-stock-in-date,
-.item-stock-out,
-.item-stock-out-date {
+.item-stocks,
+.item-total-stocks {
   cursor: pointer;
 }
 
-#modal-stock-in .card,
-#modal-stock-out .card {
-  width: 350px;
+.item-product-name {
+  color: #299438;
+}
+
+#perish-products {
+  width: 250px;
+}
+
+.perish-details {
+  background-color: var(--color-tertiary);
+  color: var(--color-tertiary-contrast);
+}
+
+#modal-stock-in .card {
+  width: 650px;
   border: 1px solid #000;
 }
 

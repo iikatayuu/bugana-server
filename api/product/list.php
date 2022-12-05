@@ -95,18 +95,35 @@ while ($product = $products_res->fetch_object()) {
     $stocks_res = $conn->query("SELECT * FROM stocks WHERE product=$id ORDER BY date DESC");
 
     while ($stocks = $stocks_res->fetch_object()) {
+      $stockid = $stocks->id;
       $quantity = intval($stocks->quantity);
       $current_stocks += $quantity;
 
       if ($quantity < 0) {
+        $status = $stocks->status;
         $stock_out[] = [
           'quantity' => $quantity,
+          'status' => $status,
           'date' => $stocks->date
         ];
       } else {
+        $outs_res = $conn->query("SELECT * FROM stocks WHERE quantity < 0 AND stocks=$stockid");
+        $revenue = 0;
+        while ($out = $outs_res->fetch_object()) {
+          if ($out->status == 'sold') $revenue += intval($out->amount);
+        }
+
+        $now_date = time();
+        $stock_date = strtotime($stocks->date);
+        $perish_days = $product->perish;
+        $perish = strtotime("+$perish_days days", $stock_date);
+        $days_to_perish = round(($perish - $now_date) / (60 * 60 * 24));
+
         $stock_in[] = [
           'quantity' => $quantity,
-          'date' => $stocks->date
+          'date' => $stocks->date,
+          'revenue' => $revenue,
+          'perishDays' => $days_to_perish > 0 ? $days_to_perish : 0
         ];
       }
     }

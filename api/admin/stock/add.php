@@ -41,7 +41,7 @@ if (!empty($_POST['token'])) {
     if ($usertype === 'admin' || $usertype === 'headadmin') {
       $products_res = $conn->query("SELECT * FROM products WHERE id=$id LIMIT 1");
       if ($products_res->num_rows > 0) {
-        $conn->query("INSERT INTO stocks (product, quantity) VALUES ($id, $quantity)");
+        $conn->query("INSERT INTO stocks (product, quantity, stocks) VALUES ($id, $quantity, $quantity)");
         $result['success'] = true;
         $result['message'] = '';
       } else {

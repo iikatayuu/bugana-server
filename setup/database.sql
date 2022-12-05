@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 27, 2022 at 03:54 AM
+-- Generation Time: Dec 05, 2022 at 10:23 AM
 -- Server version: 8.0.27
 -- PHP Version: 7.4.26
 
@@ -20,6 +20,35 @@ SET time_zone = "+00:00";
 --
 -- Database: `bugana`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+DROP PROCEDURE IF EXISTS `Perish`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Perish` (IN `perish_list` TEXT, IN `length` INT)  BEGIN
+  SET @i = 0;
+  WHILE @i < length DO
+    SET @id = SUBSTRING_INDEX(perish_list, ',', @i + 1);
+
+    SELECT product, quantity, stocks
+    INTO @productid, @quantity, @available
+    FROM stocks WHERE id=@id;
+
+    SELECT price INTO @price
+    FROM products WHERE id=@productid;
+
+    SET @amount = @price * @available;
+    INSERT INTO stocks (product, quantity, stocks, amount, status)
+    VALUES (@productid, @available * -1, @id, @amount, 'perished');
+
+    UPDATE stocks SET stocks=0 WHERE id=@id;
+
+    SET @i = @i + 1;
+  END WHILE;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -51,6 +80,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Product Category',
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Product Description',
   `price` double(12,2) NOT NULL COMMENT 'Product Price per Quantity',
+  `perish` int NOT NULL COMMENT 'Days to perish',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Product Added Date',
   `edited` timestamp NULL DEFAULT NULL COMMENT 'Product Last Edited Date',
   PRIMARY KEY (`id`)
@@ -67,6 +97,10 @@ CREATE TABLE IF NOT EXISTS `stocks` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'Stock ID',
   `product` int NOT NULL COMMENT 'Product ID',
   `quantity` int NOT NULL COMMENT 'Quantity added or subtracted',
+  `stocks` int NOT NULL COMMENT 'Stock In - Available stocks\r\nStock Out - Stock id',
+  `amount` float(12,2) NOT NULL DEFAULT '0.00' COMMENT 'Amount (in pesos) received when stocking out',
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Stock out status (sold or perished)',
+  `transaction_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Transaction code when sold',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date added',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -133,6 +167,26 @@ CREATE TABLE IF NOT EXISTS `violations` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date added',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DELIMITER $$
+--
+-- Events
+--
+DROP EVENT IF EXISTS `check_perish`$$
+CREATE DEFINER=`root`@`localhost` EVENT `check_perish` ON SCHEDULE EVERY 1 DAY STARTS '2022-12-05 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+  SELECT
+    GROUP_CONCAT(stocks.id),
+    COUNT(stocks.id)
+  INTO @perished, @length
+  FROM stocks
+  JOIN products ON
+    products.id = stocks.product AND
+    DATEDIFF(NOW(), stocks.date) >= products.perish
+  WHERE stocks.stocks>0;
+  CALL Perish(@perished, @length);
+END$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

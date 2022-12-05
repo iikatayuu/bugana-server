@@ -210,6 +210,8 @@ select.btn {
   color: var(--color-secondary-contrast);
 }
 
+.m-0, .my-0, .mt-0 { margin-top: 0 !important; }
+.m-0, .my-0, .mb-0 { margin-bottom: 0 !important; }
 .m-1, .my-1, .mt-1 { margin-top: 8px !important; }
 .m-1, .my-1, .mb-1 { margin-bottom: 8px !important; }
 .m-2, .my-2, .mt-2 { margin-top: 12px !important; }
@@ -220,6 +222,8 @@ select.btn {
 .m-4, .my-4, .mb-4 { margin-bottom: 32px !important; }
 .m-5, .my-5, .mt-5 { margin-top: 48px !important; }
 .m-5, .my-5, .mb-5 { margin-bottom: 48px !important; }
+.m-0, .mx-0, .ml-0 { margin-left: 0 !important; }
+.m-0, .mx-0, .mr-0 { margin-right: 0 !important; }
 .m-1, .mx-1, .ml-1 { margin-left: 8px !important; }
 .m-1, .mx-1, .mr-1 { margin-right: 8px !important; }
 .m-2, .mx-2, .ml-2 { margin-left: 12px !important; }
@@ -281,6 +285,15 @@ select.btn {
 .flex-align-start { align-items: flex-start; }
 .align-self-end { align-self: flex-end; }
 
+.w-100 { width: 100% !important; }
+.w-75 { width: 75% !important; }
+.w-50 { width: 50% !important; }
+
 .box-shadow {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
+
+.border { border: 1px solid #000000; }
+.border-bottom { border-bottom: 1px solid #000000; }
+.border-left-0 { border-left: 0; }
+.border-right-0 { border-right: 0; }

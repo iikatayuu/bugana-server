@@ -98,7 +98,32 @@ if (!empty($POST['token'])) {
         $amount = $price * $quantity;
 
         if ($itemid !== '0') $conn->query("DELETE FROM carts WHERE id=$itemid");
-        $conn->query("INSERT INTO stocks (product, quantity) VALUES ($productid, -$quantity)");
+
+        $total_stock_out = 0;
+        while ($total_stock_out < $quantity) {
+          $stockin_res = $conn->query("SELECT id, stocks FROM stocks WHERE product=$productid AND stocks > 0 AND quantity > 0 ORDER BY date ASC LIMIT 1");
+          if ($stockin_res->num_rows > 0) {
+            $stockin = $stockin_res->fetch_object();
+            $stockinid = $stockin->id;
+            $stocks = $stockin->stocks;
+            $stock_out = 0;
+
+            if ($stocks >= $quantity) {
+              $stock_out = $quantity - $total_stock_out;
+              $stocks -= $stock_out;
+            } else {
+              $stock_out = $stocks;
+              $stocks = 0;
+            }
+
+            $total_stock_out += $stock_out;
+            $stock_out_amount = $price * $stock_out;
+            $conn->query("UPDATE stocks SET stocks=$stocks WHERE id=$stockinid");
+            $conn->query("INSERT INTO stocks (product, quantity, stocks, amount, status, transaction_code)
+              VALUES ($productid, -$stock_out, $stockinid, $stock_out_amount, 'sold', '$trans_code')");
+          } else break;
+        }
+
         $conn->query("INSERT INTO transactions (transaction_code, user, product, quantity, shipping, amount, paymentoption)
           VALUES ('$trans_code', $userid, $productid, $quantity, $shipping, $amount, '$paymentoption')");
       }
