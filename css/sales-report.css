@@ -25,3 +25,9 @@
 .details-link {
   color: #314e5d;
 }
+
+#modal-month-report .card {
+  background-color: #fff;
+  border: 1px solid #000;
+  color: #000;
+}

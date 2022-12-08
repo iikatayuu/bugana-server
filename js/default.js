@@ -1,4 +1,19 @@
 
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+]
+
 function modal (action, target = '') {
   if (action === 'open') {
     $('.modal-container').removeClass('d-none')
@@ -49,5 +64,24 @@ $(document).ready(function () {
     const targets = event.originalEvent.composedPath()
     const isDropdown = $(targets).hasClass('dropdown')
     if (!isDropdown) $('.dropdown-content.active').removeClass('active')
+  })
+
+  $('[data-print]').click(function (event) {
+    event.preventDefault()
+
+    const selector = $(this).attr('data-print')
+    const contents = $(selector).clone(true, true)
+
+    $(contents).find('[data-print-style]').each(function () {
+      const styles = $(this).attr('data-print-style')
+      $(this).attr('style', styles)
+    })
+
+    const html = $(contents).html()
+
+    const child = window.open('', '', 'width=900, height=600')
+    child.document.write(html)
+    child.print()
+    // child.close()
   })
 })

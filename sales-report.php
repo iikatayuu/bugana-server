@@ -106,7 +106,14 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
     </header>
 
     <?php if ($is_detailed) { ?>
-      <h6 class="dashboard-title my-2 mx-3">This <?= $date_base ?> <?= $is_unsold ? 'Unsold ' : '' ?> Sales</h6>
+      <div class="d-flex my-2 mx-3">
+        <h6 class="dashboard-title flex-1">This <?= $date_base ?> <?= $is_unsold ? 'Unsold ' : '' ?> Sales</h6>
+
+        <?php if ($date === 'monthly' && !$is_unsold) { ?>
+          <button type="button" class="btn btn-text text-underline" data-modal="#modal-month-report">Generate Month Report</button>
+        <?php } ?>
+      </div>
+
       <table class="dashboard-table dashboard-table-borderless">
         <thead>
           <tr>
@@ -174,6 +181,29 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
       </div>
     <?php } ?>
   </div>
+
+  <?php if ($is_detailed && $date === 'monthly' && !$is_unsold) { ?>
+  <div class="modal-container d-none"></div>
+  <div id="modal-month-report" class="modal">
+    <div class="card card-rect text-center px-5 pt-2 pb-3">
+      <div id="month-report" class="d-contents">
+        <!-- Separate CSS for printing -->
+        <div data-print-style="border:1px solid #000; padding:18px; text-align:center; width:400px;">
+          <div class="text-bold" data-print-style="font-size:18px; font-weight:700;">Kadiwa Farmers Market</div>
+          <div class="text-bold" data-print-style="font-size:18px; font-weight:700;" id="month-date"></div>
+          <div class="text-bold mb-3" data-print-style="font-size:18px; font-weight:700; margin-bottom:24px;">Report for the Month of <span id="month-month"></span></div>
+
+          <div class="d-flex flex-align-center flex-space-between mb-5" data-print-style="display:flex; align-items:center; justify-content:space-between;">
+            <div>Total Sales</div>
+            <div class="text-bold text-xl" id="month-total-sales" data-print-style="font-size:24px; font-weight:700;">1000</div>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-tertiary" data-print="#month-report">Print Report</button>
+    </div>
+  </div>
+  <?php } ?>
 </main>
 <?php
 

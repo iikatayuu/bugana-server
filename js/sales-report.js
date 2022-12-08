@@ -41,9 +41,16 @@ $(document).ready(function () {
     }
 
     const totalElem = $(tempTotal).clone(true, true)
-    $(totalElem).find('.sales-report-total-amount').text(total.toFixed(2))
+    const totalStr = total.toFixed(2)
+    $(totalElem).find('.sales-report-total-amount').text(totalStr)
+    $('#month-total-sales').text(totalStr)
     $('#sales').append(totalElem)
   }
+
+  const currentDate = new Date()
+  const month = MONTHS[currentDate.getMonth()]
+  $('#month-date').text(`${month} ${currentDate.getDay()}, ${currentDate.getFullYear()}`)
+  $('#month-month').text(month)
 
   displayTransactions()
 })
