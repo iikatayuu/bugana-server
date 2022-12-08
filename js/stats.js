@@ -126,7 +126,11 @@ $(document).ready(function () {
         weeklyStats = stats.weekly
         monthlyStats = stats.monthly
         yearlyStats = stats.yearly
-        
+
+        $('[data-graph="weekly"]').text('Week ' + stats.weeklyDate)
+        $('[data-graph="monthly"]').text(stats.monthlyDate + ' Monthly Sales')
+        $('[data-graph="yearly"').text(stats.yearlyDate + ' Yearly Sales')
+
         displayGraph()
       }
     }

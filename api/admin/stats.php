@@ -82,6 +82,9 @@ if (!empty($_GET['token'])) {
       $current_day = date('w');
       $week_start = date('Y-m-d 00:00:00', strtotime("-$current_day days"));
       $week_end = date('Y-m-d 23:59:59', strtotime('+' . (6 - intval($current_day)) . ' days'));
+      $weekly_date_start = date('M d', strtotime("-$current_day days"));
+      $weekly_date_end = date('M d', strtotime('+' . (6 - intval($current_day)) . ' days'));
+      $weekly_date = "$weekly_date_start - $weekly_date_end";
       $weekly_query = str_replace(['%DATE_START%', '%DATE_END%'], [$week_start, $week_end], $query);
       $weekly_res = $conn->query($weekly_query);
 
@@ -96,6 +99,7 @@ if (!empty($_GET['token'])) {
       $day_month = date('t');
       $month_start = date('Y-m-01 00:00:00');
       $month_end = date("Y-m-$day_month 23:59:59");
+      $monthly_date = date('M Y');
       $monthly_query = str_replace(['%DATE_START%', '%DATE_END%'], [$month_start, $month_end], $query);
       $monthly_res = $conn->query($monthly_query);
 
@@ -109,6 +113,7 @@ if (!empty($_GET['token'])) {
 
       $year_start = date('Y-01-01 00:00:00');
       $year_end = date('Y-12-31 23:59:59');
+      $yearly_date = date('Y');
       $yearly_query = str_replace(['%DATE_START%', '%DATE_END%'], [$year_start, $year_end], $query);
       $yearly_res = $conn->query($yearly_query);
 
@@ -129,8 +134,11 @@ if (!empty($_GET['token'])) {
         'totalUsers' => $total_users,
         'users' => $new_users,
         'weekly' => $weekly,
+        'weeklyDate' => $weekly_date,
         'monthly' => $monthly,
-        'yearly' => $yearly
+        'monthlyDate' => $monthly_date,
+        'yearly' => $yearly,
+        'yearlyDate' => $yearly_date
       ];
     } else {
       $result['message'] = 'User is not admin';
