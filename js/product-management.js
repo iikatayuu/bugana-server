@@ -87,13 +87,8 @@ $(document).ready(function () {
       $(elem).find('.product-added').text(product.created)
       $(elem).find('.product-edited').text(product.edited)
       $(elem).find('.product-action-edit').attr('href', (index, attr) => attr + product.id)
-      $(elem).find('.product-action-archive').attr('data-index', 1).click(archiveProduct)
       $('#products').append(elem)
     }
-  }
-
-  async function archiveProduct (event) {
-    event.preventDefault()
   }
 
   $('#products-category-select').on('change', function () {

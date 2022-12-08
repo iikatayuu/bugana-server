@@ -176,9 +176,6 @@ out_header('BUGANA Product Management', $styles, $scripts);
         <a href="/product-edit.php?id=" class="btn btn-text product-action-edit" role="button">
           <img src="/imgs/edit.svg" alt="Edit button" />
         </a>
-        <button type="button" class="btn btn-text product-action-archive">
-          <img src="/imgs/archive.svg" alt="Archive button" />
-        </button>
       </td>
     </tr>
   </template>
