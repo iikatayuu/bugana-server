@@ -43,47 +43,92 @@ if (!empty($_GET['token'])) {
     }
 
     $date = !empty($_GET['date']) ? $_GET['date'] : null;
-    $query = "SELECT
-        transactions.*,
-        products.id AS productid, products.name, products.user AS farmerid, products.price
-      FROM transactions
-      JOIN products ON products.id=transactions.product WHERE transactions.status='success'";
+    $unsold = !empty($_GET['unsold']) ? $_GET['unsold'] : null;
 
-    if ($date === 'weekly') {
-      $current_day = date('w');
-      $week_start = date('Y-m-d 00:00:00', strtotime("-$current_day days"));
-      $week_end = date('Y-m-d 23:59:59', strtotime('+' . (6 - intval($current_day)) . ' days'));
-      $query .= " AND transactions.date BETWEEN '$week_start' AND '$week_end'";
-    } else if ($date === 'monthly') {
-      $month_days = date('t');
-      $month_start = date('Y-m-01 00:00:00');
-      $month_end = date("Y-m-$month_days 23:59:59");
-      $query .= " AND transactions.date BETWEEN '$month_start' AND '$month_end'";
-    } else if ($date === 'annual') {
-      $year_start = date('Y-01-01 00:00:00');
-      $year_end = date("Y-12-31 23:59:59");
-      $query .= " AND transactions.date BETWEEN '$year_start' AND '$year_end'";
-    }
+    if (!$unsold) {
+      $query = "SELECT
+          transactions.*,
+          products.id AS productid, products.name, products.user AS farmerid, products.price
+        FROM transactions
+        JOIN products ON products.id=transactions.product WHERE transactions.status='success'";
 
-    $query .= " ORDER BY transactions.date DESC";
-    $transactions_res = $conn->query($query);
-    $transactions = [];
-    while ($transaction = $transactions_res->fetch_object()) {
-      $productid = $transaction->productid;
-      $transactionitem = [
-        'id' => $transaction->id,
-        'quantity' => $transaction->quantity,
-        'date' => $transaction->date,
-        'amount' => $transaction->amount,
-        'product' => [
-          'id' => $transaction->productid,
-          'name' => $transaction->name,
-          'user' => $transaction->farmerid,
-          'price' => $transaction->price
-        ]
-      ];
+      if ($date === 'weekly') {
+        $current_day = date('w');
+        $week_start = date('Y-m-d 00:00:00', strtotime("-$current_day days"));
+        $week_end = date('Y-m-d 23:59:59', strtotime('+' . (6 - intval($current_day)) . ' days'));
+        $query .= " AND transactions.date BETWEEN '$week_start' AND '$week_end'";
+      } else if ($date === 'monthly') {
+        $month_days = date('t');
+        $month_start = date('Y-m-01 00:00:00');
+        $month_end = date("Y-m-$month_days 23:59:59");
+        $query .= " AND transactions.date BETWEEN '$month_start' AND '$month_end'";
+      } else if ($date === 'annual') {
+        $year_start = date('Y-01-01 00:00:00');
+        $year_end = date("Y-12-31 23:59:59");
+        $query .= " AND transactions.date BETWEEN '$year_start' AND '$year_end'";
+      }
 
-      $transactions[] = $transactionitem;
+      $query .= " ORDER BY transactions.date DESC";
+      $transactions_res = $conn->query($query);
+      $transactions = [];
+      while ($transaction = $transactions_res->fetch_object()) {
+        $productid = $transaction->productid;
+        $transactionitem = [
+          'id' => $transaction->id,
+          'quantity' => $transaction->quantity,
+          'date' => $transaction->date,
+          'amount' => $transaction->amount,
+          'product' => [
+            'id' => $transaction->productid,
+            'name' => $transaction->name,
+            'user' => $transaction->farmerid,
+            'price' => $transaction->price
+          ]
+        ];
+
+        $transactions[] = $transactionitem;
+      }
+    } else {
+      $query = "SELECT stocks.*, products.id AS productid, products.name, products.user AS farmerid, products.price
+        FROM stocks
+        JOIN products ON products.id=stocks.product WHERE stocks.status='perished'";
+
+      if ($date === 'weekly') {
+        $current_day = date('w');
+        $week_start = date('Y-m-d 00:00:00', strtotime("-$current_day days"));
+        $week_end = date('Y-m-d 23:59:59', strtotime('+' . (6 - intval($current_day)) . ' days'));
+        $query .= " AND stocks.date BETWEEN '$week_start' AND '$week_end'";
+      } else if ($date === 'monthly') {
+        $month_days = date('t');
+        $month_start = date('Y-m-01 00:00:00');
+        $month_end = date("Y-m-$month_days 23:59:59");
+        $query .= " AND stocks.date BETWEEN '$month_start' AND '$month_end'";
+      } else if ($date === 'annual') {
+        $year_start = date('Y-01-01 00:00:00');
+        $year_end = date("Y-12-31 23:59:59");
+        $query .= " AND stocks.date BETWEEN '$year_start' AND '$year_end'";
+      }
+
+      $query .= " ORDER BY stocks.date DESC";
+      $transactions_res = $conn->query($query);
+      $transactions = [];
+      while ($transaction = $transactions_res->fetch_object()) {
+        $productid = $transaction->productid;
+        $transactionitem = [
+          'id' => $transaction->id,
+          'quantity' => $transaction->quantity * -1,
+          'date' => $transaction->date,
+          'amount' => $transaction->amount,
+          'product' => [
+            'id' => $transaction->productid,
+            'name' => $transaction->name,
+            'user' => $transaction->farmerid,
+            'price' => $transaction->price
+          ]
+        ];
+
+        $transactions[] = $transactionitem;
+      }
     }
 
     $result['success'] = true;

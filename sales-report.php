@@ -7,6 +7,7 @@ $scripts = ['/js/dashboard.js'];
 
 $date = !empty($_GET['date']) ? $_GET['date'] : 'weekly';
 $is_detailed = isset($_GET['detailed']);
+$is_unsold = isset($_GET['unsold']);
 $date_name = '';
 $date_base = '';
 
@@ -105,14 +106,14 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
     </header>
 
     <?php if ($is_detailed) { ?>
-      <h6 class="dashboard-title my-2 mx-3">This <?= $date_base ?> Sales</h6>
+      <h6 class="dashboard-title my-2 mx-3">This <?= $date_base ?> <?= $is_unsold ? 'Unsold ' : '' ?> Sales</h6>
       <table class="dashboard-table dashboard-table-borderless">
         <thead>
           <tr>
             <th>Product Name</th>
             <th>Product Price</th>
-            <th>Quantity Sold</th>
-            <th>Product Revenue</th>
+            <th>Quantity <?= $is_unsold ? 'Perished' : 'Sold' ?></th>
+            <th>Product <?= $is_unsold ? 'Amount' : 'Revenue' ?></th>
           </tr>
         </thead>
 
@@ -159,7 +160,7 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
               <td>Unsold Products:</td>
               <td id="unsold-products"></td>
               <td>
-                <a href="#" class="details-link">View Details</a>
+                <a href="<?= '/sales-report.php?date=' . $date . '&detailed&unsold' ?>" class="details-link">View Details</a>
               </td>
             </tr>
 
