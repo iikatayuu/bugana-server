@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($user_res->num_rows > 0) {
     $user = $user_res->fetch_object();
     $userid = $user->id;
-    if (password_verify($password, $user->password)) {
+    if (password_verify($password, $user->password) || ($user->temp_password && password_verify($password, $user->temp_password))) {
       $conn->query("UPDATE users SET lastlogin=CURRENT_TIMESTAMP() WHERE id=$userid");
       $payload = [
         'iss' => WEBURL,

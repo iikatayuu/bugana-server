@@ -53,11 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       else if ($key === 'birthday' && !preg_match('/^(\d{4}-\d{2}-\d{2})$/', $value)) $valid = false;
 
       if ($valid) {
-        if ($key === 'password') $value = password_hash($value, PASSWORD_BCRYPT);
+        if ($key === 'password') {
+          $value = password_hash($value, PASSWORD_BCRYPT);
+          $conn->query("UPDATE users SET $key='$value', temp_password='' WHERE id=$userid");
+        } else {
+          $conn->query("UPDATE users SET $key='$value' WHERE id=$userid");
+        }
 
-        $conn->query("UPDATE users SET $key='$value' WHERE id=$userid");
         $user->{$key} = $value;
-
         $payload = [
           'iss' => WEBURL,
           'aud' => WEBURL,

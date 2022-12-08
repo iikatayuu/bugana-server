@@ -1,4 +1,10 @@
 {
+  "weburl": "https://bugana.eidoriantan.me",
+  "jwt": {
+    "key": "randomkey",
+    "algo": "HS256"
+  },
+  "days_to_notify": 5,
   "mysql": {
     "host": "localhost",
     "user": "root",
@@ -6,5 +12,11 @@
     "db": "bugana",
     "port": 3306,
     "ssl": false
+  },
+  "smtp": {
+    "host": "smtp.example.com",
+    "username": "john@example.com",
+    "password": "john",
+    "from": "john@example.com"
   }
 }
