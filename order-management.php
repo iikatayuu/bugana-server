@@ -133,7 +133,7 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
 
   <div class="modal-container d-none"></div>
   <div id="modal-order" class="modal">
-    <div class="card card-background p-4">
+    <div class="card p-4">
       <h3 class="card-title mb-2 text-center">ORDER DETAILS</h3>
       <table class="table-details">
         <tr>
