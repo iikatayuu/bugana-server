@@ -45,6 +45,11 @@ if (!empty($_POST['token'])) {
       }
 
       $transaction = $transaction_res->fetch_object();
+      if ($transaction->status === 'success') {
+        $result['message'] = 'Transaction was already a success';
+        die(json_encode($result));
+      }
+
       $userid = $transaction->user;
       $conn->query("INSERT INTO violations (user, transaction_code) VALUES ($userid, '$transaction_id')");
 

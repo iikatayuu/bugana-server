@@ -125,12 +125,13 @@ out_header('BUGANA Customer Violation Reports', $styles, $scripts);
     <form action="/api/admin/violations/add.php" method="post" id="form-add" class="card card-background px-4 py-3">
       <h3 class="text-center">Violation Report</h3>
 
-      <div class="d-flex my-5">
+      <div class="d-flex mt-5">
         <label for="transaction-id" class="mr-2">Transaction ID:</label>
         <input type="text" id="transaction-id" name="transactionid" />
       </div>
 
-      <div class="text-center">
+      <div class="text-danger mt-2" id="form-add-error"></div>
+      <div class="text-center mt-5">
         <button type="submit" class="btn btn-primary px-5 text-bold">Add Violation</button>
       </div>
     </form>

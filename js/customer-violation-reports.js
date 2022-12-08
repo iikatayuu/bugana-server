@@ -86,21 +86,27 @@ $(document).ready(function () {
   $('#form-add').submit(async function (event) {
     event.preventDefault()
 
+    $('#form-add-error').empty()
+
     const form = $(this).get(0)
     const action = $(form).attr('action')
     const method = $(form).attr('method')
     const formData = new FormData(form)
     formData.set('token', token)
 
-    await $.ajax(action, {
+    const res = await $.ajax(action, {
       method: method,
       data: formData,
       processData: false,
       contentType: false
     })
 
-    await displayUsers()
-    modal('#modal-add', 'close')
+    if (res.success) {
+      await displayUsers()
+      modal('#modal-add', 'close')
+    } else {
+      $('#form-add-error').text(res.message)
+    }
   })
 
   let limitTimer = null
