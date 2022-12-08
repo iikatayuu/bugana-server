@@ -18,7 +18,7 @@ if ($date === 'weekly') {
   $date_base = 'Month';
 } else if ($date === 'annual') {
   $date_name = 'Annual';
-  $date_base = 'annual';
+  $date_base = 'Annual';
 }
 
 if ($is_detailed) $scripts[] = '/js/sales-report.js';
@@ -136,6 +136,41 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
           <td class="sales-report-total-amount"></td>
         </tr>
       </template>
+    <?php } else { ?>
+      <div class="card card-rect text-center mx-auto my-5 p-0 w-50">
+        <h3 class="card-title-secondary text-center p-1"><?= $date_name ?> Report</h3>
+        <div class="table-summary p-2">
+          <table class="w-100">
+            <tr>
+              <td>Total Sales:</td>
+              <td id="total-sales"></td>
+              <td>
+                <a href="<?= '/sales-report.php?date=' . $date . '&detailed' ?>" class="details-link">View Details</a>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Total Delivery Charges:</td>
+              <td id="total-delivery-sales"></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>Unsold Products:</td>
+              <td id="unsold-products"></td>
+              <td>
+                <a href="#" class="details-link">View Details</a>
+              </td>
+            </tr>
+
+            <tr>
+              <td></td>
+              <td>Total:</td>
+              <td id="report-total"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
     <?php } ?>
   </div>
 </main>

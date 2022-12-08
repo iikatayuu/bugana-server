@@ -69,6 +69,11 @@ body { background-color: #f7fcf7;}
   font-weight: 700;
 }
 
+.card-title-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-secondary-contrast);
+}
+
 .card-title-tertiary {
   padding: 8px 12px;
   background-color: var(--color-tertiary);

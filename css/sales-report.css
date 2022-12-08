@@ -6,3 +6,22 @@
 .sales-report-total-amount {
   font-size: 32px;
 }
+
+.table-summary {
+  background-color: var(--color-background-secondary);
+  color: var(--color-background-secondary-contrast);
+}
+
+.table-summary tr td {
+  padding-top: 18px;
+  padding-bottom: 32px;
+  font-weight: 700;
+}
+
+.table-summary tr td:last-child {
+  font-weight: 400;
+}
+
+.details-link {
+  color: #314e5d;
+}
