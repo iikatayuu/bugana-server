@@ -51,16 +51,19 @@ body { background-color: #f7fcf7;}
 
 .card-secondary {
   background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
   color: var(--color-secondary-contrast);
 }
 
 .card-tertiary {
   background-color: var(--color-tertiary);
+  border-color: var(--color-tertiary);
   color: var(--color-tertiary-contrast);
 }
 
 .card-background-secondary {
   background-color: var(--color-background-secondary);
+  border-color: var(--color-background-secondary);
   color: var(--color-background-secondary-contrast);
 }
 
@@ -276,6 +279,7 @@ select.btn {
 .text-bold { font-weight: 700; }
 .text-danger { color: var(--color-danger); }
 .text-none { text-decoration: none; }
+.text-underline { text-decoration: underline; }
 
 .d-none { display: none !important; }
 .d-flex { display: flex !important; }
