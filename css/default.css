@@ -276,6 +276,7 @@ select.btn {
 .text-sm { font-size: 11px; }
 .text-md { font-size: 15px; }
 .text-lg { font-size: 20px; }
+.text-xl { font-size: 32px; }
 .text-bold { font-weight: 700; }
 .text-danger { color: var(--color-danger); }
 .text-none { text-decoration: none; }
