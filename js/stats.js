@@ -18,6 +18,29 @@ $(document).ready(function () {
     }
   }
 
+  const backgroundColors = [
+    '#b6f790',
+    '#ceb035',
+    '#d82a94',
+    '#8f4806',
+    '#7320f7',
+    '#76425b',
+    '#10220c',
+    '#75165e',
+    '#4105d9',
+    '#3982a7',
+    '#2eaafe',
+    '#15cd04',
+    '#00f246',
+    '#e95bae',
+    '#b4cafa',
+    '#457969',
+    '#f0c64a',
+    '#5b6734',
+    '#1dcb9c',
+    '#a1c208'
+  ]
+
   const userTemp = $('#temp-user-new').prop('content')
   let selected = 'weekly'
   let chart = null
@@ -54,16 +77,25 @@ $(document).ready(function () {
         labels: data.map(item => item.name),
         datasets: [{
           label: label,
-          data: data.map(item => item.earned)
+          data: data.map(item => item.earned),
+          point: { backgroundColor: '#000' }
         }]
       },
       options: {
         response: false,
         maintainAspectRatio: false,
         scales: {
+          x: { display: false },
           y: { beginAtZero: true }
         },
+        elements: {
+          point: {
+            radius: 6,
+            backgroundColor: backgroundColors
+          }
+        },
         plugins: {
+          legend: { display: false },
           customCanvasBackgroundColor: {
             color: '#e6f6e7'
           }
