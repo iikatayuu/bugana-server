@@ -43,7 +43,8 @@ main {
   cursor: pointer;
 }
 
-.sidebar-link.active {
+.sidebar-link.active,
+.sidebar-link:hover {
   background-color: var(--color-tertiary);
   color: var(--color-tertiary-contrast);
 }
