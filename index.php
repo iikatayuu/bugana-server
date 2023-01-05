@@ -6,7 +6,7 @@ out_header('BUGANA Admin Page', ['/css/login.css'], ['/js/login.js']);
 
 ?>
 <form action="/api/login.php" method="post" id="form-login">
-  <img src="/imgs/logo.png" alt="BUGANA Logo" class="login-logo" />
+  <img src="/imgs/logo.png" alt="BUGANA Logo" width="228" height="209" class="login-logo" />
 
   <div class="card text-center">
     <h6 class="login-title mb-4">BUGANA</h6>

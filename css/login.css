@@ -1,6 +1,6 @@
 
 body {
-  background-color: #097969;
+  background-color: var(--color-primary);
 }
 
 #form-login {
@@ -13,6 +13,8 @@ body {
 .login-logo {
   margin: auto;
   margin-bottom: 24px;
+  width: 228px;
+  height: 209px;
 }
 
 .login-title {
