@@ -42,6 +42,7 @@ $(document).ready(function () {
   ]
 
   const userTemp = $('#temp-user-new').prop('content')
+  const legendTemp = $('#temp-legend').prop('content')
   let selected = 'weekly'
   let chart = null
   let weeklyStats = null
@@ -108,6 +109,13 @@ $(document).ready(function () {
       },
       plugins: [bgPlugin]
     })
+
+    for (let i = 0; i < data.length; i++) {
+      const elem = $(legendTemp).clone(true, true)
+      $(elem).find('.legend-color').css('background-color', backgroundColors[i])
+      $(elem).find('.legend-name').text(data[i].name)
+      $('#legends').append(elem)
+    }
   }
 
   $('[data-graph]').click(function (event) {

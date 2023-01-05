@@ -115,9 +115,16 @@ out_header('BUGANA Admin Dashboard', $styles, $scripts);
         </div>
       </div>
 
-      <div class="new-customers card card-background-secondary card-rect p-0">
-        <header class="card-title card-title-tertiary text-lg">New Customers</header>
-        <div id="users-new" class="px-2 pt-2"></div>
+      <div class="cards-add">
+        <div class="card card-background-secondary card-rect p-0 mb-2">
+          <header class="card-title card-title-tertiary text-lg">New Customers</header>
+          <div id="users-new" class="px-2 pt-2"></div>
+        </div>
+
+        <div class="card card-background-secondary card-rect p-0">
+          <header class="card-title card-title-tertiary text-lg">Legend</header>
+          <div id="legends" class="px-2 pt-2"></div>
+        </div>
       </div>
     </div>
 
@@ -130,6 +137,13 @@ out_header('BUGANA Admin Dashboard', $styles, $scripts);
       <div class="d-flex flex-align-center mb-1">
         <img src="" alt="" width="32" class="user-img mr-2" />
         <span class="user-name"></span>
+      </div>
+    </template>
+
+    <template id="temp-legend">
+      <div class="d-flex flex-align-center mb-1">
+        <div class="legend-color"></div>
+        <span class="legend-name"></span>
       </div>
     </template>
   </div>

@@ -10,6 +10,13 @@
   background-color: var(--color-background-secondary);
 }
 
-.new-customers {
+.cards-add {
   width: 20%;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  border-radius: 4px;
 }
