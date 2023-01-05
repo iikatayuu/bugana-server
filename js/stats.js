@@ -86,7 +86,12 @@ $(document).ready(function () {
         maintainAspectRatio: false,
         scales: {
           x: { display: false },
-          y: { beginAtZero: true }
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: (value) => value + ' kg'
+            }
+          }
         },
         elements: {
           point: {
