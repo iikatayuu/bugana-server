@@ -51,7 +51,10 @@ if (!empty($POST['token'])) {
     if ($user_res->num_rows > 0) {
       $user = $user_res->fetch_object();
       if ($user->verified === '0') {
-        $result['message'] = 'You are not verified';
+        $result['message'] = 'You are not yet verified';
+        $error = true;
+      } else if ($user->verified === '2') {
+        $result['message'] = 'Your verification got declined';
         $error = true;
       }
     } else {
