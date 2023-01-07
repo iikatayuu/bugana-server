@@ -23,15 +23,18 @@ $result = [
 $query = <<<EOD
 SELECT
   products.name,
-  (
-    SELECT COALESCE(SUM(transactions.amount), 0)
-    FROM transactions
-    WHERE
-      transactions.product=products.id AND
-      transactions.status='success' AND
-      transactions.date BETWEEN '%DATE_START%' AND '%DATE_END%'
+  SUM(
+    (
+      SELECT COALESCE(SUM(transactions.amount), 0)
+      FROM transactions
+      WHERE
+        transactions.product=products.id AND
+        transactions.status='success' AND
+        transactions.date BETWEEN '%DATE_START%' AND '%DATE_END%'
+    )
   ) AS earned
   FROM products
+  GROUP BY products.name
   ORDER BY earned DESC, products.created ASC LIMIT 20
 EOD;
 
