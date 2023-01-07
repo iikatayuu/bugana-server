@@ -252,7 +252,8 @@ $view = !empty($_GET['view']) ? $_GET['view'] : 'all';
         <img src="" alt="" id="verify-validid" width="300" />
       </div>
 
-      <button type="submit" class="btn btn-primary">Verify</button>
+      <button type="submit" class="btn btn-primary mr-2">Verify</button>
+      <button type="reset" class="btn btn-tertiary">Decline</button>
     </form>
   </div>
 

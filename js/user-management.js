@@ -73,7 +73,7 @@ $(document).ready(function () {
       if ((payload.type === 'headadmin' && user.type === 'customer') || (payload.type === 'admin' && user.type === 'farmer')) {
         const actionsElem = $(tempAction).clone(true, true)
         $(actionsElem).find('.user-action-edit').attr('data-index', i).click(editUser)
-        if (user.verified === '1') $(actionsElem).find('.user-action-verify').addClass('d-none')
+        if (user.verified !== '0') $(actionsElem).find('.user-action-verify').addClass('d-none')
         else $(actionsElem).find('.user-action-verify').attr('data-index', i).click(verifyUser)
         $(elem).find('.user-actions').empty().append(actionsElem)
       }
@@ -122,6 +122,7 @@ $(document).ready(function () {
     formData.append('token', token)
 
     $(form).find('[type="submit"]').attr('disabled', true).text('Verifying...')
+    $(form).find('[type="reset"]').attr('disabled', true)
 
     const response = await $.ajax(action, {
       method: method,
@@ -132,8 +133,37 @@ $(document).ready(function () {
     })
 
     $(form).find('[type="submit"]').attr('disabled', null).text('Verify')
+    $(form).find('[type="reset"]').attr('disabled', null)
     if (response.success) {
       $(form).trigger('reset')
+      await displayUsers()
+      modal('close')
+    }
+  })
+
+  $('#form-verify').on('reset', async function (event) {
+    event.preventDefault()
+
+    const form = $(this).get(0)
+    const method = $(form).attr('method')
+    const token = sessionStorage.getItem('token')
+    const formData = new FormData(form)
+    formData.append('token', token)
+
+    $(form).find('[type="submit"]').attr('disabled', true)
+    $(form).find('[type="reset"]').attr('disabled', true).text('Declining...')
+
+    const response = await $.ajax('/api/admin/users/decline.php', {
+      method: method,
+      dataType: 'json',
+      data: formData,
+      processData: false,
+      contentType: false
+    })
+
+    $(form).find('[type="submit"]').attr('disabled', null)
+    $(form).find('[type="reset"]').attr('disabled', null).text('Decline')
+    if (response.success) {
       await displayUsers()
       modal('close')
     }
