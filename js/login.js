@@ -11,7 +11,7 @@ $(document).ready(function () {
     $('#form-login-error').text('')
     $(this).find('[type="submit"]').attr('disabled', true).text('LOGGING IN')
 
-    const form = $(this).get(0);
+    const form = $(this).get(0)
     const action = form.action
     const method = form.method
     const formData = new FormData(form)
