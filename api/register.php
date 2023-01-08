@@ -83,9 +83,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $user_res = $conn->query("SELECT * FROM users WHERE username='$username' LIMIT 1");
   if ($user_res->num_rows === 0) {
+    $code_res = $conn->query("SELECT code FROM users WHERE type='$type' ORDER BY id DESC LIMIT 1");
+    $num = 0;
+
+    if ($code_res->num_rows > 0) {
+      $code_obj = $code_res->fetch_object();
+      $num = intval(substr($code_obj->code, 1));
+    }
+
+    $numstr = strval(++$num);
+    while (strlen($numstr) < 2) $numstr = "0$numstr";
+    $code = ($type === 'customer' ? 'C' : 'F') . $numstr;
+
     $hash = password_hash($password, PASSWORD_BCRYPT);
-    $conn->query("INSERT INTO users (username, password, email, mobile, name, gender, birthday, addressstreet, addresspurok, addressbrgy, type, verified)
-                  VALUES ('$username', '$hash', '$email', '$mobile', '$name', '$gender', '$birthday', '$address_street', '$address_purok', '$address_brgy', '$type', $verified)");
+    $conn->query("INSERT INTO users (code, username, password, email, mobile, name, gender, birthday, addressstreet, addresspurok, addressbrgy, type, verified)
+                  VALUES ('$code', '$username', '$hash', '$email', '$mobile', '$name', '$gender', '$birthday', '$address_street', '$address_purok', '$address_brgy', '$type', $verified)");
 
     if ($type === 'customer' && $verified === 0) {
       $imgpath = __DIR__ . '/../userdata/ids';

@@ -62,8 +62,9 @@ if (!empty($_GET['token'])) {
       }
 
       $userid = strval($product->user);
-      while (strlen($userid) < 2) $userid = "0$userid";
-      $product->code = "F$userid";
+      $users_res = $conn->query("SELECT * FROM users WHERE id=$userid LIMIT 1");
+      $userobj = $users_res->num_rows > 0 ? $users_res->fetch_object() : null;
+      $product->code = $userobj->code;
       $product->photos = $photos;
 
       $products[] = $product;

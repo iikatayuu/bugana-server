@@ -54,6 +54,7 @@ if (!empty($_GET['token'])) {
       $query = "SELECT
           transactions.*,
           users.id AS userid,
+          users.code AS usercode,
           users.name AS userfullname,
           users.username AS username,
           users.addressstreet AS addressstreet,
@@ -78,16 +79,12 @@ if (!empty($_GET['token'])) {
       $transactions = [];
 
       while ($transaction = $transactions_res->fetch_object()) {
-        $usercode = $transaction->user;
-        while (strlen($usercode) < 2) $usercode = "0$usercode";
-        $usercode = "C$usercode";
-
         $transactionitem = [
           'id' => $transaction->id,
           'code' => $transaction->transaction_code,
           'user' => [
             'id' => $transaction->userid,
-            'code' => $usercode,
+            'code' => $transaction->usercode,
             'name' => $transaction->userfullname,
             'username' => $transaction->username,
             'addressstreet' => $transaction->addressstreet,

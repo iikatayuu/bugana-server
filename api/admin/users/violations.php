@@ -65,7 +65,7 @@ if (!empty($_GET['token'])) {
       $count = $count_res->fetch_object()->count;
       $users = [];
       $expose = [
-        'id', 'username', 'email', 'mobile', 'name',
+        'id', 'code', 'username', 'email', 'mobile', 'name',
         'addressstreet', 'addresspurok', 'addressbrgy', 'type', 'created', 'lastlogin',
         'counts'
       ];
@@ -73,13 +73,9 @@ if (!empty($_GET['token'])) {
       while ($user = $users_res->fetch_object()) {
         $exposed = [];
         foreach ($expose as $prop) $exposed[$prop] = $user->{$prop};
-        $prefix = $user->type === 'customer' ? 'C' : 'F';
-        $userid = $user->id;
-        $code = $user->id;
-        while (strlen($code) < 2) $code = "0$code";
-        $exposed['code'] = $prefix . $code;
         $exposed['transaction'] = null;
 
+        $userid = $user->id;
         $last_transaction_res = $conn->query("SELECT transaction_code FROM violations WHERE user=$userid ORDER BY id DESC LIMIT 1");
         if ($last_transaction_res->num_rows > 0) {
           $last_transaction = $last_transaction_res->fetch_object();

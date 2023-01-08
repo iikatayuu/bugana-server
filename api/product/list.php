@@ -49,7 +49,9 @@ $wheres = [];
 if ($category !== 'all' && $category !== '') $wheres[] = "category='$category'";
 if ($search) $wheres[] = "name LIKE '%$search%'";
 if ($farmer) {
-  $userid = intval(substr($farmer, 1, 2));
+  $farmer_res = $conn->query("SELECT id FROM users WHERE code='$farmer' LIMIT 1");
+  $farmerobj = $farmer_res->num_rows > 0 ? $farmer_res->fetch_object() : null;
+  $userid = $farmerobj->id;
   $wheres[] = "user=$userid";
 }
 
@@ -84,8 +86,9 @@ while ($product = $products_res->fetch_object()) {
   }
 
   $userid = strval($product->user);
-  while (strlen($userid) < 2) $userid = "0$userid";
-  $product->code = "F$userid";
+  $user_res = $conn->query("SELECT code FROM users WHERE id=$userid LIMIT 1");
+  $userobj = $user_res->num_rows > 0 ? $user_res->fetch_object() : null;
+  $product->code = $userobj->code;
   $product->photos = $photos;
 
   if (!empty($_GET['stock'])) {

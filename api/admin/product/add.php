@@ -61,20 +61,15 @@ if (!empty($_POST['token'])) {
         die(json_encode($result));
       }
 
-      $type = substr($code, 0, 1) === 'C' ? 'customer' : 'farmer';
-      if ($type !== 'farmer') {
-        $result['message'] = 'User is not a farmer';
-        die(json_encode($result));
-      }
+      $users_res = $conn->query("SELECT * FROM users WHERE code='$code' AND type='farmer' LIMIT 1");
+      $userobj = null;
 
-      $userid = intval(substr($code, 1, 2));
-      $users_res = $conn->query("SELECT * FROM users WHERE id=$userid AND type='farmer' LIMIT 1");
-      
       if ($users_res->num_rows === 0) {
         $result['message'] = 'User code does not exist';
         die(json_encode($result));
-      }
+      } else $userobj = $users_res->fetch_object();
 
+      $userid = $userobj->id;
       $conn->query("INSERT INTO products (name, user, category, description, price, perish) VALUES ('$name', $userid, '$category', '$description', $price, $perish)");
       $productid = $conn->insert_id;
       $imgpath = __DIR__ . '/../../../userdata/products';

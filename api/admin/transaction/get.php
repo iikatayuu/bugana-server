@@ -46,6 +46,7 @@ if (!empty($_POST['token'])) {
       $query = "SELECT
           transactions.*,
           users.name AS userfullname,
+          users.code AS usercode,
           users.username AS username,
           users.addressstreet AS addressstreet,
           users.addresspurok AS addresspurok,
@@ -62,13 +63,11 @@ if (!empty($_POST['token'])) {
       $transactions = [];
 
       while ($transaction = $transactions_res->fetch_object()) {
-        $usercode = $transaction->user;
-        while (strlen($usercode) < 2) $usercode = "0$usercode";
-        $usercode = "C$usercode";
-
-        $farmercode = $transaction->farmerid;
-        while (strlen($farmercode) < 2) $farmercode = "0$farmercode";
-        $farmercode = "F$farmercode";
+        $usercode = $transaction->usercode;
+        $farmerid = $transaction->farmerid;
+        $farmer_res = $conn->query("SELECT * FROM users WHERE id=$farmerid LIMIT 1");
+        $farmerobj = $farmer_res->num_rows > 0 ? $farmer_res->fetch_object() : null;
+        $farmercode = $farmerobj->code;
 
         $transactionitem = [
           'id' => $transaction->id,

@@ -1,0 +1,29 @@
+
+body {
+  background-color: var(--color-primary);
+}
+
+#form-setup {
+  display: flex;
+  flex-direction: column;
+  width: 460px;
+  margin: 36px auto;
+}
+
+.setup-logo {
+  margin: auto;
+  margin-bottom: 24px;
+  width: 228px;
+  height: 209px;
+}
+
+.setup-title {
+  font-weight: 400;
+  font-size: 40px;
+}
+
+.setup-subtitle {
+  font-family: 'Inika';
+  font-weight: 700;
+  font-size: 20px;
+}

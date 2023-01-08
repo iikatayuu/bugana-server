@@ -132,12 +132,9 @@ $(document).ready(function () {
 
     $('#table-stock-in').empty()
 
-    let code = product.user
-    while (code.length < 2) code = `0${code}`
-
     const params = new URLSearchParams()
     params.set('token', token)
-    params.set('user', `F${code}`)
+    params.set('user', product.code)
     const farmers = await $.getJSON(`/api/admin/users.php?${params.toString()}`)
     const farmer = farmers.users[0]
     $('#stock-farmer').text(farmer.name)

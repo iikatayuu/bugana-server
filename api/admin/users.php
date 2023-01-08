@@ -87,15 +87,7 @@ if (!empty($_GET['token'])) {
         die(json_encode($result));
       }
 
-      if ($user) {
-        $code = substr($user, 0, 1);
-        $usertype = $code === 'F' ? 'farmer' : 'customer';
-        $where = "type='$usertype'";
-        $userid = intval(substr($user, 1, 2));
-        $wheres[] = "id=$userid";
-        if (!in_array($where, $wheres)) $wheres[] = $where;
-      }
-
+      if ($user) $wheres[] = "code='$user'";
       $add_q = implode(' AND ', $wheres);
       $query .= $add_q;
       $count_query .= $add_q;
@@ -114,7 +106,7 @@ if (!empty($_GET['token'])) {
       $count = $count_res->fetch_object()->count;
       $users = [];
       $expose = [
-        'id', 'username', 'email', 'mobile', 'name', 'gender', 'birthday',
+        'id', 'code', 'username', 'email', 'mobile', 'name', 'gender', 'birthday',
         'addressstreet', 'addresspurok', 'addressbrgy', 'type', 'created', 'lastlogin', 'verified'
       ];
 
@@ -123,11 +115,6 @@ if (!empty($_GET['token'])) {
       while ($user = $users_res->fetch_object()) {
         $exposed = [];
         foreach ($expose as $prop) $exposed[$prop] = $user->{$prop};
-        $prefix = $user->type === 'customer' ? 'C' : 'F';
-        $userid = $user->id;
-        $code = $user->id;
-        while (strlen($code) < 2) $code = "0$code";
-        $exposed['code'] = $prefix . $code;
         $users[] = $exposed;
       }
 

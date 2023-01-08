@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'type' => $user->type,
         'username' => $username,
         'userid' => $userid,
+        'usercode' => $user->code,
         'name' => $user->name
       ];
 

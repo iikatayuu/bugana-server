@@ -38,6 +38,7 @@ if (!empty($_GET['token'])) {
     $code = $conn->real_escape_string($_GET['id']);
     $transactions_res = $conn->query("SELECT
         transactions.*,
+        users.code AS usercode,
         users.name AS userfullname,
         users.username AS username,
         users.addressstreet AS addressstreet,
@@ -54,13 +55,12 @@ if (!empty($_GET['token'])) {
 
     $transactions = [];
     while ($transaction = $transactions_res->fetch_object()) {
-      $usercode = $transaction->user;
-      while (strlen($usercode) < 2) $usercode = "0$usercode";
-      $usercode = "C$usercode";
+      $usercode = $transaction->usercode;
 
-      $farmercode = $transaction->farmerid;
-      while (strlen($farmercode) < 2) $farmercode = "0$farmercode";
-      $farmercode = "F$farmercode";
+      $farmerid = $transaction->farmerid;
+      $farmer_res = $conn->query("SELECT * FROM users WHERE id=$farmerid LIMIT 1");
+      $farmerobj = $farmer_res->num_rows > 0 ? $farmer_res->fetch_object() : null;
+      $farmercode = $farmerobj->code;
 
       $transactionitem = [
         'id' => $transaction->id,
