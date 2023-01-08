@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 08, 2022 at 09:45 AM
+-- Generation Time: Jan 08, 2023 at 08:21 AM
 -- Server version: 8.0.27
 -- PHP Version: 7.4.26
 
@@ -135,6 +135,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'User ID',
+  `code` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'User unique code',
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Username',
   `password` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Password',
   `temp_password` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Temporary password (used when password is forgotten)',
@@ -167,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `violations` (
   `transaction_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Transaction Code',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date added',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DELIMITER $$
 --
