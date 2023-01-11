@@ -23,24 +23,7 @@ $result = [
   'pages' => 0
 ];
 
-$query = <<<EOD
-SELECT
-  users.*,
-  (
-    SELECT COALESCE(SUM(t.amount), 0)
-    FROM (
-      SELECT
-        products.id,
-        (
-          SELECT COALESCE(SUM(transactions.amount), 0)
-          FROM transactions WHERE transactions.product=products.id AND transactions.status='success'
-        ) AS amount
-      FROM products WHERE products.user=users.id
-    ) t
-  ) AS sales
-FROM users WHERE 
-EOD;
-
+$query = "SELECT * FROM users WHERE ";
 if (!empty($_GET['token'])) {
   $decoded = null;
   $page = !empty($_GET['page']) ? $conn->real_escape_string($_GET['page']) : '1';
@@ -110,11 +93,17 @@ if (!empty($_GET['token'])) {
         'addressstreet', 'addresspurok', 'addressbrgy', 'type', 'created', 'lastlogin', 'verified'
       ];
 
-      if (!empty($_GET['sales'])) $expose[] = 'sales';
-
       while ($user = $users_res->fetch_object()) {
         $exposed = [];
         foreach ($expose as $prop) $exposed[$prop] = $user->{$prop};
+
+        if (!empty($_GET['sales'])) {
+          $userid = $user->id;
+          $sales_res = $conn->query("SELECT COALESCE(SUM(transactions.amount), 0) AS sales FROM products JOIN transactions ON transactions.product=products.id WHERE products.user=$userid");
+          $sales = $sales_res->fetch_object()->sales;
+          $exposed['sales'] = $sales;
+        }
+
         $users[] = $exposed;
       }
 
