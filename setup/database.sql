@@ -26,7 +26,7 @@ DELIMITER $$
 -- Procedures
 --
 DROP PROCEDURE IF EXISTS `Perish`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `Perish` (IN `perish_list` TEXT, IN `length` INT)  BEGIN
+CREATE PROCEDURE `Perish` (IN `perish_list` TEXT, IN `length` INT)  BEGIN
   SET @i = 0;
   WHILE @i < length DO
     SET @id = SUBSTRING_INDEX(perish_list, ',', @i + 1);
@@ -165,7 +165,7 @@ DROP TABLE IF EXISTS `violations`;
 CREATE TABLE IF NOT EXISTS `violations` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'Violation ID',
   `user` int NOT NULL COMMENT 'User ID',
-  `transaction_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Transaction Code',
+  `transaction_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Transaction Code',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date added',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -175,7 +175,7 @@ DELIMITER $$
 -- Events
 --
 DROP EVENT IF EXISTS `check_perish`$$
-CREATE DEFINER=`root`@`localhost` EVENT `check_perish` ON SCHEDULE EVERY 1 DAY STARTS '2022-12-05 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+CREATE EVENT `check_perish` ON SCHEDULE EVERY 1 DAY STARTS '2022-12-05 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
   SELECT
     GROUP_CONCAT(stocks.id),
     COUNT(stocks.id)
