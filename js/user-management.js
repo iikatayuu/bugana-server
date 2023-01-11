@@ -135,7 +135,6 @@ $(document).ready(function () {
     $(form).find('[type="submit"]').attr('disabled', null).text('Verify')
     $(form).find('[type="reset"]').attr('disabled', null)
     if (response.success) {
-      $(form).trigger('reset')
       await displayUsers()
       modal('close')
     }
