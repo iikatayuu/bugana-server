@@ -135,7 +135,7 @@ out_header('BUGANA Admin Dashboard', $styles, $scripts);
 
     <template id="temp-user-new">
       <div class="d-flex flex-align-center mb-1">
-        <img src="" alt="" width="32" class="user-img mr-2" />
+        <img src="" alt="" width="32" height="32" class="user-img mr-2" />
         <span class="user-name"></span>
       </div>
     </template>

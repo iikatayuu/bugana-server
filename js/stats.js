@@ -155,7 +155,7 @@ $(document).ready(function () {
         $('.total-orders').text(stats.totalOrders)
         $('.total-users').text(stats.totalUsers)
 
-        for (let i = 0; i < stats.users.length; i++) {
+        for (let i = 0; i < stats.users.length && i < 3; i++) {
           const user = stats.users[i]
           const elem = $(userTemp).clone(true, true)
 
