@@ -44,21 +44,45 @@ if (!empty($_POST['token'])) {
       $notis_res = $conn->query("SELECT
           stocks.*,
           products.name AS productname,
-          products.perish - DATEDIFF(NOW(), stocks.date) AS days_left
+          products.perish - DATEDIFF(NOW(), stocks.date) AS days_left,
+          users.code
         FROM stocks
         JOIN products ON
           products.id = stocks.product AND
           DATEDIFF(NOW(), stocks.date) < products.perish AND
           products.perish - DATEDIFF(NOW(), stocks.date) <= $days_to_notify
+        JOIN users ON users.id = products.user
         WHERE stocks.stocks > 0 AND stocks.quantity > 0;
       ");
 
       while ($noti = $notis_res->fetch_object()) {
         $productname = $noti->productname;
+        $usercode = $noti->code;
         $days_left = $noti->days_left;
         $notifications[] = [
-          'message' => "\"$productname\" is perishing in $days_left days"
+          'message' => "$usercode: \"$productname\" is perishing in $days_left days"
         ];
+      }
+
+      $notis_res = $conn->query("SELECT
+          products.*,
+          COALESCE(SUM(stocks.quantity), 0) AS stocks,
+          users.code
+        FROM products
+        JOIN stocks ON stocks.product=products.id
+        JOIN users ON users.id=products.user
+        GROUP BY products.id"
+      );
+
+      while ($noti = $notis_res->fetch_object()) {
+        $productname = $noti->name;
+        $usercode = $noti->code;
+
+        if ($noti->stocks < 5) {
+          $notifications[] = [
+            'message' => "$usercode: \"$productname\" needs restocking"
+          ];
+        }
       }
 
       $result['success'] = true;

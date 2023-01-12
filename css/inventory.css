@@ -11,6 +11,8 @@
 
 #perish-products {
   width: 250px;
+  max-height: 228px;
+  overflow-y: scroll;
 }
 
 .perish-details {
