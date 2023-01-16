@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $address_brgy = $conn->real_escape_string($POST['address-brgy']);
   $verified = 0;
 
-  if ($token === null && $type === 'farmer') {
+  if ($token === null && ($type === 'farmer' || $type === 'admin')) {
     $result['message'] = 'Token is required';
     die(json_encode($result));
   }
@@ -93,7 +93,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $numstr = strval(++$num);
     while (strlen($numstr) < 2) $numstr = "0$numstr";
-    $code = ($type === 'customer' ? 'C' : 'F') . $numstr;
+    $code_prefix = '';
+    if ($type === 'customer') $code_prefix = 'C';
+    if ($type === 'farmer') $code_prefix = 'F';
+    if ($type === 'admin') $code_prefix = 'A';
+    $code = $code_prefix . $numstr;
 
     $hash = password_hash($password, PASSWORD_BCRYPT);
     $conn->query("INSERT INTO users (code, username, password, email, mobile, name, gender, birthday, addressstreet, addresspurok, addressbrgy, type, verified)

@@ -6,8 +6,6 @@ $styles = ['/css/dashboard.css', '/css/user-management.css'];
 $scripts = ['/js/dashboard.js', '/js/user-management.js'];
 out_header('BUGANA User Management', $styles, $scripts);
 
-$view = !empty($_GET['view']) ? $_GET['view'] : 'all';
-
 ?>
 <main>
   <div class="sidebar">
@@ -43,6 +41,11 @@ $view = !empty($_GET['view']) ? $_GET['view'] : 'all';
       </svg>
       <span>User Management</span>
     </a>
+    <nav class="sidebar-nav">
+      <a href="/user-management.php?type=admin" class="headadmin-btns user-admin d-none">Admin</a>
+      <a href="/user-management.php?type=customers" class="headadmin-btns user-customers d-none">Customers</a>
+      <a href="/user-management.php?type=farmers" class="user-farmers">Farmers</a>
+    </nav>
 
     <a href="/product-management.php" class="sidebar-link">
       <svg width="16" height="16" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -80,28 +83,31 @@ $view = !empty($_GET['view']) ? $_GET['view'] : 'all';
       <span class="admin-name"></span>
     </header>
 
-    <div class="d-flex flex-align-center mt-4 mx-2">
+    <div class="d-flex flex-align-center mt-4 mx-3">
       <h6 class="dashboard-title my-2 mx-3">Users</h6>
       <div class="flex-1">
         <input type="text" id="user-search" name="q" placeholder="Search User Code" class="form-control form-control-white box-shadow table-search" />
       </div>
 
       <div class="headadmin-btns d-none">
-        <button type="button" class="btn btn-sm btn-secondary mr-2 text-md <?= $view !== 'customers' ? 'd-none' : '' ?>" data-modal="#modal-register">Register Customer</button>
-
-        <a href="/user-management.php?view=all" class="mr-2 text-none <?= $view === 'all' ? 'd-none' : '' ?>">
-          <button type="button" class="btn btn-sm btn-secondary">View All</button>
-        </a>
-        <a href="/user-management.php?view=customers" class="mr-2 text-none <?= $view === 'customers' ? 'd-none' : '' ?>">
-          <button type="button" class="btn btn-sm btn-secondary">Customers</button>
-        </a>
-        <a href="/user-management.php?view=farmers" class="mr-2 text-none <?= $view === 'farmers' ? 'd-none' : '' ?>">
-          <button type="button" class="btn btn-sm btn-secondary">Farmers</button>
-        </a>
+        <button type="button" class="btn btn-sm btn-secondary text-md mr-3 py-1 user-new-admin d-none" data-modal="#modal-register-admin">
+          <img src="/imgs/plus.svg" alt="Plus Image" width="20" height="20" class="mr-1" />
+          <span>New Admin</span>
+        </button>
       </div>
 
-      <div class="admin-btns mr-3 d-none">
-        <button type="button" class="btn btn-primary" data-modal="#modal-register">Add Farmer</button>
+      <div class="headadmin-btns d-none">
+        <button type="button" class="btn btn-sm btn-secondary text-md mr-3 py-1 user-new-customers d-none" data-modal="#modal-register">
+          <img src="/imgs/plus.svg" alt="Plus Image" width="20" height="20" class="mr-1" />
+          <span>New Customer</span>
+        </button>
+      </div>
+
+      <div class="admin-btns d-none">
+        <button type="button" class="btn btn-sm btn-secondary text-md mr-3 py-1 user-new-farmers d-none" data-modal="#modal-register">
+          <img src="/imgs/plus.svg" alt="Plus Image" width="20" height="20" class="mr-1" />
+          <span>New Farmer</span>
+        </button>
       </div>
     </div>
 
@@ -143,104 +149,188 @@ $view = !empty($_GET['view']) ? $_GET['view'] : 'all';
   </div>
 
   <div class="modal-container d-none"></div>
+  <div id="modal-register-admin" class="modal">
+    <form action="/api/register.php" method="post" id="form-register-admin" class="modal-register card card-tertiary p-4">
+      <h3 class="card-title mb-2 text-center">REGISTER ADMIN</h3>
+
+      <div class="form-group mb-2">
+        <label for="register-admin-name">Name:</label>
+        <input type="text" id="register-admin-name" name="name" placeholder="Name" class="form-control mt-1" required />
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="register-admin-gender">Gender:</label>
+        <select id="register-admin-gender" name="gender" class="form-control mt-1" required>
+          <option value="" selected>Select gender</option>
+          <option>Male</option>
+          <option>Female</option>
+        </select>
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="register-admin-birthday">Birthday:</label>
+        <input type="text" id="register-admin-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="register-admin-email">Email:</label>
+        <input type="email" id="register-admin-email" name="email" placeholder="Email" class="form-control mt-1" required />
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="register-admin-mobile">Mobile Number:</label>
+        <input type="text" id="register-admin-mobile" name="mobile" placeholder="Mobile Number" class="form-control mt-1" required />
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="register-admin-username">Username:</label>
+        <input type="text" id="register-admin-username" name="username" placeholder="Username" class="form-control mt-1" required />
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="register-admin-password">Password:</label>
+        <input type="password" id="register-admin-password" name="password" placeholder="Password" class="form-control mt-1" required />
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="register-admin-address-street">Street:</label>
+        <input type="text" id="register-admin-address-street" name="address-street" placeholder="Street" class="form-control mt-1" required />
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="register-admin-address-purok">Purok:</label>
+        <input type="text" id="register-admin-address-purok" name="address-purok" placeholder="Purok" class="form-control mt-1" required />
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="register-admin-address-brgy">Barangay:</label>
+        <select id="register-admin-address-brgy" name="address-brgy" class="form-control mt-1" required>
+          <option value="">Select barangay</option>
+          <option>Abuanan</option>
+          <option>Alianza</option>
+          <option>Atipuluan</option>
+          <option>Bacong-Montilla</option>
+          <option>Bagroy</option>
+          <option>Balingasag</option>
+          <option>Binubuhan</option>
+          <option>Busay</option>
+          <option>Calumangan</option>
+          <option>Caridad</option>
+          <option>Don Jorge L. Araneta</option>
+          <option>Dulao</option>
+          <option>Ilijan</option>
+          <option>Lag-Asan</option>
+          <option>Ma-ao</option>
+          <option>Mailum</option>
+          <option>Malingin</option>
+          <option>Napoles</option>
+          <option>Pacol</option>
+          <option>Poblacion</option>
+          <option>Sagasa</option>
+          <option>Tabunan</option>
+          <option>Taloc</option>
+          <option>Sampinit</option>
+        </select>
+      </div>
+
+      <div class="align-self-end mt-2">
+        <div id="form-register-admin-error" class="text-danger mb-1"></div>
+        <button type="submit" class="btn btn-block btn-secondary">Register Account</button>
+      </div>
+    </form>
+  </div>
+
   <div id="modal-register" class="modal">
-    <form action="/api/register.php" method="post" id="form-register" class="card card-tertiary p-4">
+    <form action="/api/register.php" method="post" id="form-register" class="modal-register card card-tertiary p-4">
       <h3 class="card-title mb-2 text-center">
         REGISTER
         <span class="headadmin-btns d-none">CUSTOMER</span>
         <span class="admin-btns d-none">FARMER</span>
       </h3>
 
-      <div class="d-flex">
-        <div class="mx-1">
-          <div class="form-group mb-2">
-            <label for="register-name">Name:</label>
-            <input type="text" id="register-name" name="name" placeholder="Name" class="form-control mt-1" required />
-          </div>
+      <div class="form-group mb-2">
+        <label for="register-name">Name:</label>
+        <input type="text" id="register-name" name="name" placeholder="Name" class="form-control mt-1" required />
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="register-gender">Gender:</label>
-            <select id="register-gender" name="gender" class="form-control mt-1" required>
-              <option value="" selected>Select gender</option>
-              <option>Male</option>
-              <option>Female</option>
-              <option>Others</option>
-            </select>
-          </div>
+      <div class="form-group mb-2">
+        <label for="register-gender">Gender:</label>
+        <select id="register-gender" name="gender" class="form-control mt-1" required>
+          <option value="" selected>Select gender</option>
+          <option>Male</option>
+          <option>Female</option>
+        </select>
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="register-birthday">Birthday:</label>
-            <input type="text" id="register-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
-          </div>
+      <div class="form-group mb-2">
+        <label for="register-birthday">Birthday:</label>
+        <input type="text" id="register-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="register-email">Email:</label>
-            <input type="email" id="register-email" name="email" placeholder="Email" class="form-control mt-1" required />
-          </div>
+      <div class="form-group mb-2">
+        <label for="register-email">Email:</label>
+        <input type="email" id="register-email" name="email" placeholder="Email" class="form-control mt-1" required />
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="register-mobile">Mobile Number:</label>
-            <input type="text" id="register-mobile" name="mobile" placeholder="Mobile Number" class="form-control mt-1" required />
-          </div>
-        </div>
+      <div class="form-group mb-2">
+        <label for="register-mobile">Mobile Number:</label>
+        <input type="text" id="register-mobile" name="mobile" placeholder="Mobile Number" class="form-control mt-1" required />
+      </div>
 
-        <div class="d-flex flex-column mx-1">
-          <div class="form-group mb-2">
-            <label for="register-username">Username:</label>
-            <input type="text" id="register-username" name="username" placeholder="Username" class="form-control mt-1" required />
-          </div>
+      <div class="form-group mb-2">
+        <label for="register-username">Username:</label>
+        <input type="text" id="register-username" name="username" placeholder="Username" class="form-control mt-1" required />
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="register-password">Password:</label>
-            <input type="password" id="register-password" name="password" placeholder="Password" class="form-control mt-1" required />
-          </div>
+      <div class="form-group mb-2">
+        <label for="register-password">Password:</label>
+        <input type="password" id="register-password" name="password" placeholder="Password" class="form-control mt-1" required />
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="register-address-street">Street:</label>
-            <input type="text" id="register-address-street" name="address-street" placeholder="Street" class="form-control mt-1" required />
-          </div>
+      <div class="form-group mb-2">
+        <label for="register-address-street">Street:</label>
+        <input type="text" id="register-address-street" name="address-street" placeholder="Street" class="form-control mt-1" required />
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="register-address-purok">Purok:</label>
-            <input type="text" id="register-address-purok" name="address-purok" placeholder="Purok" class="form-control mt-1" required />
-          </div>
+      <div class="form-group mb-2">
+        <label for="register-address-purok">Purok:</label>
+        <input type="text" id="register-address-purok" name="address-purok" placeholder="Purok" class="form-control mt-1" required />
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="register-address-brgy">Barangay:</label>
-            <select id="register-brgy" name="address-brgy" class="form-control mt-1" required>
-              <option value="">Select barangay</option>
-              <option>Abuanan</option>
-              <option>Alianza</option>
-              <option>Atipuluan</option>
-              <option>Bacong-Montilla</option>
-              <option>Bagroy</option>
-              <option>Balingasag</option>
-              <option>Binubuhan</option>
-              <option>Busay</option>
-              <option>Calumangan</option>
-              <option>Caridad</option>
-              <option>Don Jorge L. Araneta</option>
-              <option>Dulao</option>
-              <option>Ilijan</option>
-              <option>Lag-Asan</option>
-              <option>Ma-ao</option>
-              <option>Mailum</option>
-              <option>Malingin</option>
-              <option>Napoles</option>
-              <option>Pacol</option>
-              <option>Poblacion</option>
-              <option>Sagasa</option>
-              <option>Tabunan</option>
-              <option>Taloc</option>
-              <option>Sampinit</option>
-            </select>
-          </div>
-
-          <div class="align-self-end mt-2">
-            <div id="form-register-error" class="text-danger mb-1"></div>
-            <button type="submit" class="btn btn-primary">Register Account</button>
-          </div>
-        </div>
+      <div class="form-group mb-2">
+        <label for="register-address-brgy">Barangay:</label>
+        <select id="register-address-brgy" name="address-brgy" class="form-control mt-1" required>
+          <option value="">Select barangay</option>
+          <option>Abuanan</option>
+          <option>Alianza</option>
+          <option>Atipuluan</option>
+          <option>Bacong-Montilla</option>
+          <option>Bagroy</option>
+          <option>Balingasag</option>
+          <option>Binubuhan</option>
+          <option>Busay</option>
+          <option>Calumangan</option>
+          <option>Caridad</option>
+          <option>Don Jorge L. Araneta</option>
+          <option>Dulao</option>
+          <option>Ilijan</option>
+          <option>Lag-Asan</option>
+          <option>Ma-ao</option>
+          <option>Mailum</option>
+          <option>Malingin</option>
+          <option>Napoles</option>
+          <option>Pacol</option>
+          <option>Poblacion</option>
+          <option>Sagasa</option>
+          <option>Tabunan</option>
+          <option>Taloc</option>
+          <option>Sampinit</option>
+        </select>
+      </div>
+      
+      <div class="align-self-end mt-2">
+        <div id="form-register-error" class="text-danger mb-1"></div>
+        <button type="submit" class="btn btn-secondary">Register Account</button>
       </div>
     </form>
   </div>

@@ -12,7 +12,11 @@ $(document).ready(function () {
   const tempAction = $('#temp-user-actions').prop('content')
   const tempPageBtn = $('#temp-page-btn').prop('content')
   const search = new URLSearchParams(window.location.search)
-  const view = payload.type === 'admin' ? 'farmers' : search.get('view') || 'all'
+  const type = search.get('type')
+  const view = type || (payload.type === 'headadmin' ? 'admin' : 'farmers')
+  $(`.user-${view}`).addClass('active')
+  $(`.user-new-${view}`).removeClass('d-none')
+
   let page = 1
   let limit = parseInt($('#limit-page').val())
   let userCode = $('#user-search').val()
@@ -165,6 +169,37 @@ $(document).ready(function () {
     if (response.success) {
       await displayUsers()
       modal('close')
+    }
+  })
+
+  $('#form-register-admin').submit(async function (event) {
+    event.preventDefault()
+
+    const form = $(this).get(0)
+    const action = $(form).attr('action')
+    const method = $(form).attr('method')
+    const formData = new FormData(form)
+    formData.append('token', token)
+    formData.append('type', 'admin')
+
+    $('#form-register-admin-error').empty()
+    $(form).find('[type="submit"]').attr('disabled', true).text('Registering...')
+
+    const response = await $.ajax(action, {
+      method: method,
+      dataType: 'json',
+      data: formData,
+      processData: false,
+      contentType: false
+    })
+
+    $(form).find('[type="submit"]').attr('disabled', null).text('Register account')
+    if (response.success) {
+      $(form).trigger('reset')
+      await displayUsers()
+      modal('close')
+    } else {
+      $('#form-register-admin-error').text(response.message)
     }
   })
 

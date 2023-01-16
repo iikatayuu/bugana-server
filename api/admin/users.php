@@ -63,6 +63,7 @@ if (!empty($_GET['token'])) {
       $wheres = [];
 
       if ($view === 'all') $wheres[] = "type!='admin' AND type!='headadmin'";
+      else if ($view === 'admin') $wheres[] = "type='admin'";
       else if ($view === 'customers') $wheres[] = "type='customer'";
       else if ($view === 'farmers') $wheres[] = "type='farmer'";
       else {

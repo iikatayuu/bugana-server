@@ -1,6 +1,6 @@
 
-#modal-register input,
-#modal-register select,
+.modal-register input,
+.modal-register select,
 #modal-edit input,
 #modal-edit select {
   padding: 8px;
