@@ -243,7 +243,7 @@ out_header('BUGANA User Management', $styles, $scripts);
   <div id="modal-register" class="modal">
     <form action="/api/register.php" method="post" id="form-register" class="modal-register card card-tertiary p-4">
       <h3 class="card-title mb-2 text-center">
-        REGISTER
+        NEW
         <span class="headadmin-btns d-none">CUSTOMER</span>
         <span class="admin-btns d-none">FARMER</span>
       </h3>
@@ -330,7 +330,7 @@ out_header('BUGANA User Management', $styles, $scripts);
       
       <div class="align-self-end mt-2">
         <div id="form-register-error" class="text-danger mb-1"></div>
-        <button type="submit" class="btn btn-secondary">Register Account</button>
+        <button type="submit" class="btn btn-block btn-secondary">Register Account</button>
       </div>
     </form>
   </div>
@@ -350,99 +350,92 @@ out_header('BUGANA User Management', $styles, $scripts);
   <div id="modal-edit" class="modal">
     <form action="/api/admin/edit.php" method="post" id="form-edit" class="card card-tertiary p-4">
       <h3 class="card-title mb-2 text-center">Edit <span id="edit-type-text"></span> Details</h3>
+      <input type="hidden" id="edit-id" name="id" value="" required />
 
-      <div class="d-flex">
-        <div class="mx-1">
-          <input type="hidden" id="edit-id" name="id" value="" required />
+      <div class="form-group mb-2">
+        <label for="edit-name">Name:</label>
+        <input type="text" id="edit-name" name="name" placeholder="Name" class="form-control mt-1" required />
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="edit-name">Name:</label>
-            <input type="text" id="edit-name" name="name" placeholder="Name" class="form-control mt-1" required />
-          </div>
+      <div class="form-group mb-2">
+        <label for="edit-gender">Gender:</label>
+        <select id="edit-gender" name="gender" class="form-control mt-1" required>
+          <option value="" selected>Select gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Others</option>
+        </select>
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="edit-gender">Gender:</label>
-            <select id="edit-gender" name="gender" class="form-control mt-1" required>
-              <option value="" selected>Select gender</option>
-              <option>Male</option>
-              <option>Female</option>
-              <option>Others</option>
-            </select>
-          </div>
+      <div class="form-group mb-2">
+        <label for="edit-birthday">Birthday:</label>
+        <input type="text" id="edit-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="edit-birthday">Birthday:</label>
-            <input type="text" id="edit-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
-          </div>
+      <div class="form-group mb-2">
+        <label for="edit-email">Email:</label>
+        <input type="email" id="edit-email" name="email" placeholder="Email" class="form-control mt-1" required />
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="edit-email">Email:</label>
-            <input type="email" id="edit-email" name="email" placeholder="Email" class="form-control mt-1" required />
-          </div>
+      <div class="form-group mb-2">
+        <label for="edit-mobile">Mobile Number:</label>
+        <input type="text" id="edit-mobile" name="mobile" placeholder="Mobile Number" class="form-control mt-1" required />
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="edit-mobile">Mobile Number:</label>
-            <input type="text" id="edit-mobile" name="mobile" placeholder="Mobile Number" class="form-control mt-1" required />
-          </div>
-        </div>
+      <div class="form-group mb-2">
+        <label for="edit-username">Username:</label>
+        <input type="text" id="edit-username" name="username" placeholder="Username" class="form-control mt-1" readonly />
+      </div>
 
-        <div class="d-flex flex-column mx-1">
-          <div class="form-group mb-2">
-            <label for="edit-username">Username:</label>
-            <input type="text" id="edit-username" name="username" placeholder="Username" class="form-control mt-1" readonly />
-          </div>
+      <div class="form-group mb-2">
+        <label for="edit-password">New Password:</label>
+        <input type="password" id="edit-password" name="password" placeholder="Password" class="form-control mt-1" />
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="edit-password">New Password:</label>
-            <input type="password" id="edit-password" name="password" placeholder="Password" class="form-control mt-1" />
-          </div>
+      <div class="form-group mb-2">
+        <label for="edit-address-street">Street:</label>
+        <input type="text" id="edit-address-street" name="address-street" placeholder="Street" class="form-control mt-1" required />
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="edit-address-street">Street:</label>
-            <input type="text" id="edit-address-street" name="address-street" placeholder="Street" class="form-control mt-1" required />
-          </div>
+      <div class="form-group mb-2">
+        <label for="edit-address-purok">Purok:</label>
+        <input type="text" id="edit-address-purok" name="address-purok" placeholder="Purok" class="form-control mt-1" required />
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="edit-address-purok">Purok:</label>
-            <input type="text" id="edit-address-purok" name="address-purok" placeholder="Purok" class="form-control mt-1" required />
-          </div>
+      <div class="form-group mb-2">
+        <label for="edit-address-brgy">Barangay:</label>
+        <select id="edit-address-brgy" name="address-brgy" class="form-control mt-1" required>
+          <option value="">Select barangay</option>
+          <option>Abuanan</option>
+          <option>Alianza</option>
+          <option>Atipuluan</option>
+          <option>Bacong-Montilla</option>
+          <option>Bagroy</option>
+          <option>Balingasag</option>
+          <option>Binubuhan</option>
+          <option>Busay</option>
+          <option>Calumangan</option>
+          <option>Caridad</option>
+          <option>Don Jorge L. Araneta</option>
+          <option>Dulao</option>
+          <option>Ilijan</option>
+          <option>Lag-Asan</option>
+          <option>Ma-ao</option>
+          <option>Mailum</option>
+          <option>Malingin</option>
+          <option>Napoles</option>
+          <option>Pacol</option>
+          <option>Poblacion</option>
+          <option>Sagasa</option>
+          <option>Tabunan</option>
+          <option>Taloc</option>
+          <option>Sampinit</option>
+        </select>
+      </div>
 
-          <div class="form-group mb-2">
-            <label for="edit-address-brgy">Barangay:</label>
-            <select id="edit-address-brgy" name="address-brgy" class="form-control mt-1" required>
-              <option value="">Select barangay</option>
-              <option>Abuanan</option>
-              <option>Alianza</option>
-              <option>Atipuluan</option>
-              <option>Bacong-Montilla</option>
-              <option>Bagroy</option>
-              <option>Balingasag</option>
-              <option>Binubuhan</option>
-              <option>Busay</option>
-              <option>Calumangan</option>
-              <option>Caridad</option>
-              <option>Don Jorge L. Araneta</option>
-              <option>Dulao</option>
-              <option>Ilijan</option>
-              <option>Lag-Asan</option>
-              <option>Ma-ao</option>
-              <option>Mailum</option>
-              <option>Malingin</option>
-              <option>Napoles</option>
-              <option>Pacol</option>
-              <option>Poblacion</option>
-              <option>Sagasa</option>
-              <option>Tabunan</option>
-              <option>Taloc</option>
-              <option>Sampinit</option>
-            </select>
-          </div>
-
-          <div class="align-self-end mt-2">
-            <div id="form-edit-error" class="text-danger mb-1"></div>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-          </div>
-        </div>
+      <div class="align-self-end mt-2">
+        <div id="form-edit-error" class="text-danger mb-1"></div>
+        <button type="submit" class="btn btn-block btn-secondary">Save Changes</button>
       </div>
     </form>
   </div>
