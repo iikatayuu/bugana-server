@@ -159,6 +159,7 @@ select.btn {
   font-size: 20px;
   text-decoration: none;
   cursor: pointer;
+  border-radius: 4px;
 }
 
 .btn-text {
