@@ -25,17 +25,17 @@ SELECT
   products.name,
   SUM(
     (
-      SELECT COALESCE(SUM(transactions.amount), 0)
+      SELECT COALESCE(SUM(transactions.quantity), 0)
       FROM transactions
       WHERE
         transactions.product=products.id AND
         transactions.status='success' AND
         transactions.date BETWEEN '%DATE_START%' AND '%DATE_END%'
     )
-  ) AS earned
+  ) AS quantities
   FROM products
   GROUP BY products.name
-  ORDER BY earned DESC, products.created ASC LIMIT 20
+  ORDER BY quantities DESC, products.created ASC LIMIT 20
 EOD;
 
 if (!empty($_GET['token'])) {
@@ -95,7 +95,7 @@ if (!empty($_GET['token'])) {
         if (!$stat->name) continue;
         $weekly[] = [
           'name' => $stat->name,
-          'earned' => floatval($stat->earned)
+          'quantities' => intval($stat->quantities)
         ];
       }
 
@@ -110,7 +110,7 @@ if (!empty($_GET['token'])) {
         if (!$stat->name) continue;
         $monthly[] = [
           'name' => $stat->name,
-          'earned' => floatval($stat->earned)
+          'quantities' => intval($stat->quantities)
         ];
       }
 
@@ -124,7 +124,7 @@ if (!empty($_GET['token'])) {
         if (!$stat->name) continue;
         $yearly[] = [
           'name' => $stat->name,
-          'earned' => floatval($stat->earned)
+          'quantities' => intval($stat->quantities)
         ];
       }
 

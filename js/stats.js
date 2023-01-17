@@ -78,7 +78,7 @@ $(document).ready(function () {
         labels: data.map(item => item.name),
         datasets: [{
           label: label,
-          data: data.map(item => item.earned),
+          data: data.map(item => item.quantities),
           point: { backgroundColor: '#000' }
         }]
       },
