@@ -110,6 +110,7 @@ $(document).ready(function () {
       plugins: [bgPlugin]
     })
 
+    $('#legends').empty()
     for (let i = 0; i < data.length; i++) {
       const elem = $(legendTemp).clone(true, true)
       $(elem).find('.legend-color').css('background-color', backgroundColors[i])
