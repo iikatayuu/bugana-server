@@ -48,9 +48,12 @@ if (!empty($_GET['token'])) {
     if (!$unsold) {
       $query = "SELECT
           transactions.*,
-          products.id AS productid, products.name, products.user AS farmerid, products.price
+          products.id AS productid, products.name, products.user AS farmerid, products.price,
+          SUM(transactions.amount) AS amount,
+          SUM(transactions.quantity) AS quantity
         FROM transactions
-        JOIN products ON products.id=transactions.product WHERE transactions.status='success'";
+        JOIN products ON products.id=transactions.product
+        WHERE transactions.status='success'";
 
       if ($date === 'weekly') {
         $current_day = date('w');
@@ -68,7 +71,7 @@ if (!empty($_GET['token'])) {
         $query .= " AND transactions.date BETWEEN '$year_start' AND '$year_end'";
       }
 
-      $query .= " ORDER BY transactions.date DESC";
+      $query .= " GROUP BY products.name ORDER BY transactions.date DESC";
       $transactions_res = $conn->query($query);
       $transactions = [];
       while ($transaction = $transactions_res->fetch_object()) {
