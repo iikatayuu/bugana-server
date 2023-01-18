@@ -117,7 +117,7 @@ out_header('BUGANA Individual Farmers Sales Report', $styles, $scripts);
   <div class="modal-container d-none"></div>
   <div id="modal-farmer" class="modal">
     <div class="card card-background p-4">
-      <h4 class="card-title mb-2 text-center farmer-name"></h4>
+      <h4 class="card-title mb-2 text-center farmer-details-name"></h4>
       <h3 class="card-title mb-2 text-center">This Months Report</h3>
 
       <table class="dashboard-table">

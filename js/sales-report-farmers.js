@@ -90,7 +90,7 @@ $(document).ready(function () {
     const response = await $.getJSON(`/api/transaction/list.php?${params.toString()}`)
     if (!response.success) return
 
-    $('.farmer-name').text(farmer.name)
+    $('.farmer-details-name').text(farmer.name)
     $('#transactions').empty()
 
     const transactions = response.transactions
