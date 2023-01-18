@@ -41,7 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if ($decoded !== null) {
     $userid = $decoded->userid;
-    $conn->query("UPDATE transactions SET status='success' WHERE user=$userid AND transaction_code='$code'");
+    $usertype = $decoded->type;
+    if ($usertype === 'headadmin') {
+      $conn->query("UPDATE transactions SET status='success' WHERE transaction_code='$code'");
+    } else {
+      $conn->query("UPDATE transactions SET status='success' WHERE user=$userid AND transaction_code='$code'");
+    }
 
     $result['success'] = true;
     $result['message'] = '';

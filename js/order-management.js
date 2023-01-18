@@ -77,6 +77,29 @@ $(document).ready(function () {
         alt: transaction.status === 'success' ? 'Successful' : 'Pending'
       })
 
+      if (transaction.status !== 'success') {
+        $(elem).find('.order-status-container').click(async function (event) {
+          event.preventDefault()
+          event.stopPropagation()
+  
+          const response = await $.ajax('/api/transaction/receive.php', {
+            method: 'post',
+            dataType: 'json',
+            data: {
+              code: transaction.code,
+              token: token
+            }
+          })
+
+          if (response.success) {
+            $(this).find('.order-status').attr({
+              src: '/imgs/status-check.png',
+              alt: 'Successful'
+            })
+          }
+        })
+      }
+
       $(elem).find('.transaction-action').attr('data-code', transaction.code).click(showOrder)
 
       $('#transactions').append(elem)

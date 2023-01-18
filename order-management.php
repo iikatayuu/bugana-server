@@ -197,7 +197,7 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
       <td class="customer-address"></td>
       <td class="total-amount"></td>
       <td class="order-type"></td>
-      <td>
+      <td class="order-status-container">
         <img class="order-status" alt="" width="18" />
       </td>
     </tr>
