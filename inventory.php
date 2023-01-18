@@ -150,14 +150,14 @@ out_header('BUGANA Inventory', $styles, $scripts);
         <div class="d-flex">
           <div class="flex-1 py-1 border border-left-0">Farmer: <span id="stock-farmer"></span></div>
           <div class="flex-1 py-1 border">Product: <span id="stock-product-name"></span></div>
-          <div class="flex-1 py-1 border border-right-0">Price: <span id="stock-product-price"></span></div>
+          <div class="flex-1 py-1 border border-right-0">Price: ₱<span id="stock-product-price"></span></div>
         </div>
         <table class="dashboard-table w-100 mx-0 mt-0 mb-2">
           <thead>
             <tr>
               <th class="text-sm">Date</th>
               <th class="text-sm">Quantity (KG)</th>
-              <th class="text-sm">Product Revenue</th>
+              <th class="text-sm">Product Revenue (₱)</th>
               <th class="text-sm">Remaining Days to Perish</th>
             </tr>
           </thead>

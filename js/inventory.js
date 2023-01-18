@@ -117,8 +117,8 @@ $(document).ready(function () {
       $(elem).find('.item-category').text(category)
       $(elem).find('.item-product-name').text(product.name)
       $(elem).find('.item-stock-in-date').text(product.stocksIn.length > 0 ? product.stocksIn[0].date : '').attr('data-index', i).click(showStocksIn)
-      $(elem).find('.item-stocks').text(stocks).attr('data-index', i).click(showStocksIn)
-      $(elem).find('.item-total-stocks').text(totalStocks).attr('data-index', i).click(showStocksIn)
+      $(elem).find('.item-stocks').text(`${stocks} kg`).attr('data-index', i).click(showStocksIn)
+      $(elem).find('.item-total-stocks').text(`${totalStocks} kg`).attr('data-index', i).click(showStocksIn)
       $('#inventory').append(elem)
     }
   }
