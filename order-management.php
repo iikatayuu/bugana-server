@@ -195,7 +195,7 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
       <td class="transaction-date"></td>
       <td class="customer-code"></td>
       <td class="customer-address"></td>
-      <td class="total-amount"></td>
+      <td><span class="total-amount"></span> PHP</td>
       <td class="order-type"></td>
       <td class="order-status-container">
         <img class="order-status" alt="" width="18" />
@@ -207,9 +207,9 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
     <tr>
       <td class="farmer-code text-center"></td>
       <td class="product-name text-center"></td>
-      <td class="order-quantity text-center"></td>
-      <td class="order-price text-center"></td>
-      <td class="order-amount text-center"></td>
+      <td class="text-center"><span class="order-quantity"></span> KG</td>
+      <td class="text-center"><span class="order-price"></span> PHP</td>
+      <td class="text-center"><span class="order-amount"></span> PHP</td>
     </tr>
   </template>
 

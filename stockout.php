@@ -138,9 +138,9 @@ out_header('BUGANA Inventory', $styles, $scripts);
       <td class="item-category"></td>
       <td class="item-product-name"></td>
       <td class="item-stock-out-date"></td>
-      <td class="item-quantity"></td>
-      <td class="item-price"></td>
-      <td class="item-product-revenue"></td>
+      <td><span class="item-quantity"></span> KG</td>
+      <td><span class="item-price"></span> PHP</td>
+      <td><span class="item-product-revenue"></span> PHP</td>
       <td class="item-status"></td>
     </tr>
   </template>

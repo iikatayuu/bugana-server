@@ -169,7 +169,7 @@ out_header('BUGANA Product Management', $styles, $scripts);
       <td class="product-name"></td>
       <td class="product-category"></td>
       <td class="product-description"></td>
-      <td class="product-price"></td>
+      <td><span class="product-price"></span> PHP</td>
       <td class="product-added"></td>
       <td class="product-edited"></td>
       <td class="product-actions">
