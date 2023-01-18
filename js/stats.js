@@ -79,7 +79,11 @@ $(document).ready(function () {
         datasets: [{
           label: label,
           data: data.map(item => item.quantities),
-          point: { backgroundColor: '#000' }
+          tooltip: {
+            callbacks: {
+              label: (item => `${item.raw} kg`)
+            }
+          }
         }]
       },
       options: {
