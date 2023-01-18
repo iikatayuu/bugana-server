@@ -90,7 +90,7 @@ $(document).ready(function () {
       $(elem).find('.item-category').text(category)
       $(elem).find('.item-product-name').text(stock.product.name)
       $(elem).find('.item-stock-out-date').text(stock.date)
-      $(elem).find('.item-quantity').text(parseFloat(stock.quantity))
+      $(elem).find('.item-quantity').text(parseFloat(stock.quantity) * -1)
       $(elem).find('.item-price').text(stock.product.price)
       $(elem).find('.item-product-revenue').text(stock.revenue)
       $(elem).find('.item-status').text(status)
