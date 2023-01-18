@@ -69,7 +69,7 @@ if (!empty($_GET['token'])) {
       $total_orders_res = $conn->query("SELECT COUNT(DISTINCT(transaction_code)) AS total FROM transactions WHERE status='success'");
       $total_orders = $total_orders_res->fetch_object()->total;
 
-      $new_users_res = $conn->query("SELECT * FROM users WHERE type='customer' ORDER BY created LIMIT 10");
+      $new_users_res = $conn->query("SELECT * FROM users WHERE type='customer' ORDER BY created DESC LIMIT 10");
       $new_users = [];
       while ($user = $new_users_res->fetch_object()) {
         $new_users[] = [
