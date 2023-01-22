@@ -76,7 +76,6 @@ $(document).ready(function () {
       $(elem).find('.user-lastlogin').text(user.lastlogin)
       if ((payload.type === 'headadmin' && user.type === 'customer') || (payload.type === 'admin' && user.type === 'farmer')) {
         const actionsElem = $(tempAction).clone(true, true)
-        $(actionsElem).find('.user-action-edit').attr('data-index', i).click(editUser)
         if (user.verified !== '0') $(actionsElem).find('.user-action-verify').addClass('d-none')
         else $(actionsElem).find('.user-action-verify').attr('data-index', i).click(verifyUser)
         $(elem).find('.user-actions').empty().append(actionsElem)
@@ -84,25 +83,6 @@ $(document).ready(function () {
 
       $('#users').append(elem)
     }
-  }
-
-  async function editUser (event) {
-    event.preventDefault()
-
-    const index = $(this).attr('data-index')
-    const user = users[index]
-    $('#edit-type-text').text(user.type === 'customer' ? 'Customer' : 'Farmer')
-    $('#edit-id').val(user.id)
-    $('#edit-name').val(user.name)
-    $('#edit-gender').val(user.gender)
-    $('#edit-birthday').val(user.birthday)
-    $('#edit-email').val(user.email)
-    $('#edit-mobile').val(user.mobile)
-    $('#edit-username').val(user.username)
-    $('#edit-address-street').val(user.addressstreet)
-    $('#edit-address-purok').val(user.addresspurok)
-    $('#edit-address-brgy').val(user.addressbrgy)
-    modal('open', '#modal-edit')
   }
 
   async function verifyUser (event) {
@@ -231,37 +211,6 @@ $(document).ready(function () {
       modal('close')
     } else {
       $('#form-register-error').text(response.message)
-    }
-  })
-
-  $('#form-edit').submit(async function (event) {
-    event.preventDefault()
-
-    const form = $(this).get(0)
-    const action = $(form).attr('action')
-    const method = $(form).attr('method')
-    const token = sessionStorage.getItem('token')
-    const formData = new FormData(form)
-    formData.append('token', token)
-
-    $('#form-edit-error').empty()
-    $(form).find('[type="submit"]').attr('disabled', true).text('Saving...')
-
-    const response = await $.ajax(action, {
-      method: method,
-      dataType: 'json',
-      data: formData,
-      processData: false,
-      contentType: false
-    })
-
-    $(form).find('[type="submit"]').attr('disabled', null).text('Save Changes')
-    if (response.success) {
-      $(form).trigger('reset')
-      await displayUsers()
-      modal('close')
-    } else {
-      $('#form-edit-error').text(response.message)
     }
   })
 
