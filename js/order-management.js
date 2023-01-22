@@ -64,14 +64,14 @@ $(document).ready(function () {
       const transaction = transactions[i]
       const user = transaction.user
       const elem = $(tempTransaction).clone(true, true)
-      const totalAmount = parseFloat(transaction.total_amount) + (transaction.type === 'delivery' ? 50 : 0)
+      const totalAmount = parseFloat(transaction.total_amount) + (transaction.paymentoption === 'delivery' ? 50 : 0)
 
       $(elem).find('.transaction-id').text(transaction.code)
       $(elem).find('.transaction-date').text(transaction.date)
       $(elem).find('.customer-code').text(user.code)
       $(elem).find('.customer-address').text(user.addressstreet + ', ' + user.addresspurok + ', ' + user.addressbrgy)
       $(elem).find('.total-amount').text(totalAmount.toFixed(2))
-      $(elem).find('.order-type').text(transaction.type === 'delivery' ? 'COD' : 'COP')
+      $(elem).find('.order-type').text(transaction.paymentoption === 'delivery' ? 'COD' : 'COP')
       $(elem).find('.order-status').attr({
         src: '/imgs/status-' + (transaction.status === 'success' ? 'check.png' : 'pending.png'),
         alt: transaction.status === 'success' ? 'Successful' : 'Pending'
