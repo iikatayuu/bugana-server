@@ -86,9 +86,10 @@ while ($product = $products_res->fetch_object()) {
   }
 
   $userid = strval($product->user);
-  $user_res = $conn->query("SELECT code FROM users WHERE id=$userid LIMIT 1");
+  $user_res = $conn->query("SELECT code, name FROM users WHERE id=$userid LIMIT 1");
   $userobj = $user_res->num_rows > 0 ? $user_res->fetch_object() : null;
   $product->code = $userobj->code;
+  $product->farmername = $userobj->name;
   $product->photos = $photos;
 
   if (!empty($_GET['stock'])) {

@@ -80,6 +80,7 @@ $(document).ready(function () {
       }
 
       $(elem).find('.product-code').text(product.code)
+      $(elem).find('.product-farmer-name').text(product.farmername)
       $(elem).find('.product-name').text(product.name)
       $(elem).find('.product-category').text(category)
       $(elem).find('.product-description').text(product.description)
