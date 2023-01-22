@@ -151,7 +151,7 @@ out_header('BUGANA Customer Violation Reports', $styles, $scripts);
       <td class="user-transaction"></td>
       <td class="counts"></td>
       <td>
-        <button type="button" class="user-actions">BAN</button>
+        <button type="button" class="user-actions" disabled>BAN</button>
       </td>
     </tr>
   </template>

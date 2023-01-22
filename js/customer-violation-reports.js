@@ -62,7 +62,11 @@ $(document).ready(function () {
       $(elem).find('.user-email').text(user.email)
       $(elem).find('.user-transaction').text(transaction ? transaction.transaction_code : '')
       $(elem).find('.counts').text(user.counts)
-      $(elem).find('.user-actions').attr('data-id', user.id).click(banUser)
+      $(elem).find('.user-actions').attr({
+        'data-id': user.id,
+        disabled: parseInt(user.counts) > 1 ? null : true
+      }).click(banUser)
+
       $('#users').append(elem)
     }
   }
