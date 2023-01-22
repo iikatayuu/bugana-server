@@ -85,7 +85,7 @@ $(document).ready(function () {
           break
       }
 
-      $(elem).find('.item-tx-code').text(stock.transaction_code)
+      $(elem).find('.item-tx-code').text(stock.transaction_code || 'NONE')
       $(elem).find('.item-farmer-id').text(stock.product.user)
       $(elem).find('.item-category').text(category)
       $(elem).find('.item-product-name').text(stock.product.name)
