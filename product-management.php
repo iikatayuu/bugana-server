@@ -79,20 +79,21 @@ out_header('BUGANA Product Management', $styles, $scripts);
     </header>
 
     <div class="d-flex flex-align-center mt-4 mx-3">
-      <div class="mr-2">
+      <div class="flex-1">
         <input type="text" id="user-search" name="q" placeholder="Search Farmer Code" class="form-control form-control-white box-shadow table-search" />
       </div>
 
-      <div class="flex-1">
-        <select id="products-category-select" class="btn btn-sm btn-tertiary text-md py-1">
-          <option value="all" selected>Sort By: All</option>
-          <option value="vegetable">Sort By: Vegetable</option>
-          <option value="root-crops">Sort By: Root Crops</option>
-          <option value="fruits">Sort By: Fruits</option>
-        </select>
-      </div>
+      <select id="products-category-select" class="btn btn-sm btn-tertiary text-md py-1 mr-2">
+        <option value="all" selected>Sort By: All</option>
+        <option value="vegetable">Sort By: Vegetable</option>
+        <option value="root-crops">Sort By: Root Crops</option>
+        <option value="fruits">Sort By: Fruits</option>
+      </select>
 
-      <a href="/product-new.php" class="btn btn-primary btn-round-sm admin-btns d-none" role="button">Add New Product</a>
+      <a href="/product-new.php" class="btn btn-secondary btn-round-sm py-1" role="button">
+        <img src="/imgs/plus.svg" alt="Add new product" width="18" height="18" class="mr-2" />
+        <span>Add New Product</span>
+      </a>
     </div>
 
     <table class="dashboard-table">
