@@ -98,7 +98,7 @@ out_header('BUGANA Inventory', $styles, $scripts);
           <th>Stock Out Date</th>
           <th>Quantity</th>
           <th>Price</th>
-          <th>Product Revenue</th>
+          <th>Total</th>
           <th>Status</th>
         </tr>
       </thead>
