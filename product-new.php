@@ -89,8 +89,8 @@ out_header('BUGANA New Product', $styles, $scripts);
         </div>
 
         <div class="d-flex flex-space-around my-2">
-          <button type="submit" class="btn btn-lg btn-primary">ADD PRODUCT</button>
-          <a href="/product-management.php" class="btn btn-lg btn-primary" role="button">CANCEL</a>
+          <a href="/product-management.php" class="btn btn-lg btn-secondary" role="button">CANCEL</a>
+          <button type="submit" class="btn btn-lg btn-secondary">ADD PRODUCT</button>
         </div>
       </form>
     </div>
