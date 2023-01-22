@@ -193,16 +193,6 @@ out_header('BUGANA User Management', $styles, $scripts);
       </div>
 
       <div class="form-group mb-2">
-        <label for="register-admin-address-street">Street:</label>
-        <input type="text" id="register-admin-address-street" name="address-street" placeholder="Street" class="form-control mt-1" required />
-      </div>
-
-      <div class="form-group mb-2">
-        <label for="register-admin-address-purok">Purok:</label>
-        <input type="text" id="register-admin-address-purok" name="address-purok" placeholder="Purok" class="form-control mt-1" required />
-      </div>
-
-      <div class="form-group mb-2">
         <label for="register-admin-address-brgy">Barangay:</label>
         <select id="register-admin-address-brgy" name="address-brgy" class="form-control mt-1" required>
           <option value="">Select barangay</option>
@@ -231,6 +221,16 @@ out_header('BUGANA User Management', $styles, $scripts);
           <option>Taloc</option>
           <option>Sampinit</option>
         </select>
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="register-admin-address-purok">Purok:</label>
+        <input type="text" id="register-admin-address-purok" name="address-purok" placeholder="Purok" class="form-control mt-1" required />
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="register-admin-address-street">Street:</label>
+        <input type="text" id="register-admin-address-street" name="address-street" placeholder="Street" class="form-control mt-1" required />
       </div>
 
       <div class="align-self-end mt-2">
@@ -288,16 +288,6 @@ out_header('BUGANA User Management', $styles, $scripts);
       </div>
 
       <div class="form-group mb-2">
-        <label for="register-address-street">Street:</label>
-        <input type="text" id="register-address-street" name="address-street" placeholder="Street" class="form-control mt-1" required />
-      </div>
-
-      <div class="form-group mb-2">
-        <label for="register-address-purok">Purok:</label>
-        <input type="text" id="register-address-purok" name="address-purok" placeholder="Purok" class="form-control mt-1" required />
-      </div>
-
-      <div class="form-group mb-2">
         <label for="register-address-brgy">Barangay:</label>
         <select id="register-address-brgy" name="address-brgy" class="form-control mt-1" required>
           <option value="">Select barangay</option>
@@ -326,6 +316,16 @@ out_header('BUGANA User Management', $styles, $scripts);
           <option>Taloc</option>
           <option>Sampinit</option>
         </select>
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="register-address-purok">Purok:</label>
+        <input type="text" id="register-address-purok" name="address-purok" placeholder="Purok" class="form-control mt-1" required />
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="register-address-street">Street:</label>
+        <input type="text" id="register-address-street" name="address-street" placeholder="Street" class="form-control mt-1" required />
       </div>
       
       <div class="align-self-end mt-2">
