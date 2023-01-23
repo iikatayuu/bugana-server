@@ -179,7 +179,7 @@ out_header('BUGANA User Management', $styles, $scripts);
 
       <div class="form-group mb-2">
         <label for="register-admin-mobile">Mobile Number:</label>
-        <input type="text" id="register-admin-mobile" name="mobile" placeholder="Mobile Number" class="form-control mt-1" required />
+        <input type="text" id="register-admin-mobile" name="mobile" placeholder="09123456789" class="form-control mt-1" required />
       </div>
 
       <div class="form-group mb-2">
@@ -274,7 +274,7 @@ out_header('BUGANA User Management', $styles, $scripts);
 
       <div class="form-group mb-2">
         <label for="register-mobile">Mobile Number:</label>
-        <input type="text" id="register-mobile" name="mobile" placeholder="Mobile Number" class="form-control mt-1" required />
+        <input type="text" id="register-mobile" name="mobile" placeholder="09123456789" class="form-control mt-1" required />
       </div>
 
       <div class="form-group mb-2">
