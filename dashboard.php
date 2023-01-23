@@ -82,7 +82,9 @@ out_header('BUGANA Admin Dashboard', $styles, $scripts);
     <div class="dashboard-cards">
       <div class="card card-tertiary text-center">
         <div class="mb-2">TOTAL PRODUCTS SOLD</div>
-        <div class="total-products-sold">0</div>
+        <div>
+          <span class="total-products-sold"></span> KG
+        </div>
       </div>
 
       <div class="card card-tertiary text-center">
