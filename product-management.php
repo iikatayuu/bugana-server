@@ -99,7 +99,6 @@ out_header('BUGANA Product Management', $styles, $scripts);
     <table class="dashboard-table">
       <thead>
         <tr>
-          <th>Farmer Code</th>
           <th>Farmer Name</th>
           <th>
             <div class="d-flex flex-align-center flex-center">
@@ -167,7 +166,6 @@ out_header('BUGANA Product Management', $styles, $scripts);
 
   <template id="temp-product">
     <tr>
-      <td class="product-code"></td>
       <td class="product-farmer-name"></td>
       <td class="product-name"></td>
       <td class="product-category"></td>

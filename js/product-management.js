@@ -80,7 +80,6 @@ $(document).ready(function () {
       }
 
       const createdDate = dateFormat(product.created)
-      $(elem).find('.product-code').text(product.code)
       $(elem).find('.product-farmer-name').text(product.farmername)
       $(elem).find('.product-name').text(product.name)
       $(elem).find('.product-category').text(category)
