@@ -169,7 +169,7 @@ out_header('BUGANA User Management', $styles, $scripts);
 
       <div class="form-group mb-2">
         <label for="register-admin-birthday">Birthday:</label>
-        <input type="text" id="register-admin-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
+        <input type="date" id="register-admin-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
       </div>
 
       <div class="form-group mb-2">
@@ -264,7 +264,7 @@ out_header('BUGANA User Management', $styles, $scripts);
 
       <div class="form-group mb-2">
         <label for="register-birthday">Birthday:</label>
-        <input type="text" id="register-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
+        <input type="date" id="register-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
       </div>
 
       <div class="form-group mb-2">
