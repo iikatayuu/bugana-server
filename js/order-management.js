@@ -65,9 +65,10 @@ $(document).ready(function () {
       const user = transaction.user
       const elem = $(tempTransaction).clone(true, true)
       const totalAmount = parseFloat(transaction.total_amount) + (transaction.paymentoption === 'delivery' ? 50 : 0)
+      const dateStr = dateFormat(transaction.date)
 
       $(elem).find('.transaction-id').text(transaction.code)
-      $(elem).find('.transaction-date').text(transaction.date)
+      $(elem).find('.transaction-date').text(dateStr)
       $(elem).find('.customer-code').text(user.code)
       $(elem).find('.customer-address').text(user.addressstreet + ', ' + user.addresspurok + ', ' + user.addressbrgy)
       $(elem).find('.total-amount').text(totalAmount.toFixed(2))
@@ -120,11 +121,12 @@ $(document).ready(function () {
     const transactions = response.transactions
     const tx = transactions[0]
     const user = tx.user
+    const dateStr = dateFormat(tx.date)
     let grandTotal = 0
 
     $('#order-customer-name').text(user.name)
     $('#transaction-id').text(code)
-    $('#transaction-date').text(tx.date)
+    $('#transaction-date').text(dateStr)
     $('#order-customer-code').text(user.code)
     $('#order-customer-address').text(user.addressstreet + ', ' + user.addresspurok + ', ' + user.addressbrgy)
     $('#order-type').text(tx.paymentoption === 'delivery' ? 'Cash On Delivery' : 'Cash On Pickup')

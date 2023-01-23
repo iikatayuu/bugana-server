@@ -113,10 +113,11 @@ $(document).ready(function () {
         stocks += quantity;
       })
 
+      const dateStr = product.stocksIn.length > 0 ? dateFormat(product.stocksIn[0].date) : ''
       $(elem).find('.item-farmer-code').text(product.code)
       $(elem).find('.item-category').text(category)
       $(elem).find('.item-product-name').text(product.name)
-      $(elem).find('.item-stock-in-date').text(product.stocksIn.length > 0 ? product.stocksIn[0].date : '').attr('data-index', i).click(showStocksIn)
+      $(elem).find('.item-stock-in-date').text(dateStr).attr('data-index', i).click(showStocksIn)
       $(elem).find('.item-stocks').text(`${stocks} kg`).attr('data-index', i).click(showStocksIn)
       $(elem).find('.item-total-stocks').text(`${totalStocks} kg`).attr('data-index', i).click(showStocksIn)
       $('#inventory').append(elem)
@@ -144,7 +145,8 @@ $(document).ready(function () {
     for (let i = 0; i < product.stocksIn.length && i < 10; i++) {
       const stocks = product.stocksIn[i]
       const elem = $(tempStock).clone(true, true)
-      $(elem).find('.stock-date').text(stocks.date)
+      const dateStr = dateFormat(stocks.date)
+      $(elem).find('.stock-date').text(dateStr)
       $(elem).find('.stock-quantity').text(stocks.quantity)
       $(elem).find('.stock-revenue').text(stocks.revenue)
       $(elem).find('.stock-perish-left').text(stocks.perishDays > 0 ? stocks.perishDays + ' days' : 'Perished')

@@ -69,11 +69,13 @@ $(document).ready(function () {
     for (let i = 0; i < users.length; i++) {
       const user = users[i]
       const elem = $(tempUser).clone(true, true)
+      const createdDate = dateFormat(user.created)
+      const lastloginDate = dateFormat(user.lastlogin)
       $(elem).find('.user-code').text(user.code)
       $(elem).find('.user-name').text(user.name)
       $(elem).find('.user-email').text(user.email)
-      $(elem).find('.user-created').text(user.created)
-      $(elem).find('.user-lastlogin').text(user.lastlogin)
+      $(elem).find('.user-created').text(createdDate)
+      $(elem).find('.user-lastlogin').text(lastloginDate)
       if ((payload.type === 'headadmin' && user.type === 'customer') || (payload.type === 'admin' && user.type === 'farmer')) {
         const actionsElem = $(tempAction).clone(true, true)
         if (user.verified !== '0') $(actionsElem).find('.user-action-verify').addClass('d-none')

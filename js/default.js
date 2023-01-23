@@ -14,6 +14,41 @@ const MONTHS = [
   'December'
 ]
 
+const MONTHS_SHORT = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+]
+
+function dateFormat (d) {
+  let dateStr = ''
+  const date = new Date(d)
+  const hrs = date.getHours()
+  const meridian = hrs > 12 ? 'PM' : 'AM'
+  let hours = (hrs > 12 ? hrs - 12 : hrs).toString()
+  while (hours.length < 2) hours = `0${hours}`
+  let minutes = date.getMinutes().toString()
+  while (minutes.length < 2) minutes = `0${minutes}`
+
+  dateStr += MONTHS_SHORT[date.getMonth()] + ' '
+  dateStr += date.getDate() + ', '
+  dateStr += date.getFullYear() + ' '
+  dateStr += hours + ':'
+  dateStr += minutes + ' '
+  dateStr += meridian
+
+  return dateStr
+}
+
 function modal (action, target = '') {
   if (action === 'open') {
     $('.modal-container').removeClass('d-none')

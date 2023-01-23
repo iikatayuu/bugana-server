@@ -100,9 +100,10 @@ $(document).ready(function () {
       const user = transaction.user
       const product = transaction.product
       const priceEach = parseFloat(transaction.amount) / parseInt(transaction.quantity)
+      const dateStr = dateFormat(transaction.date)
 
       $(elem).find('.buyer-name').text(user.name)
-      $(elem).find('.transaction-date').text(transaction.date)
+      $(elem).find('.transaction-date').text(dateStr)
       $(elem).find('.product-name').text(product.name)
       $(elem).find('.product-price').text(priceEach.toFixed(2))
       $(elem).find('.product-quantity').text(transaction.quantity)

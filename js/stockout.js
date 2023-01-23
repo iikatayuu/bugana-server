@@ -85,11 +85,12 @@ $(document).ready(function () {
           break
       }
 
+      const dateStr = dateFormat(stock.date)
       $(elem).find('.item-tx-code').text(stock.transaction_code || 'NONE')
       $(elem).find('.item-farmer-id').text(stock.product.user)
       $(elem).find('.item-category').text(category)
       $(elem).find('.item-product-name').text(stock.product.name)
-      $(elem).find('.item-stock-out-date').text(stock.date)
+      $(elem).find('.item-stock-out-date').text(dateStr)
       $(elem).find('.item-quantity').text(parseFloat(stock.quantity) * -1)
       $(elem).find('.item-price').text(stock.product.price.toFixed(2))
       $(elem).find('.item-product-revenue').text(stock.revenue)
