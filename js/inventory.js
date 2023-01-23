@@ -114,7 +114,7 @@ $(document).ready(function () {
       })
 
       const dateStr = product.stocksIn.length > 0 ? dateFormat(product.stocksIn[0].date) : ''
-      $(elem).find('.item-farmer-code').text(product.code)
+      $(elem).find('.item-farmer-name').text(product.farmername)
       $(elem).find('.item-category').text(category)
       $(elem).find('.item-product-name').text(product.name)
       $(elem).find('.item-stock-in-date').text(dateStr).attr('data-index', i).click(showStocksIn)
