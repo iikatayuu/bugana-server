@@ -34,7 +34,6 @@ $(document).ready(function () {
 
       const elem = $(tempSale).clone(true, true)
       $(elem).find('.product-name').text(product.name)
-      $(elem).find('.product-price').text(product.price)
       $(elem).find('.quantity-sold').text(transaction.quantity)
       $(elem).find('.product-revenue').text(transaction.amount)
       $('#sales').append(elem)

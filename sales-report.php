@@ -118,7 +118,6 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
         <thead>
           <tr>
             <th>Product Name</th>
-            <th>Product Price</th>
             <th>Quantity <?= $is_unsold ? 'Perished' : 'Sold' ?></th>
             <th>Product <?= $is_unsold ? 'Amount' : 'Revenue' ?></th>
           </tr>
@@ -131,7 +130,6 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
       <template id="temp-sale">
         <tr>
           <td class="product-name"></td>
-          <td><span class="product-price"></span> PHP</td>
           <td><span class="quantity-sold"></span> KG</td>
           <td><span class="product-revenue"></span> PHP</td>
         </tr>
@@ -139,7 +137,7 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
 
       <template id="temp-total">
         <tr class="sales-report-total">
-          <td colspan="2"></td>
+          <td></td>
           <td>TOTAL</td>
           <td><span class="sales-report-total-amount"></span> PHP</td>
         </tr>
