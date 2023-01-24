@@ -149,6 +149,15 @@ body { background-color: #f7fcf7;}
   display: initial;
 }
 
+.modal-x-tertiary {
+  background-color: var(--color-tertiary);
+  color: var(--color-tertiary-contrast);
+}
+
+.modal-x-tertiary img {
+  fill: var(--color-tertiary-contrast);
+}
+
 select.btn {
   border-radius: 4px;
   appearance: none;

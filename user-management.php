@@ -150,200 +150,229 @@ out_header('BUGANA User Management', $styles, $scripts);
 
   <div class="modal-container d-none"></div>
   <div id="modal-register-admin" class="modal">
-    <form action="/api/register.php" method="post" id="form-register-admin" class="modal-register card card-tertiary p-4">
-      <h3 class="card-title mb-2 text-center">REGISTER ADMIN</h3>
-
-      <div class="form-group mb-2">
-        <label for="register-admin-name">Name:</label>
-        <input type="text" id="register-admin-name" name="name" placeholder="Name" class="form-control mt-1" required />
+    <form action="/api/register.php" method="post" id="form-register-admin" class="modal-register card card-tertiary p-0">
+      <div class="card-title d-flex flex-align-center mt-2 mb-2 pt-2 px-2">
+        <h3 class="text-center mr-2 flex-1">REGISTER ADMIN</h3>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-register-admin">
+            <svg fill="#fff" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M376.6 427.5c11.31 13.58 9.484 33.75-4.094 45.06c-5.984 4.984-13.25 7.422-20.47 7.422c-9.172 0-18.27-3.922-24.59-11.52L192 305.1l-135.4 162.5c-6.328 7.594-15.42 11.52-24.59 11.52c-7.219 0-14.48-2.438-20.47-7.422c-13.58-11.31-15.41-31.48-4.094-45.06l142.9-171.5L7.422 84.5C-3.891 70.92-2.063 50.75 11.52 39.44c13.56-11.34 33.73-9.516 45.06 4.094L192 206l135.4-162.5c11.3-13.58 31.48-15.42 45.06-4.094c13.58 11.31 15.41 31.48 4.094 45.06l-142.9 171.5L376.6 427.5z"/></svg>
+          </button>
+        </div>
       </div>
 
-      <div class="form-group mb-2">
-        <label for="register-admin-gender">Gender:</label>
-        <select id="register-admin-gender" name="gender" class="form-control mt-1" required>
-          <option value="" selected>Select gender</option>
-          <option>Male</option>
-          <option>Female</option>
-        </select>
-      </div>
+      <div class="px-4 pb-3">
+        <div class="form-group mb-2">
+          <label for="register-admin-name">Name:</label>
+          <input type="text" id="register-admin-name" name="name" placeholder="Name" class="form-control mt-1" required />
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-admin-birthday">Birthday:</label>
-        <input type="date" id="register-admin-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
-      </div>
+        <div class="form-group mb-2">
+          <label for="register-admin-gender">Gender:</label>
+          <select id="register-admin-gender" name="gender" class="form-control mt-1" required>
+            <option value="" selected>Select gender</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-admin-email">Email:</label>
-        <input type="email" id="register-admin-email" name="email" placeholder="Email" class="form-control mt-1" required />
-      </div>
+        <div class="form-group mb-2">
+          <label for="register-admin-birthday">Birthday:</label>
+          <input type="date" id="register-admin-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-admin-mobile">Mobile Number:</label>
-        <input type="text" id="register-admin-mobile" name="mobile" placeholder="09123456789" class="form-control mt-1" required />
-      </div>
+        <div class="form-group mb-2">
+          <label for="register-admin-email">Email:</label>
+          <input type="email" id="register-admin-email" name="email" placeholder="Email" class="form-control mt-1" required />
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-admin-username">Username:</label>
-        <input type="text" id="register-admin-username" name="username" placeholder="Username" class="form-control mt-1" required />
-      </div>
+        <div class="form-group mb-2">
+          <label for="register-admin-mobile">Mobile Number:</label>
+          <input type="text" id="register-admin-mobile" name="mobile" placeholder="09123456789" class="form-control mt-1" required />
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-admin-password">Password:</label>
-        <input type="password" id="register-admin-password" name="password" placeholder="Password" class="form-control mt-1" required />
-      </div>
+        <div class="form-group mb-2">
+          <label for="register-admin-username">Username:</label>
+          <input type="text" id="register-admin-username" name="username" placeholder="Username" class="form-control mt-1" required />
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-admin-address-brgy">Barangay:</label>
-        <select id="register-admin-address-brgy" name="address-brgy" class="form-control mt-1" required>
-          <option value="">Select barangay</option>
-          <option>Abuanan</option>
-          <option>Alianza</option>
-          <option>Atipuluan</option>
-          <option>Bacong-Montilla</option>
-          <option>Bagroy</option>
-          <option>Balingasag</option>
-          <option>Binubuhan</option>
-          <option>Busay</option>
-          <option>Calumangan</option>
-          <option>Caridad</option>
-          <option>Don Jorge L. Araneta</option>
-          <option>Dulao</option>
-          <option>Ilijan</option>
-          <option>Lag-Asan</option>
-          <option>Ma-ao</option>
-          <option>Mailum</option>
-          <option>Malingin</option>
-          <option>Napoles</option>
-          <option>Pacol</option>
-          <option>Poblacion</option>
-          <option>Sagasa</option>
-          <option>Tabunan</option>
-          <option>Taloc</option>
-          <option>Sampinit</option>
-        </select>
-      </div>
+        <div class="form-group mb-2">
+          <label for="register-admin-password">Password:</label>
+          <input type="password" id="register-admin-password" name="password" placeholder="Password" class="form-control mt-1" required />
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-admin-address-purok">Purok:</label>
-        <input type="text" id="register-admin-address-purok" name="address-purok" placeholder="Purok" class="form-control mt-1" required />
-      </div>
+        <div class="form-group mb-2">
+          <label for="register-admin-address-brgy">Barangay:</label>
+          <select id="register-admin-address-brgy" name="address-brgy" class="form-control mt-1" required>
+            <option value="">Select barangay</option>
+            <option>Abuanan</option>
+            <option>Alianza</option>
+            <option>Atipuluan</option>
+            <option>Bacong-Montilla</option>
+            <option>Bagroy</option>
+            <option>Balingasag</option>
+            <option>Binubuhan</option>
+            <option>Busay</option>
+            <option>Calumangan</option>
+            <option>Caridad</option>
+            <option>Don Jorge L. Araneta</option>
+            <option>Dulao</option>
+            <option>Ilijan</option>
+            <option>Lag-Asan</option>
+            <option>Ma-ao</option>
+            <option>Mailum</option>
+            <option>Malingin</option>
+            <option>Napoles</option>
+            <option>Pacol</option>
+            <option>Poblacion</option>
+            <option>Sagasa</option>
+            <option>Tabunan</option>
+            <option>Taloc</option>
+            <option>Sampinit</option>
+          </select>
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-admin-address-street">Street:</label>
-        <input type="text" id="register-admin-address-street" name="address-street" placeholder="Street" class="form-control mt-1" required />
-      </div>
+        <div class="form-group mb-2">
+          <label for="register-admin-address-purok">Purok:</label>
+          <input type="text" id="register-admin-address-purok" name="address-purok" placeholder="Purok" class="form-control mt-1" required />
+        </div>
 
-      <div class="align-self-end mt-2">
-        <div id="form-register-admin-error" class="text-danger mb-1"></div>
-        <button type="submit" class="btn btn-block btn-secondary">Register Account</button>
+        <div class="form-group mb-2">
+          <label for="register-admin-address-street">Street:</label>
+          <input type="text" id="register-admin-address-street" name="address-street" placeholder="Street" class="form-control mt-1" required />
+        </div>
+
+        <div class="align-self-end mt-2">
+          <div id="form-register-admin-error" class="text-danger mb-1"></div>
+          <button type="submit" class="btn btn-block btn-secondary">Register Account</button>
+        </div>
       </div>
     </form>
   </div>
 
   <div id="modal-register" class="modal">
-    <form action="/api/register.php" method="post" id="form-register" class="modal-register card card-tertiary p-4">
-      <h3 class="card-title mb-2 text-center">
-        NEW
-        <span class="headadmin-btns d-none">CUSTOMER</span>
-        <span class="admin-btns d-none">FARMER</span>
-      </h3>
-
-      <div class="form-group mb-2">
-        <label for="register-name">Name:</label>
-        <input type="text" id="register-name" name="name" placeholder="Name" class="form-control mt-1" required />
+    <form action="/api/register.php" method="post" id="form-register" class="modal-register card card-tertiary p-0">
+      <div class="card-title d-flex flex-align-center mt-2 mb-2 pt-2 px-2">
+        <h3 class="text-center mr-2 flex-1">
+          NEW
+          <span class="headadmin-btns d-none">CUSTOMER</span>
+          <span class="admin-btns d-none">FARMER</span>
+        </h3>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-register">
+            <svg fill="#fff" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M376.6 427.5c11.31 13.58 9.484 33.75-4.094 45.06c-5.984 4.984-13.25 7.422-20.47 7.422c-9.172 0-18.27-3.922-24.59-11.52L192 305.1l-135.4 162.5c-6.328 7.594-15.42 11.52-24.59 11.52c-7.219 0-14.48-2.438-20.47-7.422c-13.58-11.31-15.41-31.48-4.094-45.06l142.9-171.5L7.422 84.5C-3.891 70.92-2.063 50.75 11.52 39.44c13.56-11.34 33.73-9.516 45.06 4.094L192 206l135.4-162.5c11.3-13.58 31.48-15.42 45.06-4.094c13.58 11.31 15.41 31.48 4.094 45.06l-142.9 171.5L376.6 427.5z"/></svg>
+          </button>
+        </div>
       </div>
 
-      <div class="form-group mb-2">
-        <label for="register-gender">Gender:</label>
-        <select id="register-gender" name="gender" class="form-control mt-1" required>
-          <option value="" selected>Select gender</option>
-          <option>Male</option>
-          <option>Female</option>
-        </select>
-      </div>
+      <div class="px-4 pb-3">
+        <div class="form-group mb-2">
+          <label for="register-name">Name:</label>
+          <input type="text" id="register-name" name="name" placeholder="Name" class="form-control mt-1" required />
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-birthday">Birthday:</label>
-        <input type="date" id="register-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
-      </div>
+        <div class="form-group mb-2">
+          <label for="register-gender">Gender:</label>
+          <select id="register-gender" name="gender" class="form-control mt-1" required>
+            <option value="" selected>Select gender</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-email">Email:</label>
-        <input type="email" id="register-email" name="email" placeholder="Email" class="form-control mt-1" required />
-      </div>
+        <div class="form-group mb-2">
+          <label for="register-birthday">Birthday:</label>
+          <input type="date" id="register-birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control mt-1" required />
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-mobile">Mobile Number:</label>
-        <input type="text" id="register-mobile" name="mobile" placeholder="09123456789" class="form-control mt-1" required />
-      </div>
+        <div class="form-group mb-2">
+          <label for="register-email">Email:</label>
+          <input type="email" id="register-email" name="email" placeholder="Email" class="form-control mt-1" required />
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-username">Username:</label>
-        <input type="text" id="register-username" name="username" placeholder="Username" class="form-control mt-1" required />
-      </div>
+        <div class="form-group mb-2">
+          <label for="register-mobile">Mobile Number:</label>
+          <input type="text" id="register-mobile" name="mobile" placeholder="09123456789" class="form-control mt-1" required />
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-password">Password:</label>
-        <input type="password" id="register-password" name="password" placeholder="Password" class="form-control mt-1" required />
-      </div>
+        <div class="form-group mb-2">
+          <label for="register-username">Username:</label>
+          <input type="text" id="register-username" name="username" placeholder="Username" class="form-control mt-1" required />
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-address-brgy">Barangay:</label>
-        <select id="register-address-brgy" name="address-brgy" class="form-control mt-1" required>
-          <option value="">Select barangay</option>
-          <option>Abuanan</option>
-          <option>Alianza</option>
-          <option>Atipuluan</option>
-          <option>Bacong-Montilla</option>
-          <option>Bagroy</option>
-          <option>Balingasag</option>
-          <option>Binubuhan</option>
-          <option>Busay</option>
-          <option>Calumangan</option>
-          <option>Caridad</option>
-          <option>Don Jorge L. Araneta</option>
-          <option>Dulao</option>
-          <option>Ilijan</option>
-          <option>Lag-Asan</option>
-          <option>Ma-ao</option>
-          <option>Mailum</option>
-          <option>Malingin</option>
-          <option>Napoles</option>
-          <option>Pacol</option>
-          <option>Poblacion</option>
-          <option>Sagasa</option>
-          <option>Tabunan</option>
-          <option>Taloc</option>
-          <option>Sampinit</option>
-        </select>
-      </div>
+        <div class="form-group mb-2">
+          <label for="register-password">Password:</label>
+          <input type="password" id="register-password" name="password" placeholder="Password" class="form-control mt-1" required />
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-address-purok">Purok:</label>
-        <input type="text" id="register-address-purok" name="address-purok" placeholder="Purok" class="form-control mt-1" required />
-      </div>
+        <div class="form-group mb-2">
+          <label for="register-address-brgy">Barangay:</label>
+          <select id="register-address-brgy" name="address-brgy" class="form-control mt-1" required>
+            <option value="">Select barangay</option>
+            <option>Abuanan</option>
+            <option>Alianza</option>
+            <option>Atipuluan</option>
+            <option>Bacong-Montilla</option>
+            <option>Bagroy</option>
+            <option>Balingasag</option>
+            <option>Binubuhan</option>
+            <option>Busay</option>
+            <option>Calumangan</option>
+            <option>Caridad</option>
+            <option>Don Jorge L. Araneta</option>
+            <option>Dulao</option>
+            <option>Ilijan</option>
+            <option>Lag-Asan</option>
+            <option>Ma-ao</option>
+            <option>Mailum</option>
+            <option>Malingin</option>
+            <option>Napoles</option>
+            <option>Pacol</option>
+            <option>Poblacion</option>
+            <option>Sagasa</option>
+            <option>Tabunan</option>
+            <option>Taloc</option>
+            <option>Sampinit</option>
+          </select>
+        </div>
 
-      <div class="form-group mb-2">
-        <label for="register-address-street">Street:</label>
-        <input type="text" id="register-address-street" name="address-street" placeholder="Street" class="form-control mt-1" required />
-      </div>
-      
-      <div class="align-self-end mt-2">
-        <div id="form-register-error" class="text-danger mb-1"></div>
-        <button type="submit" class="btn btn-block btn-secondary">Register Account</button>
+        <div class="form-group mb-2">
+          <label for="register-address-purok">Purok:</label>
+          <input type="text" id="register-address-purok" name="address-purok" placeholder="Purok" class="form-control mt-1" required />
+        </div>
+
+        <div class="form-group mb-2">
+          <label for="register-address-street">Street:</label>
+          <input type="text" id="register-address-street" name="address-street" placeholder="Street" class="form-control mt-1" required />
+        </div>
+        
+        <div class="align-self-end mt-2">
+          <div id="form-register-error" class="text-danger mb-1"></div>
+          <button type="submit" class="btn btn-block btn-secondary">Register Account</button>
+        </div>
       </div>
     </form>
   </div>
 
   <div id="modal-verify" class="modal">
-    <form action="/api/admin/users/verify.php" method="post" id="form-verify" class="card card-tertiary p-4">
-      <input type="hidden" id="verify-id" name="id" value="" required />
-      <div class="form-group">
-        <img src="" alt="" id="verify-validid" width="300" />
+    <form action="/api/admin/users/verify.php" method="post" id="form-verify" class="card card-tertiary p-0">
+      <div class="d-flex flex-align-center mt-1 mb-2 pt-1 px-2">
+        <div class="flex-1"></div>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-verify">
+            <svg fill="#fff" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M376.6 427.5c11.31 13.58 9.484 33.75-4.094 45.06c-5.984 4.984-13.25 7.422-20.47 7.422c-9.172 0-18.27-3.922-24.59-11.52L192 305.1l-135.4 162.5c-6.328 7.594-15.42 11.52-24.59 11.52c-7.219 0-14.48-2.438-20.47-7.422c-13.58-11.31-15.41-31.48-4.094-45.06l142.9-171.5L7.422 84.5C-3.891 70.92-2.063 50.75 11.52 39.44c13.56-11.34 33.73-9.516 45.06 4.094L192 206l135.4-162.5c11.3-13.58 31.48-15.42 45.06-4.094c13.58 11.31 15.41 31.48 4.094 45.06l-142.9 171.5L376.6 427.5z"/></svg>
+          </button>
+        </div>
       </div>
 
-      <button type="submit" class="btn btn-primary mr-2">Verify</button>
-      <button type="reset" class="btn btn-tertiary">Decline</button>
+      <div class="px-4 pb-3">
+        <input type="hidden" id="verify-id" name="id" value="" required />
+        <div class="form-group">
+          <img src="" alt="" id="verify-validid" width="300" />
+        </div>
+
+        <button type="submit" class="btn btn-primary mr-2">Verify</button>
+        <button type="reset" class="btn btn-tertiary">Decline</button>
+      </div>
     </form>
   </div>
 

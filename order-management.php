@@ -133,54 +133,64 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
 
   <div class="modal-container d-none"></div>
   <div id="modal-order" class="modal">
-    <div class="card p-4">
-      <h3 class="card-title mb-2 text-center">ORDER DETAILS</h3>
-      <table class="table-details">
-        <tr>
-          <td>Customer Name:</td>
-          <td id="order-customer-name"></td>
-        </tr>
+    <div class="card p-0">
+      <div class="d-flex flex-align-center mt-1 mb-2 pt-1 px-2">
+        <div class="card-title text-center flex-1">ORDER DETAILS</div>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-order">
+            <svg fill="#000" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M376.6 427.5c11.31 13.58 9.484 33.75-4.094 45.06c-5.984 4.984-13.25 7.422-20.47 7.422c-9.172 0-18.27-3.922-24.59-11.52L192 305.1l-135.4 162.5c-6.328 7.594-15.42 11.52-24.59 11.52c-7.219 0-14.48-2.438-20.47-7.422c-13.58-11.31-15.41-31.48-4.094-45.06l142.9-171.5L7.422 84.5C-3.891 70.92-2.063 50.75 11.52 39.44c13.56-11.34 33.73-9.516 45.06 4.094L192 206l135.4-162.5c11.3-13.58 31.48-15.42 45.06-4.094c13.58 11.31 15.41 31.48 4.094 45.06l-142.9 171.5L376.6 427.5z"/></svg>
+          </button>
+        </div>
+      </div>
 
-        <tr>
-          <td>Transaction ID:</td>
-          <td id="transaction-id"></td>
-        </tr>
+      <div class="px-4 pb-3">
+        <table class="table-details">
+          <tr>
+            <td>Customer Name:</td>
+            <td id="order-customer-name"></td>
+          </tr>
 
-        <tr>
-          <td>Transaction Date:</td>
-          <td id="transaction-date"></td>
-        </tr>
+          <tr>
+            <td>Transaction ID:</td>
+            <td id="transaction-id"></td>
+          </tr>
 
-        <tr>
-          <td>Customer Code:</td>
-          <td id="order-customer-code"></td>
-        </tr>
+          <tr>
+            <td>Transaction Date:</td>
+            <td id="transaction-date"></td>
+          </tr>
 
-        <tr>
-          <td>Address:</td>
-          <td id="order-customer-address"></td>
-        </tr>
+          <tr>
+            <td>Customer Code:</td>
+            <td id="order-customer-code"></td>
+          </tr>
 
-        <tr>
-          <td>Order Type:</td>
-          <td id="order-type"></td>
-        </tr>
-      </table>
+          <tr>
+            <td>Address:</td>
+            <td id="order-customer-address"></td>
+          </tr>
 
-      <table class="table-products">
-        <thead>
-          <th class="px-2 text-center">Farmer Code</th>
-          <th class="px-2 text-center">Product Name</th>
-          <th class="px-2 text-center">Quantity</th>
-          <th class="px-2 text-center">Price</th>
-          <th class="px-2 text-center">Total Amount</th>
-        </thead>
+          <tr>
+            <td>Order Type:</td>
+            <td id="order-type"></td>
+          </tr>
+        </table>
 
-        <tbody id="orders"></tbody>
-      </table>
+        <table class="table-products">
+          <thead>
+            <th class="px-2 text-center">Farmer Code</th>
+            <th class="px-2 text-center">Product Name</th>
+            <th class="px-2 text-center">Quantity</th>
+            <th class="px-2 text-center">Price</th>
+            <th class="px-2 text-center">Total Amount</th>
+          </thead>
 
-      <div class="text-center">
-        <button type="button" class="btn btn-primary px-5" data-modal="#modal-order">OK</button>
+          <tbody id="orders"></tbody>
+        </table>
+
+        <div class="text-center">
+          <button type="button" class="btn btn-primary px-5" data-modal="#modal-order">OK</button>
+        </div>
       </div>
     </div>
   </div>
