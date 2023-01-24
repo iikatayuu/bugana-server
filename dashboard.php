@@ -106,10 +106,10 @@ out_header('BUGANA Admin Dashboard', $styles, $scripts);
     <div class="d-flex flex-align-start px-3 mt-5">
       <div class="flex-1 pr-3">
         <div class="dashboard-statistics d-flex">
-          <h6 class="dashboard-title flex-1 mb-1">Statistics</h6>
-          <button type="button" class="btn btn-text text-sm active" data-graph="weekly">Weekly</button>
-          <button type="button" class="btn btn-text text-sm" data-graph="monthly">Monthly</button>
-          <button type="button" class="btn btn-text text-sm" data-graph="yearly">Yearly</button>
+          <h6 class="dashboard-title flex-1 mb-1"><span class="dashboard-title-text">Weekly</span> Statistical Graph</h6>
+          <button type="button" class="btn btn-text text-sm py-2 px-3 active" data-graph="weekly">Weekly</button>
+          <button type="button" class="btn btn-text text-sm py-2 px-3" data-graph="monthly">Monthly</button>
+          <button type="button" class="btn btn-text text-sm py-2 px-3" data-graph="yearly">Yearly</button>
         </div>
 
         <div>

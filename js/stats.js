@@ -130,14 +130,17 @@ $(document).ready(function () {
     switch (graph) {
       case 'weekly':
         data = weeklyStats
+        $('.dashboard-title-text').text('Weekly')
         break
 
       case 'monthly':
         data = monthlyStats
+        $('.dashboard-title-text').text('Monthly')
         break
 
       case 'yearly':
         data = yearlyStats
+        $('.dashboard-title-text').text('Yearly')
         break
     }
 
