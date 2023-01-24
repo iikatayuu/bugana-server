@@ -26,6 +26,12 @@
   color: #314e5d;
 }
 
+.table-details th,
+.table-details td {
+  padding: 8px;
+  text-align: center;
+}
+
 #modal-month-report .card {
   background-color: #fff;
   border: 1px solid #000;

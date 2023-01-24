@@ -120,6 +120,7 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
             <th>Product Name</th>
             <th>Quantity <?= $is_unsold ? 'Perished' : 'Sold' ?></th>
             <th>Product <?= $is_unsold ? 'Amount' : 'Revenue' ?></th>
+            <th></th>
           </tr>
         </thead>
 
@@ -132,12 +133,13 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
           <td class="product-name"></td>
           <td><span class="quantity-sold"></span> KG</td>
           <td><span class="product-revenue"></span> PHP</td>
+          <td><a href="#" class="product-details">View Details</a></td>
         </tr>
       </template>
 
       <template id="temp-total">
         <tr class="sales-report-total">
-          <td></td>
+          <td colspan="2"></td>
           <td>TOTAL</td>
           <td><span class="sales-report-total-amount"></span> PHP</td>
         </tr>
@@ -180,8 +182,8 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
     <?php } ?>
   </div>
 
-  <?php if ($is_detailed && $date === 'monthly' && !$is_unsold) { ?>
   <div class="modal-container d-none"></div>
+  <?php if ($is_detailed && $date === 'monthly' && !$is_unsold) { ?>
   <div id="modal-month-report" class="modal">
     <div class="card card-rect text-center px-5 pt-2 pb-3">
       <div id="month-report" class="d-contents">
@@ -201,6 +203,36 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
       <button type="button" class="btn btn-tertiary" data-print="#month-report">Print Report</button>
     </div>
   </div>
+  <?php } ?>
+  <?php if ($is_detailed && !$is_unsold) { ?>
+  <div id="modal-product-breakdown" class="modal">
+    <div class="card card-rect p-0 text-center">
+      <h3 class="card-title-tertiary mb-2 py-2 text-center text-lg">PRODUCT BREAKDOWN</h3>
+      <table class="table-details p-2">
+        <thead>
+          <tr>
+            <th>Farmer Name</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total Amount</th>
+          </tr>
+        </thead>
+
+        <tbody id="modal-product-breakdown-farmers"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <template id="temp-breakdown">
+    <tr>
+      <td class="bd-farmer-name"></td>
+      <td class="bd-product-name"></td>
+      <td><span class="bd-product-price"></span> PHP</td>
+      <td><span class="bd-product-quantity"></span> KG</td>
+      <td><span class="bd-total-amount"></span> PHP</td>
+    </tr>
+  </template>
   <?php } ?>
 </main>
 <?php

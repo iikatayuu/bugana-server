@@ -12,6 +12,8 @@ $(document).ready(function () {
 
   const tempSale = $('#temp-sale').prop('content')
   const tempTotal = $('#temp-total').prop('content')
+  const tempBreakdown = $('#temp-breakdown').prop('content')
+
   async function displayTransactions () {
     $('#sales').empty()
 
@@ -36,6 +38,8 @@ $(document).ready(function () {
       $(elem).find('.product-name').text(product.name)
       $(elem).find('.quantity-sold').text(transaction.quantity)
       $(elem).find('.product-revenue').text(transaction.amount)
+      $(elem).find('.product-details').attr('data-product', product.name).click(showProduct)
+
       $('#sales').append(elem)
     }
 
@@ -44,6 +48,35 @@ $(document).ready(function () {
     $(totalElem).find('.sales-report-total-amount').text(totalStr)
     $('#month-total-sales').text(totalStr)
     $('#sales').append(totalElem)
+  }
+
+  async function showProduct (event) {
+    event.preventDefault()
+
+    const product = $(this).attr('data-product')
+    const response = await $.ajax('/api/admin/product/breakdown.php', {
+      method: 'post',
+      dataType: 'json',
+      data: { product, token }
+    })
+    if (!response.success) return
+
+    const breakdown = response.breakdown
+    $('#modal-product-breakdown-farmers').empty()
+    for (let i = 0; i < breakdown.length; i++) {
+      const elem = $(tempBreakdown).clone(true, true)
+      const farmerProduct = breakdown[i]
+
+      $(elem).find('.bd-farmer-name').text(farmerProduct.name)
+      $(elem).find('.bd-product-name').text(product)
+      $(elem).find('.bd-product-price').text(farmerProduct.price)
+      $(elem).find('.bd-product-quantity').text(farmerProduct.quantity)
+      $(elem).find('.bd-total-amount').text(farmerProduct.totalAmount)
+
+      $('#modal-product-breakdown-farmers').append(elem)
+    }
+
+    modal('open', '#modal-product-breakdown')
   }
 
   const currentDate = new Date()
