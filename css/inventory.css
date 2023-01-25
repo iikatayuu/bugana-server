@@ -1,10 +1,4 @@
 
-.item-stock-in-date,
-.item-stocks,
-.item-total-stocks {
-  cursor: pointer;
-}
-
 .item-product-name {
   color: #299438;
 }

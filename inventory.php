@@ -116,6 +116,7 @@ out_header('BUGANA Inventory', $styles, $scripts);
           <th>Recent Stock In Date</th>
           <th>Available Stocks</th>
           <th>Total Stock In</th>
+          <th>Actions</th>
         </tr>
       </thead>
 
@@ -174,7 +175,8 @@ out_header('BUGANA Inventory', $styles, $scripts);
           <tbody id="table-stock-in"></tbody>
         </table>
 
-        <button type="button" class="btn btn-primary btn-sm" data-modal="#modal-stock-add">Add Stock</button>
+        <button type="button" class="btn btn-secondary btn-sm mr-4" data-modal="#modal-stock-in">Cancel</button>
+        <button type="button" class="btn btn-secondary btn-sm" data-modal="#modal-stock-add">Add Stock</button>
       </div>
     </div>
   </div>
@@ -195,7 +197,8 @@ out_header('BUGANA Inventory', $styles, $scripts);
           <input type="number" id="stock-add-quantity" name="quantity" placeholder="Quantity" class="form-control" required />
         </div>
         <div id="form-stock-add-error" class="text-danger"></div>
-        <button type="submit" class="btn btn-primary btn-sm">CONFIRM</button>
+        <button type="button" class="btn btn-secondary btn-sm mr-4">Cancel</button>
+        <button type="submit" class="btn btn-secondary btn-sm">CONFIRM</button>
       </div>
     </form>
   </div>
@@ -212,6 +215,9 @@ out_header('BUGANA Inventory', $styles, $scripts);
       <td class="item-stock-in-date"></td>
       <td class="item-stocks"></td>
       <td class="item-total-stocks"></td>
+      <td>
+        <button type="button" class="btn btn-secondary btn-sm box-shadow text-sm item-show-stocks">Add Stock</button>
+      </td>
     </tr>
   </template>
 
