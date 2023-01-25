@@ -195,7 +195,7 @@ out_header('BUGANA Admin Dashboard', $styles, $scripts);
 
     <div class="card card-background-secondary card-rect p-0 m-3">
       <header class="card-title card-title-tertiary">Farmer Top Sales</header>
-      <div class="px-2 pt-2"></div>
+      <div id="farmer-top" class="d-flex flex-space-around px-1"></div>
     </div>
 
     <template id="temp-restock">
@@ -216,6 +216,38 @@ out_header('BUGANA Admin Dashboard', $styles, $scripts);
       <div class="d-flex flex-align-center mb-1">
         <div class="legend-color"></div>
         <span class="legend-name"></span>
+      </div>
+    </template>
+
+    <template id="temp-farmer-top">
+      <div class="card card-rect">
+        <div class="d-flex flex-align-center">
+          <img src="" alt="" width="64" height="64" class="farmer-top-image user-img mr-2" />
+          <div>
+            <div>Farmer Code: <span class="farmer-top-code"></span></div>
+            <div>Farmer Name: <span class="farmer-top-name"></span></div>
+          </div>
+        </div>
+
+        <div class="mt-2 text-center">
+          <h5 class="text-bold mb-1">Top Sold Products</h5>
+          <div class="top-sold-products d-flex flex-space-around flex-align-end">
+            <div class="farmer-top-2 text-center d-none">
+              <img src="" alt="" width="48" height="48" class="prod-img" />
+              <div class="farmer-top-2-name"></div>
+            </div>
+
+            <div class="farmer-top-1 text-center d-none">
+              <img src="" alt="" width="64" height="64" class="prod-img" />
+              <div class="farmer-top-1-name"></div>
+            </div>
+
+            <div class="farmer-top-3 text-center d-none">
+              <img src="" alt="" width="48" height="48" class="prod-img" />
+              <div class="farmer-top-3-name"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </template>
   </div>

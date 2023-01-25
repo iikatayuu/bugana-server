@@ -44,6 +44,7 @@ $(document).ready(function () {
   const userTemp = $('#temp-user-new').prop('content')
   const legendTemp = $('#temp-legend').prop('content')
   const tempRestock = $('#temp-restock').prop('content')
+  const tempTopUser = $('#temp-farmer-top').prop('content')
   let selected = 'weekly'
   let chart = null
   let weeklyStats = null
@@ -188,6 +189,31 @@ $(document).ready(function () {
 
           $(elem).find('.user-name').text(user.name)
           $('#users-new').append(elem)
+        }
+
+        for (let i = 0; i < stats.topUsers.length; i++) {
+          const farmer = stats.topUsers[i]
+          const elem = $(tempTopUser).clone(true, true)
+
+          $(elem).find('.farmer-top-code').text(farmer.code)
+          $(elem).find('.farmer-top-name').text(farmer.name)
+          $(elem).find('.farmer-top-image').attr({
+            src: `/api/profileimg.php?id=${farmer.id}`,
+            alt: `${farmer.name} Profile Image`
+          })
+
+          for (let j = 0; j < farmer.products.length; j++) {
+            const product = farmer.products[j]
+            const image = product.photos[0]
+            $(elem).find(`.farmer-top-${j + 1}`).removeClass('d-none')
+            $(elem).find(`.farmer-top-${j + 1}-name`).text(product.name)
+            $(elem).find(`.farmer-top-${j + 1} img`).attr({
+              src: image,
+              alt: `${product.name} Image`
+            })
+          }
+
+          $('#farmer-top').append(elem)
         }
 
         weeklyStats = stats.weekly

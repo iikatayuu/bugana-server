@@ -104,6 +104,12 @@ body { background-color: #f7fcf7;}
   background-color: #ffffff;
 }
 
+.user-img,
+.prod-img {
+  border: 1px solid var(--color-tertiary);
+  border-radius: 50%;
+}
+
 .dropdown {
   display: inline-block;
   position: relative;
@@ -305,6 +311,7 @@ select.btn {
 .flex-center { justify-content: center; }
 .flex-align-center { align-items: center; }
 .flex-align-start { align-items: flex-start; }
+.flex-align-end { align-items: flex-end; }
 .align-self-end { align-self: flex-end; }
 
 .w-100 { width: 100% !important; }

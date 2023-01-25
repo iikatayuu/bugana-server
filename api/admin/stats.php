@@ -20,6 +20,12 @@ $result = [
   'stats' => null
 ];
 
+function sort_top ($a, $b) {
+  $an = $a['earnings'];
+  $bn = $b['earnings'];
+  return $bn - $an;
+}
+
 $query = <<<EOD
 SELECT
   products.name,
@@ -162,6 +168,53 @@ if (!empty($_GET['token'])) {
         }
       }
 
+      $top_users = [];
+      $farmers_res = $conn->query("SELECT * FROM users WHERE type='farmer'");
+      while ($farmer = $farmers_res->fetch_object()) {
+        $farmerid = $farmer->id;
+        $total_sales = 0;
+        $products = [];
+        $products_res = $conn->query(
+          "SELECT
+            products.*,
+            COALESCE(SUM(transactions.amount), 0) AS sales
+          FROM products
+          JOIN transactions ON transactions.product=products.id
+          WHERE products.user=$farmerid
+          GROUP BY products.id
+          ORDER BY sales DESC"
+        );
+
+        while ($product = $products_res->fetch_object()) {
+          $total_sales += floatval($product->sales);
+
+          $imgpath = __DIR__ . '/../../userdata/products';
+          $productid = $product->id;
+          $imgres = glob("$imgpath/$productid-*.{jpg,jpeg,png}", GLOB_BRACE);
+          $photos = [];
+
+          foreach ($imgres as $img) {
+            $basename = pathinfo($img, PATHINFO_BASENAME);
+            $photos[] = "/userdata/products/$basename";
+          }
+
+          $products[] = [
+            'id' => $product->id,
+            'name' => $product->name,
+            'photos' => $photos
+          ];
+        }
+
+        $top_users[] = [
+          'id' => $farmer->id,
+          'code' => $farmer->code,
+          'name' => $farmer->name,
+          'earnings' => $total_sales,
+          'products' => $products
+        ];
+      }
+
+      usort($top_users, 'sort_top');
       $result['success'] = true;
       $result['message'] = '';
       $result['stats'] = [
@@ -177,6 +230,7 @@ if (!empty($_GET['token'])) {
           'day' => $total_orders,
           'week' => $total_orders_week
         ],
+        'topUsers' => $top_users,
         'restocks' => $restocks,
         'totalCustomers' => $total_customers,
         'totalFarmers' => $total_farmers,
