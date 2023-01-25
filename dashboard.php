@@ -220,7 +220,7 @@ out_header('BUGANA Admin Dashboard', $styles, $scripts);
     </template>
 
     <template id="temp-farmer-top">
-      <div class="card card-rect">
+      <div class="card card-rect box-shadow">
         <div class="d-flex flex-align-center">
           <img src="" alt="" width="64" height="64" class="farmer-top-image user-img mr-2" />
           <div>
