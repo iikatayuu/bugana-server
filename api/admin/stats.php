@@ -215,6 +215,8 @@ if (!empty($_GET['token'])) {
       }
 
       usort($top_users, 'sort_top');
+      $top_users = array_slice($top_users, 0, 3);
+
       $result['success'] = true;
       $result['message'] = '';
       $result['stats'] = [
