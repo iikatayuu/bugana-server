@@ -126,7 +126,7 @@ out_header('BUGANA Inventory', $styles, $scripts);
           </th>
           <th>Category</th>
           <th>
-          <div class="d-flex flex-align-center flex-center">
+            <div class="d-flex flex-align-center flex-center">
               <span class="mr-1">Product Name</span>
               <div class="dropdown">
                 <button type="button" class="btn btn-text" data-dropdown="toggle">
@@ -140,7 +140,7 @@ out_header('BUGANA Inventory', $styles, $scripts);
             </div>
           </th>
           <th>
-          <div class="d-flex flex-align-center flex-center">
+            <div class="d-flex flex-align-center flex-center">
               <span class="mr-1">Recent Stock In Date</span>
               <div class="dropdown">
                 <button type="button" class="btn btn-text" data-dropdown="toggle">
