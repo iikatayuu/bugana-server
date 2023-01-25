@@ -26,7 +26,6 @@ $result = [
 $page = !empty($_GET['page']) ? $_GET['page'] : '1';
 $limit = !empty($_GET['limit']) ? $conn->real_escape_string($_GET['limit']) : '10';
 $category = !empty($_GET['category']) ? $conn->real_escape_string($_GET['category']) : 'all';
-$farmer = !empty($_GET['farmer']) ? strtoupper($conn->real_escape_string($_GET['farmer'])) : null;
 $search = !empty($_GET['search']) ? $conn->real_escape_string($_GET['search']) : null;
 $productsort = !empty($_GET['product_sort']) ? $conn->real_escape_string($_GET['product_sort']) : null;
 $pricesort = !empty($_GET['price_sort']) ? $conn->real_escape_string($_GET['price_sort']) : null;
@@ -37,22 +36,25 @@ if (!preg_match('/^(\d+)$/', $page)) {
   die(json_encode($result));
 }
 
-if ($farmer && !preg_match('/^(F\d{2})$/', $farmer)) {
-  $result['message'] = 'Invalid farmer code';
-  die(json_encode($result));
-}
-
 $query = "SELECT * FROM products";
 $count_query = "SELECT COUNT(*) AS count FROM products";
 $wheres = [];
 
 if ($category !== 'all' && $category !== '') $wheres[] = "category='$category'";
-if ($search) $wheres[] = "name LIKE '%$search%'";
-if ($farmer) {
-  $farmer_res = $conn->query("SELECT id FROM users WHERE code='$farmer' LIMIT 1");
-  $farmerobj = $farmer_res->num_rows > 0 ? $farmer_res->fetch_object() : null;
-  $userid = $farmerobj->id;
-  $wheres[] = "user=$userid";
+if ($search) {
+  $users_q_res = $conn->query("SELECT id FROM users WHERE name LIKE '%$search%'");
+  $ids = [];
+  while ($user_q = $users_q_res->fetch_object()) {
+    $user_id = $user_q->id;
+    $ids[] = "user=$user_id";
+  }
+
+  if (count($ids) > 0) {
+    $ids = implode(' OR ', $ids);
+    $wheres[] = "(name LIKE '%$search%' OR $ids)";
+  } else {
+    $wheres[] = "name LIKE '%$search%'";
+  }
 }
 
 $add_q = count($wheres) > 0 ? ' WHERE ' . implode(' AND ', $wheres) : '';

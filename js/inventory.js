@@ -13,7 +13,7 @@ $(document).ready(function () {
   let category = 'all'
   let page = 1
   let limit = parseInt($('#limit-page').val())
-  let farmerCode = $('#farmer-search').val()
+  let searchQ = $('#search-q').val()
   let products = []
   let currentProduct = null
 
@@ -46,7 +46,7 @@ $(document).ready(function () {
     params.set('limit', limit.toString())
     params.set('category', category)
     params.set('stock', '1')
-    if (farmerCode) params.set('farmer', farmerCode)
+    if (searchQ) params.set('search', searchQ)
 
     const response = await $.ajax(`/api/product/list.php?${params.toString()}`, {
       method: 'get',
@@ -156,21 +156,21 @@ $(document).ready(function () {
     modal('open', '#modal-stock-in')
   }
 
-  let codeTimer = null
+  let searchTimer = null
   let limitTimer = null
 
-  $('#farmer-search').on('keyup', function () {
+  $('#search-q').on('keyup', function () {
     const value = $(this).val()
-    clearTimeout(codeTimer)
-    codeTimer = setTimeout(function () {
-      farmerCode = value
+    clearTimeout(searchTimer)
+    searchTimer = setTimeout(function () {
+      searchQ = value
       page = 1
       displayStocks()
     }, 1250)
   })
 
-  $('#farmer-search').on('keydown', function () {
-    if (codeTimer) clearTimeout(codeTimer)
+  $('#search-q').on('keydown', function () {
+    if (searchTimer) clearTimeout(searchTimer)
   })
 
   $('#limit-page').on('keyup', function () {

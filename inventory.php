@@ -84,7 +84,7 @@ out_header('BUGANA Inventory', $styles, $scripts);
 
     <div class="d-flex flex-space-between flex-align-center mt-4 mx-3">
       <div class="flex-1">
-        <input type="text" id="farmer-search" name="q" placeholder="Search Farmer Code" class="form-control form-control-white box-shadow table-search" />
+        <input type="text" id="search-q" name="q" placeholder="Search Farmer or Product" class="form-control form-control-white box-shadow table-search" />
       </div>
 
       <div class="mr-4">
