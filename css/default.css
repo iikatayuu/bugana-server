@@ -131,6 +131,32 @@ body { background-color: #f7fcf7;}
 .dropdown-content button { border-bottom: 1px solid #ccc; }
 .dropdown-content button:last-child { border: 0; }
 
+.tooltip {
+  position: relative;
+}
+
+.tooltip-content {
+  position: absolute;
+  padding: 2px 4px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.tooltip-content-left {
+  top: 4px;
+  transform: translateX(-110%);
+}
+
+.tooltip-content {
+  display: none;
+}
+
+.tooltip:hover .tooltip-content {
+  display: block;
+}
+
 .modal-container {
   position: fixed;
   top: 0;

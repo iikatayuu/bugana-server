@@ -89,8 +89,9 @@ out_header('BUGANA Inventory', $styles, $scripts);
 
       <div class="mr-4">
         <div class="dropdown">
-          <button type="button" class="btn btn-text" data-dropdown="toggle">
+          <button type="button" class="btn btn-text tooltip" data-dropdown="toggle">
             <img src="/imgs/bell.svg" alt="Notifications" width="24" height="24" />
+            <div class="tooltip-content tooltip-content-left">Notifications</div>
           </button>
           <div id="perish-products" class="dropdown-content"></div>
         </div>
