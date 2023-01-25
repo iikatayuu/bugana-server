@@ -200,8 +200,8 @@ out_header('BUGANA Admin Dashboard', $styles, $scripts);
 
     <template id="temp-restock">
       <tr>
-        <td class="restock-name text-center"></td>
-        <td class="restock-stocks text-center"></td>
+        <td class="restock-name text-center pt-1"></td>
+        <td class="restock-stocks text-center pt-1"></td>
       </tr>
     </template>
 
