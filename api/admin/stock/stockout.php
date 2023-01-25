@@ -23,6 +23,13 @@ $result = [
   'pages' => 0
 ];
 
+$page = !empty($_GET['page']) ? $_GET['page'] : '1';
+$limit = !empty($_GET['limit']) ? $conn->real_escape_string($_GET['limit']) : '10';
+$search = !empty($_GET['search']) ? $conn->real_escape_string($_GET['search']) : null;
+$productsort = !empty($_GET['product_sort']) ? $conn->real_escape_string($_GET['product_sort']) : null;
+$farmersort = !empty($_GET['farmer_sort']) ? $conn->real_escape_string($_GET['farmer_sort']) : null;
+$stockoutsort = !empty($_GET['stockout_sort']) ? $conn->real_escape_string($_GET['stockout_sort']) : null;
+
 if (!empty($_GET['token'])) {
   $decoded = null;
   try {
@@ -40,10 +47,6 @@ if (!empty($_GET['token'])) {
   if ($decoded !== null) {
     $usertype = $decoded->type;
     if ($usertype === 'admin' || $usertype === 'headadmin') {
-      $page = !empty($_GET['page']) ? $_GET['page'] : '1';
-      $limit = !empty($_GET['limit']) ? $conn->real_escape_string($_GET['limit']) : '10';
-      $search = !empty($_GET['search']) ? $conn->real_escape_string($_GET['search']) : null;
-
       if (!preg_match('/^(\d+)$/', $page)) {
         $result['message'] = 'Invalid page';
         die(json_encode($result));
@@ -66,8 +69,20 @@ if (!empty($_GET['token'])) {
       $query .= $add_q;
       $count_query .= $add_q;
 
+      $orders = [];
+      if ($productsort && $productsort === 'asc') $orders[] = 'productname ASC';
+      if ($productsort && $productsort === 'desc') $orders[] = 'productname DESC';
+      if ($farmersort && $farmersort === 'asc') $orders[] = 'userfullname ASC';
+      if ($farmersort && $farmersort === 'desc') $orders[] = 'userfullname DESC';
+      if ($stockoutsort && $stockoutsort === 'asc') $orders[] = 'stocks.date ASC';
+      if ($stockoutsort && $stockoutsort === 'desc') $orders[] = 'stocks.date DESC';
+
+      $default_order = 'stocks.date DESC';
+      $add_q = ' ORDER BY ' . (count($orders) > 0 ? implode(', ', $orders) : $default_order);
+      $query .= $add_q;
+
       $page_q = (intval($page) - 1) * intval($limit);
-      $stocks_res = $conn->query("$query ORDER BY stocks.date DESC LIMIT $page_q, $limit");
+      $stocks_res = $conn->query("$query LIMIT $page_q, $limit");
       $count_res = $conn->query($count_query);
       $count = $count_res->fetch_object()->count;
       $stocks = [];

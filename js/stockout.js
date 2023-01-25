@@ -8,6 +8,9 @@ $(document).ready(function () {
 
   const tempItem = $('#temp-item').prop('content')
   const tempPageBtn = $('#temp-page-btn').prop('content')
+  let farmerSort = ''
+  let productSort = ''
+  let stockOutSort = ''
   let page = 1
   let limit = parseInt($('#limit-page').val())
   let transactionCode = $('#transaction-search').val()
@@ -20,6 +23,9 @@ $(document).ready(function () {
     params.set('page', page.toString())
     params.set('limit', limit.toString())
     if (transactionCode) params.set('search', transactionCode)
+    if (farmerSort) params.set('farmer.sort', farmerSort)
+    if (productSort) params.set('product.sort', productSort)
+    if (stockOutSort) params.set('stockout.sort', stockOutSort)
 
     const response = await $.ajax(`/api/admin/stock/stockout.php?${params.toString()}`, {
       method: 'get',
@@ -127,6 +133,42 @@ $(document).ready(function () {
 
   $('#limit-page').on('keydown', function () {
     if (limitTimer) clearTimeout(limitTimer)
+  })
+
+  $('#sort-farmer-ascending').click(function () {
+    farmerSort = 'asc'
+    $('.dropdown-content.active').removeClass('active')
+    displayStocks()
+  })
+
+  $('#sort-farmer-descending').click(function () {
+    farmerSort = 'desc'
+    $('.dropdown-content.active').removeClass('active')
+    displayStocks()
+  })
+
+  $('#sort-product-ascending').click(function () {
+    productSort = 'asc'
+    $('.dropdown-content.active').removeClass('active')
+    displayStocks()
+  })
+
+  $('#sort-product-descending').click(function () {
+    productSort = 'desc'
+    $('.dropdown-content.active').removeClass('active')
+    displayStocks()
+  })
+
+  $('#sort-stockout-ascending').click(function () {
+    stockOutSort = 'asc'
+    $('.dropdown-content.active').removeClass('active')
+    displayStocks()
+  })
+
+  $('#sort-stockout-descending').click(function () {
+    stockOutSort = 'desc'
+    $('.dropdown-content.active').removeClass('active')
+    displayStocks()
   })
 
   $(document).on('click', '[data-page]', function (event) {

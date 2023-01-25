@@ -91,10 +91,49 @@ out_header('BUGANA Inventory', $styles, $scripts);
     <table class="dashboard-table">
       <thead>
         <tr>
-          <th>Farmer Name</th>
+          <th>
+            <div class="d-flex flex-align-center flex-center">
+              <span class="mr-1">Farmer Name</span>
+              <div class="dropdown">
+                <button type="button" class="btn btn-text" data-dropdown="toggle">
+                  <img src="/imgs/down.svg" alt="Sort by farmer name" width="12" />
+                </button>
+                <div class="dropdown-content">
+                  <button type="button" class="btn btn-text btn-block text-md py-1" id="sort-farmer-ascending">Sort: A-Z</button>
+                  <button type="button" class="btn btn-text btn-block text-md py-1" id="sort-farmer-descending">Sort: Z-A</button>
+                </div>
+              </div>
+            </div>
+          </th>
           <th>Category</th>
-          <th>Product Name</th>
-          <th>Stock Out Date</th>
+          <th>
+            <div class="d-flex flex-align-center flex-center">
+              <span class="mr-1">Product Name</span>
+              <div class="dropdown">
+                <button type="button" class="btn btn-text" data-dropdown="toggle">
+                  <img src="/imgs/down.svg" alt="Sort by product name" width="12" />
+                </button>
+                <div class="dropdown-content">
+                  <button type="button" class="btn btn-text btn-block text-md py-1" id="sort-product-ascending">Sort: A-Z</button>
+                  <button type="button" class="btn btn-text btn-block text-md py-1" id="sort-product-descending">Sort: Z-A</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="d-flex flex-align-center flex-center">
+              <span class="mr-1">Stock Out Date</span>
+              <div class="dropdown">
+                <button type="button" class="btn btn-text" data-dropdown="toggle">
+                  <img src="/imgs/down.svg" alt="Sort by stock out date" width="12" />
+                </button>
+                <div class="dropdown-content">
+                  <button type="button" class="btn btn-text btn-block text-md py-1" id="sort-stockout-ascending">Oldest</button>
+                  <button type="button" class="btn btn-text btn-block text-md py-1" id="sort-stockout-descending">Latest</button>
+                </div>
+              </div>
+            </div>
+          </th>
           <th>Quantity</th>
           <th>Price</th>
           <th>Total</th>
