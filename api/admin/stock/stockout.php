@@ -54,7 +54,8 @@ if (!empty($_GET['token'])) {
           stocks.*,
           products.user AS farmerid,
           products.name AS productname,
-          products.category
+          products.category,
+          (SELECT name FROM users WHERE users.id=products.user) AS userfullname
         FROM stocks
         JOIN products ON products.id=stocks.product";
 
@@ -80,6 +81,7 @@ if (!empty($_GET['token'])) {
           'date' => $stock->date,
           'revenue' => $stock->amount,
           'status' => $stock->status,
+          'username' => $stock->userfullname,
           'product' => [
             'name' => $stock->productname,
             'user' => $farmerid,

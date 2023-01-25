@@ -91,8 +91,7 @@ out_header('BUGANA Inventory', $styles, $scripts);
     <table class="dashboard-table">
       <thead>
         <tr>
-          <th>Transaction ID</th>
-          <th>Farmer ID</th>
+          <th>Farmer Name</th>
           <th>Category</th>
           <th>Product Name</th>
           <th>Stock Out Date</th>
@@ -133,8 +132,7 @@ out_header('BUGANA Inventory', $styles, $scripts);
 
   <template id="temp-item">
     <tr>
-      <td class="item-tx-code"></td>
-      <td class="item-farmer-id"></td>
+      <td class="item-farmer-name"></td>
       <td class="item-category"></td>
       <td class="item-product-name"></td>
       <td class="item-stock-out-date"></td>
