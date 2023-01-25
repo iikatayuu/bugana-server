@@ -126,6 +126,11 @@ main {
   margin: 16px auto;
 }
 
+.dashboard-table th {
+  background-color: var(--color-tertiary);
+  color: var(--color-tertiary-contrast);
+}
+
 .dashboard-table td,
 .dashboard-table th {
   padding: 8px;
