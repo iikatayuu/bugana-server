@@ -147,11 +147,9 @@ if (!empty($_GET['token'])) {
 
       $prod_res = $conn->query("SELECT
           products.*,
-          users.code,
           COALESCE(SUM(stocks.quantity), 0) AS stocks
         FROM products
         JOIN stocks ON stocks.product=products.id
-        JOIN users ON users.id=products.user
         GROUP BY products.id
         ORDER BY stocks ASC
         LIMIT 3
