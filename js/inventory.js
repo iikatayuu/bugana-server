@@ -10,6 +10,9 @@ $(document).ready(function () {
   const tempStock = $('#temp-stock').prop('content')
   const tempNotification = $('#temp-perish').prop('content')
   const tempPageBtn = $('#temp-page-btn').prop('content')
+  let farmerSort = ''
+  let productSort = ''
+  let stockInSort = ''
   let category = 'all'
   let page = 1
   let limit = parseInt($('#limit-page').val())
@@ -20,6 +23,7 @@ $(document).ready(function () {
   async function getNotifications () {
     const params = new URLSearchParams()
     params.set('token', token)
+
     const response = await $.ajax(`/api/admin/notifications.php`, {
       method: 'post',
       dataType: 'json',
@@ -47,6 +51,9 @@ $(document).ready(function () {
     params.set('category', category)
     params.set('stock', '1')
     if (searchQ) params.set('search', searchQ)
+    if (farmerSort) params.set('farmer.sort', farmerSort)
+    if (productSort) params.set('product.sort', productSort)
+    if (stockInSort) params.set('stockin.sort', stockInSort)
 
     const response = await $.ajax(`/api/product/list.php?${params.toString()}`, {
       method: 'get',
@@ -225,6 +232,42 @@ $(document).ready(function () {
     } else {
       $('#form-stock-add-error').text(response.message)
     }
+  })
+
+  $('#sort-farmer-ascending').click(function () {
+    farmerSort = 'asc'
+    $('.dropdown-content.active').removeClass('active')
+    displayStocks()
+  })
+
+  $('#sort-farmer-descending').click(function () {
+    farmerSort = 'desc'
+    $('.dropdown-content.active').removeClass('active')
+    displayStocks()
+  })
+
+  $('#sort-product-ascending').click(function () {
+    productSort = 'asc'
+    $('.dropdown-content.active').removeClass('active')
+    displayStocks()
+  })
+
+  $('#sort-product-descending').click(function () {
+    productSort = 'desc'
+    $('.dropdown-content.active').removeClass('active')
+    displayStocks()
+  })
+
+  $('#sort-stockin-ascending').click(function () {
+    stockInSort = 'asc'
+    $('.dropdown-content.active').removeClass('active')
+    displayStocks()
+  })
+
+  $('#sort-stockin-descending').click(function () {
+    stockInSort = 'desc'
+    $('.dropdown-content.active').removeClass('active')
+    displayStocks()
   })
 
   $(document).on('click', '[data-page]', function (event) {

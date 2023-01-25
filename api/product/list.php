@@ -23,12 +23,40 @@ $result = [
   'pages' => 0
 ];
 
+function sort_stockin_asc ($a, $b) {
+  $astocks = $a->stocksIn;
+  $bstocks = $b->stocksIn;
+  if (count($astocks) > 0 && count($bstocks) > 0) {
+    $atime = strtotime($astocks[0]['date']);
+    $btime = strtotime($bstocks[0]['date']);
+    return $atime - $btime;
+  }
+  else if (count($astocks) > 0) return 1;
+  else if (count($bstocks) > 0) return -1;
+  else return 0;
+}
+
+function sort_stockin_desc ($a, $b) {
+  $astocks = $a->stocksIn;
+  $bstocks = $b->stocksIn;
+  if (count($astocks) > 0 && count($bstocks) > 0) {
+    $atime = strtotime($astocks[0]['date']);
+    $btime = strtotime($bstocks[0]['date']);
+    return $btime - $atime;
+  }
+  else if (count($astocks) > 0) return -1;
+  else if (count($bstocks) > 0) return 1;
+  else return 0;
+}
+
 $page = !empty($_GET['page']) ? $_GET['page'] : '1';
 $limit = !empty($_GET['limit']) ? $conn->real_escape_string($_GET['limit']) : '10';
 $category = !empty($_GET['category']) ? $conn->real_escape_string($_GET['category']) : 'all';
 $search = !empty($_GET['search']) ? $conn->real_escape_string($_GET['search']) : null;
 $productsort = !empty($_GET['product_sort']) ? $conn->real_escape_string($_GET['product_sort']) : null;
 $pricesort = !empty($_GET['price_sort']) ? $conn->real_escape_string($_GET['price_sort']) : null;
+$farmersort = !empty($_GET['farmer_sort']) ? $conn->real_escape_string($_GET['farmer_sort']) : null;
+$stockinsort = !empty($_GET['stockin_sort']) ? $conn->real_escape_string($_GET['stockin_sort']) : null;
 $random = isset($_GET['random']);
 
 if (!preg_match('/^(\d+)$/', $page)) {
@@ -36,7 +64,7 @@ if (!preg_match('/^(\d+)$/', $page)) {
   die(json_encode($result));
 }
 
-$query = "SELECT * FROM products";
+$query = "SELECT products.*, users.name AS userfullname FROM products JOIN users ON users.id=products.user";
 $count_query = "SELECT COUNT(*) AS count FROM products";
 $wheres = [];
 
@@ -66,6 +94,8 @@ if ($productsort && $productsort === 'asc') $orders[] = 'name ASC';
 if ($productsort && $productsort === 'desc') $orders[] = 'name DESC';
 if ($pricesort && $pricesort === 'asc') $orders[] = 'price ASC';
 if ($pricesort && $pricesort === 'desc') $orders[] = 'price DESC';
+if ($farmersort && $farmersort === 'asc') $orders[] = 'userfullname ASC';
+if ($farmersort && $farmersort === 'desc') $orders[] = 'userfullname DESC';
 $default_order = $random ? 'rand()' : 'created DESC';
 $add_q = ' ORDER BY ' . (count($orders) > 0 ? implode(', ', $orders) : $default_order);
 $query .= $add_q;
@@ -140,6 +170,11 @@ while ($product = $products_res->fetch_object()) {
   }
 
   $products[] = $product;
+}
+
+if (!empty($_GET['stock']) && $stockinsort) {
+  if ($stockinsort === 'asc') usort($products, 'sort_stockin_asc');
+  if ($stockinsort === 'desc') usort($products, 'sort_stockin_desc');
 }
 
 $result['success'] = true;
