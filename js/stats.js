@@ -43,6 +43,7 @@ $(document).ready(function () {
 
   const userTemp = $('#temp-user-new').prop('content')
   const legendTemp = $('#temp-legend').prop('content')
+  const tempRestock = $('#temp-restock').prop('content')
   let selected = 'weekly'
   let chart = null
   let weeklyStats = null
@@ -167,7 +168,16 @@ $(document).ready(function () {
         $('.total-customers').text(stats.totalCustomers)
         $('.total-farmers').text(stats.totalFarmers)
 
-        for (let i = 0; i < stats.users.length && i < 3; i++) {
+        for (let i = 0; i < stats.restocks.length; i++) {
+          const elem = $(tempRestock).clone(true, true)
+          const restock = stats.restocks[i]
+
+          $(elem).find('.restock-name').text(restock.name)
+          $(elem).find('.restock-stocks').text(restock.stocks)
+          $('#restock').append(elem)
+        }
+
+        for (let i = 0; i < stats.users.length; i++) {
           const user = stats.users[i]
           const elem = $(userTemp).clone(true, true)
 

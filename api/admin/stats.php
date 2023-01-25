@@ -139,6 +139,29 @@ if (!empty($_GET['token'])) {
         ];
       }
 
+      $prod_res = $conn->query("SELECT
+          products.*,
+          users.code,
+          COALESCE(SUM(stocks.quantity), 0) AS stocks
+        FROM products
+        JOIN stocks ON stocks.product=products.id
+        JOIN users ON users.id=products.user
+        GROUP BY products.id
+        ORDER BY stocks ASC
+        LIMIT 3
+      ");
+
+      $restocks = [];
+      while ($prod = $prod_res->fetch_object()) {
+        $productname = $prod->name;
+        if ($prod->stocks < 5) {
+          $restocks[] = [
+            'name' => $prod->name,
+            'stocks' => $prod->stocks
+          ];
+        }
+      }
+
       $result['success'] = true;
       $result['message'] = '';
       $result['stats'] = [
@@ -154,6 +177,7 @@ if (!empty($_GET['token'])) {
           'day' => $total_orders,
           'week' => $total_orders_week
         ],
+        'restocks' => $restocks,
         'totalCustomers' => $total_customers,
         'totalFarmers' => $total_farmers,
         'users' => $new_users,

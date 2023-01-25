@@ -170,6 +170,15 @@ out_header('BUGANA Admin Dashboard', $styles, $scripts);
       <div class="cards-add">
         <div class="card card-background-secondary card-rect p-0 mb-2">
           <header class="card-title card-title-tertiary text-lg">To Restock</header>
+          <table class="w-100 my-1">
+            <thead>
+              <tr>
+                <th class="text-center">Product Name</th>
+                <th class="text-center">Quantity Left</th>
+              </tr>
+            </thead>
+            <tbody id="restock"></tbody>
+          </table>
         </div>
 
         <div class="card card-background-secondary card-rect p-0 mb-2">
@@ -188,6 +197,13 @@ out_header('BUGANA Admin Dashboard', $styles, $scripts);
       <header class="card-title card-title-tertiary">Farmer Top Sales</header>
       <div class="px-2 pt-2"></div>
     </div>
+
+    <template id="temp-restock">
+      <tr>
+        <td class="restock-name text-center"></td>
+        <td class="restock-stocks text-center"></td>
+      </tr>
+    </template>
 
     <template id="temp-user-new">
       <div class="d-flex flex-align-center mb-1">
