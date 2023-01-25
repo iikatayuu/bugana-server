@@ -79,32 +79,82 @@ out_header('BUGANA Admin Dashboard', $styles, $scripts);
     </header>
 
     <h6 class="dashboard-title my-2 mx-3">Overview</h6>
-    <div class="dashboard-cards">
-      <div class="card card-tertiary text-center">
-        <div class="mb-2">TOTAL PRODUCTS SOLD</div>
-        <div>
-          <span class="total-products-sold"></span> KG
+    <div class="d-flex px-3 py-2">
+      <div class="flex-1 mr-2">
+        <div class="dashboard-cards mb-3">
+          <div class="card card-tertiary">
+            <div class="mb-1 text-center">
+              <h5>Total Products Sold</h5>
+            </div>
+            <div class="d-flex">
+              <div class="flex-1"><h6>Today:</h6></div>
+              <div class="card-value">
+                <span class="total-products-sold-day">0</span> KG
+              </div>
+            </div>
+            <div class="d-flex">
+              <div class="flex-1"><h6>This Week:</h6></div>
+              <div class="card-value">
+                <span class="total-products-sold-week">0</span> KG
+              </div>
+            </div>
+          </div>
+
+          <div class="card card-tertiary">
+            <div class="mb-1 text-center">
+              <h5>Total Orders</h5>
+            </div>
+            <div class="d-flex">
+              <div class="flex-1"><h6>Today:</h6></div>
+              <div class="card-value">
+                <span class="total-orders-day">0</span> KG
+              </div>
+            </div>
+            <div class="d-flex">
+              <div class="flex-1"><h6>This Week:</h6></div>
+              <div class="card-value">
+                <span class="total-orders-week">0</span> KG
+              </div>
+            </div>
+          </div>
+
+          <div class="card card-tertiary">
+            <div class="mb-1 text-center">
+              <h5>Total Unsold Products</h5>
+            </div>
+            <div class="d-flex">
+              <div class="flex-1"><h6>Today:</h6></div>
+              <div class="card-value">
+                <span class="total-products-unsold-day">0</span> KG
+              </div>
+            </div>
+            <div class="d-flex">
+              <div class="flex-1"><h6>This Week:</h6></div>
+              <div class="card-value">
+                <span class="total-products-unsold-week">0</span> KG
+              </div>
+            </div>
+          </div>
+
+          <div class="card card-tertiary">
+            <div class="mb-1 text-center">
+              <h5>Total Registered Customers</h5>
+            </div>
+            <div class="text-center text-xl">
+              <span class="total-customers card-value">0</span>
+            </div>
+          </div>
+
+          <div class="card card-tertiary">
+            <div class="mb-1 text-center">
+              <h5>Total Registered Farmers</h5>
+            </div>
+            <div class="text-center text-xl">
+              <span class="total-farmers card-value">0</span>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="card card-tertiary text-center">
-        <div class="mb-2">TOTAL ORDERS</div>
-        <div class="total-orders">0</div>
-      </div>
-
-      <div class="card card-tertiary text-center">
-        <div class="mb-2">TOTAL USERS</div>
-        <div class="total-users">0</div>
-      </div>
-
-      <div class="card card-tertiary text-center">
-        <div class="mb-2">TOTAL UNSOLD PRODUCTS</div>
-        <div class="total-products-unsold">0</div>
-      </div>
-    </div>
-
-    <div class="d-flex flex-align-start px-3 mt-5">
-      <div class="flex-1 pr-3">
         <div class="dashboard-statistics d-flex">
           <h6 class="dashboard-title flex-1 mb-1"><span class="dashboard-title-text">Weekly</span> Statistical Graph</h6>
           <button type="button" class="btn btn-text text-sm py-2 px-3 active" data-graph="weekly">Weekly</button>
@@ -118,6 +168,10 @@ out_header('BUGANA Admin Dashboard', $styles, $scripts);
       </div>
 
       <div class="cards-add">
+        <div class="card card-background-secondary card-rect p-0 mb-2">
+          <header class="card-title card-title-tertiary text-lg">To Restock</header>
+        </div>
+
         <div class="card card-background-secondary card-rect p-0 mb-2">
           <header class="card-title card-title-tertiary text-lg">New Customers</header>
           <div id="users-new" class="px-2 pt-2"></div>

@@ -57,19 +57,33 @@ if (!empty($_GET['token'])) {
     $usertype = $decoded->type;
 
     if ($usertype === 'admin' || $usertype === 'headadmin') {
-      $total_users_res = $conn->query("SELECT COUNT(*) AS total FROM users");
-      $total_users = $total_users_res->fetch_object()->total;
+      $total_customers_res = $conn->query("SELECT COUNT(*) AS total FROM users WHERE type='customer'");
+      $total_customers = $total_customers_res->fetch_object()->total;
+      $total_farmers_res = $conn->query("SELECT COUNT(*) AS total FROM users WHERE type='farmer'");
+      $total_farmers = $total_farmers_res->fetch_object()->total;
 
-      $total_products_res = $conn->query("SELECT COALESCE(SUM(quantity), 0) AS total FROM transactions WHERE status='success'");
+      $current_day = date('w');
+      $day_start = date('Y-m-d 00:00:00');
+      $day_end = date('Y-m-d 23:59:59');
+      $week_start = date('Y-m-d 00:00:00', strtotime("-$current_day days"));
+      $week_end = date('Y-m-d 23:59:59', strtotime('+' . (6 - intval($current_day)) . ' days'));
+
+      $total_products_res = $conn->query("SELECT COALESCE(SUM(quantity), 0) AS total FROM transactions WHERE status='success' AND date BETWEEN '$day_start' AND '$day_end'");
       $total_products = $total_products_res->fetch_object()->total;
+      $total_products_week_res = $conn->query("SELECT COALESCE(SUM(quantity), 0) AS total FROM transactions WHERE status='success' AND date BETWEEN '$week_start' AND '$week_end'");
+      $total_products_week = $total_products_week_res->fetch_object()->total;
 
-      $total_products_unsold_res = $conn->query("SELECT COALESCE(SUM(quantity), 0) AS total FROM stocks WHERE status='perished'");
+      $total_products_unsold_res = $conn->query("SELECT COALESCE(SUM(quantity), 0) AS total FROM stocks WHERE status='perished' AND date BETWEEN '$day_start' AND '$day_end'");
       $total_products_unsold = $total_products_unsold_res->fetch_object()->total;
+      $total_products_unsold_week_res = $conn->query("SELECT COALESCE(SUM(quantity), 0) AS total FROM stocks WHERE status='perished' AND date BETWEEN '$week_start' AND '$week_end'");
+      $total_products_unsold_week = $total_products_unsold_week_res->fetch_object()->total;
 
-      $total_orders_res = $conn->query("SELECT COUNT(DISTINCT(transaction_code)) AS total FROM transactions WHERE status='success'");
+      $total_orders_res = $conn->query("SELECT COUNT(DISTINCT(transaction_code)) AS total FROM transactions WHERE status='success' AND date BETWEEN '$day_start' AND '$day_end'");
       $total_orders = $total_orders_res->fetch_object()->total;
+      $total_orders_week_res = $conn->query("SELECT COUNT(DISTINCT(transaction_code)) AS total FROM transactions WHERE status='success' AND date BETWEEN '$week_start' AND '$week_end'");
+      $total_orders_week = $total_orders_week_res->fetch_object()->total;
 
-      $new_users_res = $conn->query("SELECT * FROM users WHERE type='customer' ORDER BY created DESC LIMIT 10");
+      $new_users_res = $conn->query("SELECT * FROM users WHERE type='customer' ORDER BY created DESC LIMIT 3");
       $new_users = [];
       while ($user = $new_users_res->fetch_object()) {
         $new_users[] = [
@@ -82,9 +96,6 @@ if (!empty($_GET['token'])) {
       $monthly = [];
       $yearly = [];
 
-      $current_day = date('w');
-      $week_start = date('Y-m-d 00:00:00', strtotime("-$current_day days"));
-      $week_end = date('Y-m-d 23:59:59', strtotime('+' . (6 - intval($current_day)) . ' days'));
       $weekly_date_start = date('M d', strtotime("-$current_day days"));
       $weekly_date_end = date('M d', strtotime('+' . (6 - intval($current_day)) . ' days'));
       $weekly_date = "$weekly_date_start - $weekly_date_end";
@@ -131,10 +142,20 @@ if (!empty($_GET['token'])) {
       $result['success'] = true;
       $result['message'] = '';
       $result['stats'] = [
-        'totalProductsSold' => $total_products,
-        'totalProductsUnsold' => intval($total_products_unsold) * -1,
-        'totalOrders' => $total_orders,
-        'totalUsers' => $total_users,
+        'totalProductsSold' => [
+          'day' => $total_products,
+          'week' => $total_products_week
+        ],
+        'totalProductsUnsold' => [
+          'day' => intval($total_products_unsold) * -1,
+          'week' => intval($total_products_unsold_week) * -1
+        ],
+        'totalOrders' => [
+          'day' => $total_orders,
+          'week' => $total_orders_week
+        ],
+        'totalCustomers' => $total_customers,
+        'totalFarmers' => $total_farmers,
         'users' => $new_users,
         'weekly' => $weekly,
         'weeklyDate' => $weekly_date,

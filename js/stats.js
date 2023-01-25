@@ -158,10 +158,14 @@ $(document).ready(function () {
     success: function (data) {
       if (data.success) {
         const stats = data.stats
-        $('.total-products-sold').text(stats.totalProductsSold)
-        $('.total-products-unsold').text(stats.totalProductsUnsold)
-        $('.total-orders').text(stats.totalOrders)
-        $('.total-users').text(stats.totalUsers)
+        $('.total-products-sold-day').text(stats.totalProductsSold.day)
+        $('.total-products-sold-week').text(stats.totalProductsSold.week)
+        $('.total-products-unsold-day').text(stats.totalProductsUnsold.day)
+        $('.total-products-unsold-week').text(stats.totalProductsUnsold.week)
+        $('.total-orders-day').text(stats.totalOrders.day)
+        $('.total-orders-week').text(stats.totalOrders.week)
+        $('.total-customers').text(stats.totalCustomers)
+        $('.total-farmers').text(stats.totalFarmers)
 
         for (let i = 0; i < stats.users.length && i < 3; i++) {
           const user = stats.users[i]
