@@ -87,7 +87,7 @@ out_header('BUGANA Stock Out', $styles, $scripts);
         <input type="text" id="search-q" name="q" placeholder="Search Farmer or Product" class="form-control form-control-white box-shadow table-search" />
       </div>
       <div class="mr-2">
-        <a href="/manual-stockout.php" class="btn btn-secondary text-md" role="button">Manual Stock Out</a>
+        <a href="/manual-stockout.php" class="btn btn-secondary text-md py-1" role="button">Manual Stock Out</a>
       </div>
       <div>
         <select id="products-category-select" class="btn btn-sm btn-tertiary text-md py-1">
