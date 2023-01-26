@@ -152,7 +152,7 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
           <td><span class="sales-report-total-amount"></span> PHP</td>
         </tr>
       </template>
-    <?php } else { ?>
+    <?php } else if ($date !== 'annual') { ?>
       <div class="card card-rect text-center mx-auto my-5 p-0 w-50">
         <h3 class="card-title-secondary text-center p-1"><?= $date_name ?> Report</h3>
         <div class="table-summary p-2">
@@ -187,6 +187,34 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
           </table>
         </div>
       </div>
+    <?php } else { ?>
+      <div class="w-50 my-3 mx-auto">
+        <div class="card card-rect card-tertiary">
+          <h4>Annual Sales Report</h4>
+        </div>
+
+        <table class="w-100">
+          <thead>
+            <tr>
+              <th class="text-bold py-1">Months</th>
+              <th class="text-bold py-1">Total Sales</th>
+              <th class="text-bold py-1"></th>
+            </tr>
+          </thead>
+
+          <tbody id="annual-sales"></tbody>
+        </table>
+      </div>
+
+      <template id="temp-annual">
+        <tr>
+          <td class="annual-month-name text-center py-1"></td>
+          <td class="annual-month-sales text-center py-1"></td>
+          <td class="text-center py-1">
+            <a href="#" class="annual-month-details">View Details</a>
+          </td>
+        </tr>
+      </template>
     <?php } ?>
   </div>
 
