@@ -162,6 +162,7 @@ while ($product = $products_res->fetch_object()) {
         $days_to_perish = round(($perish - $now_date) / (60 * 60 * 24));
 
         $stock_in[] = [
+          'id' => $stocks->id,
           'quantity' => $quantity,
           'date' => $stocks->date,
           'revenue' => $revenue,
