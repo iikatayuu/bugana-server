@@ -196,11 +196,6 @@ out_header('BUGANA User Management', $styles, $scripts);
         </div>
 
         <div class="form-group mb-2">
-          <label for="register-admin-password">Password:</label>
-          <input type="password" id="register-admin-password" name="password" placeholder="Password" class="form-control mt-1" required />
-        </div>
-
-        <div class="form-group mb-2">
           <label for="register-admin-address-brgy">Barangay:</label>
           <select id="register-admin-address-brgy" name="address-brgy" class="form-control mt-1" required>
             <option value="">Select barangay</option>
@@ -376,6 +371,63 @@ out_header('BUGANA User Management', $styles, $scripts);
     </form>
   </div>
 
+  <div id="modal-added-successful" class="modal">
+    <div class="card card-round-sm card-tertiary text-center p-0">
+      <div class="d-flex flex-align-center mt-1 mx-2">
+        <div class="flex-1"></div>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-added-successful">
+            <img src="/imgs/circle-x.svg" alt="Exit modal" width="24" height="24" />
+          </button>
+        </div>
+      </div>
+
+      <div class="p-2">
+        <img src="/imgs/modal-check.svg" alt="Success" width="48" height="48" class="mb-2" />
+        <div>Admin added successfully!</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-confirm-reset" class="modal">
+    <div class="card card-round-sm card-tertiary text-center p-0">
+      <div class="d-flex flex-align-center mt-1 mx-2">
+        <div class="flex-1"></div>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-confirm-reset">
+            <img src="/imgs/circle-x.svg" alt="Exit modal" width="24" height="24" />
+          </button>
+        </div>
+      </div>
+
+      <div class="p-2 text-center">
+        <div class="mb-3">Are you sure you want to reset this admin's password</div>
+        <div class="d-flex flex-space-around">
+          <button type="button" class="btn btn-secondary" data-user="">Yes</button>
+          <button type="button" class="btn btn-secondary" data-modal="#modal-confirm-reset">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-reset-successful" class="modal">
+    <div class="card card-round-sm card-tertiary text-center p-0">
+      <div class="d-flex flex-align-center mt-1 mx-2">
+        <div class="flex-1"></div>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-reset-successful">
+            <img src="/imgs/circle-x.svg" alt="Exit modal" width="24" height="24" />
+          </button>
+        </div>
+      </div>
+
+      <div class="p-2">
+        <img src="/imgs/modal-check.svg" alt="Success" width="48" height="48" class="mb-2" />
+        <div>Admin password has been reset!</div>
+      </div>
+    </div>
+  </div>
+
   <template id="temp-page-btn">
     <button type="button" class="btn btn-background-secondary btn-round-sm btn-sm mr-2" data-page=""></button>
   </template>
@@ -387,11 +439,15 @@ out_header('BUGANA User Management', $styles, $scripts);
       <td class="user-email"></td>
       <td class="user-created"></td>
       <td class="user-lastlogin"></td>
-      <td class="user-actions">none</td>
+      <td class="user-actions">
+        none
+      </td>
     </tr>
   </template>
 
   <template id="temp-user-actions">
+    <button type="button" class="btn btn-secondary btn-sm text-sm d-none user-action-reset">Reset Password</button>
+
     <button type="button" class="btn btn-text user-action-verify">
       <img src="/imgs/check.svg" alt="Verify button" width="20" />
     </button>

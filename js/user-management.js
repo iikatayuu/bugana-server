@@ -83,6 +83,13 @@ $(document).ready(function () {
         $(elem).find('.user-actions').empty().append(actionsElem)
       }
 
+      if (view === 'admin') {
+        const actionsElem = $(tempAction).clone(true, true)
+        $(actionsElem).find('.user-action-verify').addClass('d-none')
+        $(actionsElem).find('.user-action-reset').removeClass('d-none').attr('data-index', i).click(resetUser)
+        $(elem).find('.user-actions').empty().append(actionsElem)
+      }
+
       $('#users').append(elem)
     }
   }
@@ -96,6 +103,34 @@ $(document).ready(function () {
     $('#verify-validid').attr('src', '/api/admin/validid.php?id=' + user.id)
     modal('open', '#modal-verify')
   }
+
+  async function resetUser (event) {
+    event.preventDefault()
+
+    const index = $(this).attr('data-index')
+    $('#modal-confirm-reset').find('[data-user]').attr('data-user', index)
+    modal('open', '#modal-confirm-reset')
+  }
+
+  $('[data-user]').click(async function (event) {
+    event.preventDefault()
+
+    const index = $(this).attr('data-user')
+    const user = users[index]
+
+    $('#modal-confirm-reset').find('button').attr('disabled', true)
+    const response = await $.ajax('/api/admin/reset.php', {
+      method: 'post',
+      dataType: 'json',
+      data: { token: token, id: user.id }
+    })
+
+    $('#modal-confirm-reset').find('button').attr('disabled', null)
+    if (response.success) {
+      modal('close')
+      modal('open', '#modal-reset-successful')
+    }
+  })
 
   $('#form-verify').submit(async function (event) {
     event.preventDefault()
@@ -180,6 +215,7 @@ $(document).ready(function () {
       $(form).trigger('reset')
       await displayUsers()
       modal('close')
+      modal('open', '#modal-added-successful')
     } else {
       $('#form-register-admin-error').text(response.message)
     }

@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $gender = $conn->real_escape_string($POST['gender']);
   $birthday = $conn->real_escape_string($POST['birthday']);
   $username = $conn->real_escape_string($POST['username']);
-  $password = $POST['password'];
+  $password = !empty($POST['password']) ? $POST['password'] : null;
   $email = $conn->real_escape_string($POST['email']);
   $mobile = $conn->real_escape_string($POST['mobile']);
   $address_street = $conn->real_escape_string($POST['address-street']);
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   }
 
-  if (!preg_match('/^([a-zA-Z0-9\-_]{8,32})$/', $password)) {
+  if ($type !== 'admin' && !preg_match('/^([a-zA-Z0-9\-_]{8,32})$/', $password)) {
     $result['message'] = 'Invalid password';
     die(json_encode($result));
   }
@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($type === 'admin') $code_prefix = 'A';
   $code = $code_prefix . $numstr;
 
-  $hash = password_hash($password, PASSWORD_BCRYPT);
+  $hash = password_hash($type === 'admin' ? 'admin' : $password, PASSWORD_BCRYPT);
   $conn->query("INSERT INTO users (code, username, password, email, mobile, name, gender, birthday, addressstreet, addresspurok, addressbrgy, type, verified)
                 VALUES ('$code', '$username', '$hash', '$email', '$mobile', '$name', '$gender', '$birthday', '$address_street', '$address_purok', '$address_brgy', '$type', $verified)");
 
