@@ -178,6 +178,7 @@ body { background-color: #f7fcf7;}
   transform: translate(-50%, -50%);
   max-height: calc(100vh - 50px);
   z-index: 1000;
+  overflow-y: auto;
 }
 
 .modal-open {
