@@ -44,6 +44,7 @@ if (!empty($_GET['token'])) {
 
     $date = !empty($_GET['date']) ? $_GET['date'] : null;
     $unsold = !empty($_GET['unsold']) ? $_GET['unsold'] : null;
+    $month = !empty($_GET['month']) ? intval($_GET['month']) + 1 : null;
 
     if (!$unsold) {
       $query = "SELECT
@@ -61,9 +62,22 @@ if (!empty($_GET['token'])) {
         $week_end = date('Y-m-d 23:59:59', strtotime('+' . (6 - intval($current_day)) . ' days'));
         $query .= " AND transactions.date BETWEEN '$week_start' AND '$week_end'";
       } else if ($date === 'monthly') {
-        $month_days = date('t');
-        $month_start = date('Y-m-01 00:00:00');
-        $month_end = date("Y-m-$month_days 23:59:59");
+        $month_start = '';
+        $month_end = '';
+
+        if (!$month) {
+          $month_days = date('t');
+          $month_start = date('Y-m-01 00:00:00');
+          $month_end = date("Y-m-$month_days 23:59:59");
+        } else {
+          $year = intval(date('Y'));
+          $month = strval($month);
+          while (strlen($month) < 2) $month = "0$month";
+          $month_time = strtotime("$year-$month-01");
+          $month_start = date('Y-m-01 00:00:00', $month_time);
+          $month_end = date('Y-m-t 23:59:59', $month_time);
+        }
+
         $query .= " AND transactions.date BETWEEN '$month_start' AND '$month_end'";
       } else if ($date === 'annual') {
         $year_start = date('Y-01-01 00:00:00');

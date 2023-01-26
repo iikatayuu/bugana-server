@@ -9,6 +9,7 @@ $(document).ready(function () {
   const searchParams = new URLSearchParams(window.location.search);
   const date = searchParams.get('date')
   const unsold = searchParams.get('unsold')
+  const monthIndex = searchParams.get('month')
 
   const tempSale = $('#temp-sale').prop('content')
   const tempTotal = $('#temp-total').prop('content')
@@ -21,6 +22,7 @@ $(document).ready(function () {
     params.set('token', token)
     params.set('date', date)
     if (unsold !== null) params.set('unsold', '1')
+    if (monthIndex !== null) params.set('month', monthIndex)
 
     const response = await $.ajax('/api/admin/transaction/sales.php?' + params.toString(), {
       method: 'get',
