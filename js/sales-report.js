@@ -46,7 +46,7 @@ $(document).ready(function () {
     const totalElem = $(tempTotal).clone(true, true)
     const totalStr = total.toFixed(2)
     $(totalElem).find('.sales-report-total-amount').text(totalStr)
-    $('#month-total-sales').text(totalStr)
+    $('#report-total-sales').text(totalStr)
     $('#sales').append(totalElem)
   }
 
@@ -80,9 +80,31 @@ $(document).ready(function () {
   }
 
   const currentDate = new Date()
-  const month = MONTHS[currentDate.getMonth()]
-  $('#month-date').text(`${month} ${currentDate.getDay()}, ${currentDate.getFullYear()}`)
-  $('#month-month').text(month)
+  $('#sales-report-table-date').text(`${MONTHS[currentDate.getMonth()]} ${currentDate.getDate()}, ${currentDate.getFullYear()}`)
+
+  if (date === 'weekly') {
+    const firstDate = new Date(currentDate)
+    const day = firstDate.getDay()
+    const diff = firstDate.getDate() - day + (day === 0 ? -6 : 0)
+    firstDate.setDate(diff)
+
+    const month = MONTHS[firstDate.getMonth()]
+    const weekNum = firstDate.getWeek()
+    $('#report-date').text(`${month} ${currentDate.getDate()}, ${currentDate.getFullYear()}`)
+    $('#report-month').text(`Week ${weekNum}`)
+  }
+
+  if (date === 'monthly') {
+    const month = MONTHS[currentDate.getMonth()]
+    $('#report-date').text(`${month} ${currentDate.getDate()}, ${currentDate.getFullYear()}`)
+    $('#report-month').text(`Month of ${month}`)
+  }
+
+  if (date === 'annual') {
+    const month = MONTHS[currentDate.getMonth()]
+    $('#report-date').text(`${month} ${currentDate.getDate()}, ${currentDate.getFullYear()}`)
+    $('#report-month').text(`Year ${currentDate.getFullYear()}`)
+  }
 
   displayTransactions()
 })

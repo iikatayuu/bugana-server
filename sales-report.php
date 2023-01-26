@@ -106,34 +106,42 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
     </header>
 
     <?php if ($is_detailed) { ?>
-      <div class="d-flex my-2 mx-3">
+      <div class="d-flex flex-align-center my-2 mx-3">
         <h6 class="dashboard-title flex-1">This <?= $date_base ?> <?= $is_unsold ? 'Unsold ' : '' ?> Sales</h6>
 
-        <?php if ($date === 'monthly' && !$is_unsold) { ?>
-          <button type="button" class="btn btn-text text-underline" data-modal="#modal-month-report">Generate Month Report</button>
+        <?php if (!$is_unsold) { ?>
+        <button type="button" class="btn btn-secondary mr-2" data-modal="#modal-report">Generate <?= $date_base ?> Report</button>
+        <button type="button" class="btn btn-secondary" data-print="#sales-report-table">Print Table</button>
         <?php } ?>
       </div>
 
-      <table class="dashboard-table dashboard-table-borderless">
-        <thead>
-          <tr>
-            <th>Product Name</th>
-            <th>Quantity <?= $is_unsold ? 'Perished' : 'Sold' ?></th>
-            <th>Product <?= $is_unsold ? 'Amount' : 'Revenue' ?></th>
-            <th></th>
-          </tr>
-        </thead>
+      <div id="sales-report-table" class="d-contents">
+        <div class="d-none" style="text-align:center;">
+          <h3>Kadiwa Farmers Market</h3>
+          <h3 id="sales-report-table-date"></h3>
+        </div>
 
-        <tbody id="sales">
-        </tbody>
-      </table>
+        <table class="dashboard-table dashboard-table-borderless" data-print-style="width:100%;">
+          <thead>
+            <tr>
+              <th data-print-style="margin-bottom:12px;">Product Name</th>
+              <th>Quantity <?= $is_unsold ? 'Perished' : 'Sold' ?></th>
+              <th>Product <?= $is_unsold ? 'Amount' : 'Revenue' ?></th>
+              <th data-print-style="display:none"></th>
+            </tr>
+          </thead>
+
+          <tbody id="sales">
+          </tbody>
+        </table>
+      </div>
 
       <template id="temp-sale">
         <tr>
           <td class="product-name"></td>
           <td><span class="quantity-sold"></span> KG</td>
           <td><span class="product-revenue"></span> PHP</td>
-          <td><a href="#" class="product-details">View Details</a></td>
+          <td><a href="#" class="product-details" data-print-style="display:none;">View Details</a></td>
         </tr>
       </template>
 
@@ -183,28 +191,26 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
   </div>
 
   <div class="modal-container d-none"></div>
-  <?php if ($is_detailed && $date === 'monthly' && !$is_unsold) { ?>
-  <div id="modal-month-report" class="modal">
+  <div id="modal-report" class="modal">
     <div class="card card-rect text-center px-5 pt-2 pb-3">
-      <div id="month-report" class="d-contents">
+      <div id="data-report" class="d-contents">
         <!-- Separate CSS for printing -->
         <div data-print-style="border:1px solid #000; padding:18px; text-align:center; width:400px;">
           <div class="text-bold" data-print-style="font-size:18px; font-weight:700;">Kadiwa Farmers Market</div>
-          <div class="text-bold" data-print-style="font-size:18px; font-weight:700;" id="month-date"></div>
-          <div class="text-bold mb-3" data-print-style="font-size:18px; font-weight:700; margin-bottom:24px;">Report for the Month of <span id="month-month"></span></div>
+          <div class="text-bold" data-print-style="font-size:18px; font-weight:700;" id="report-date"></div>
+          <div class="text-bold mb-3" data-print-style="font-size:18px; font-weight:700; margin-bottom:24px;">Report for the <span id="report-month"></span></div>
 
           <div class="d-flex flex-align-center flex-space-between mb-5" data-print-style="display:flex; align-items:center; justify-content:space-between;">
             <div>Total Sales</div>
-            <div class="text-bold text-xl" id="month-total-sales" data-print-style="font-size:24px; font-weight:700;">1000</div>
+            <div class="text-bold text-xl" id="report-total-sales" data-print-style="font-size:24px; font-weight:700;">0</div>
           </div>
         </div>
       </div>
 
-      <button type="button" class="btn btn-tertiary" data-print="#month-report">Print Report</button>
+      <button type="button" class="btn btn-tertiary" data-print="#data-report">Print Report</button>
     </div>
   </div>
-  <?php } ?>
-  <?php if ($is_detailed && !$is_unsold) { ?>
+
   <div id="modal-product-breakdown" class="modal">
     <div class="card card-rect p-0 text-center">
       <div class="card-title-tertiary d-flex flex-align-center">
@@ -241,7 +247,6 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
       <td><span class="bd-total-amount"></span> PHP</td>
     </tr>
   </template>
-  <?php } ?>
 </main>
 <?php
 
