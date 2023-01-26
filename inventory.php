@@ -242,6 +242,24 @@ out_header('BUGANA Stock In', $styles, $scripts);
     </form>
   </div>
 
+  <div id="modal-added-successful" class="modal">
+    <div class="card card-round-sm card-tertiary text-center p-0">
+      <div class="d-flex flex-align-center mt-1 mx-2">
+        <div class="flex-1"></div>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-added-successful">
+            <img src="/imgs/circle-x.svg" alt="Exit modal" width="24" height="24" />
+          </button>
+        </div>
+      </div>
+
+      <div class="p-2">
+        <img src="/imgs/modal-check.svg" alt="Success" width="48" height="48" class="mb-2" />
+        <div>Stocks has been added successfully!</div>
+      </div>
+    </div>
+  </div>
+
   <template id="temp-page-btn">
     <button type="button" class="btn btn-background-secondary btn-round-sm btn-sm mr-2" data-page=""></button>
   </template>

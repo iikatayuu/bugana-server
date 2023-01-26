@@ -229,6 +229,7 @@ $(document).ready(function () {
       $(form).trigger('reset')
       await displayStocks()
       modal('close')
+      modal('open', '#modal-added-successful')
     } else {
       $('#form-stock-add-error').text(response.message)
     }
