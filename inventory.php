@@ -4,7 +4,7 @@ require_once 'includes/html.php';
 
 $styles = ['/css/dashboard.css', '/css/inventory.css'];
 $scripts = ['/js/dashboard.js', '/js/inventory.js'];
-out_header('BUGANA Inventory', $styles, $scripts);
+out_header('BUGANA Stock In', $styles, $scripts);
 
 ?>
 <main>
