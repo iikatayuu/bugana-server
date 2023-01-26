@@ -13,7 +13,7 @@ $(document).ready(function () {
   let stockOutSort = ''
   let page = 1
   let limit = parseInt($('#limit-page').val())
-  let transactionCode = $('#transaction-search').val()
+  let searchQ = $('#search-q').val()
 
   async function displayStocks () {
     $('#inventory').empty()
@@ -22,7 +22,7 @@ $(document).ready(function () {
     params.set('token', token)
     params.set('page', page.toString())
     params.set('limit', limit.toString())
-    if (transactionCode) params.set('search', transactionCode)
+    if (searchQ) params.set('search', searchQ)
     if (farmerSort) params.set('farmer.sort', farmerSort)
     if (productSort) params.set('product.sort', productSort)
     if (stockOutSort) params.set('stockout.sort', stockOutSort)
@@ -104,21 +104,21 @@ $(document).ready(function () {
     }
   }
 
-  let codeTimer = null
+  let searchTimer = null
   let limitTimer = null
 
-  $('#transaction-search').on('keyup', function () {
+  $('#search-q').on('keyup', function () {
     const value = $(this).val()
-    clearTimeout(codeTimer)
-    codeTimer = setTimeout(function () {
-      transactionCode = value
+    clearTimeout(searchTimer)
+    searchTimer = setTimeout(function () {
+      searchQ = value
       page = 1
       displayStocks()
     }, 1250)
   })
 
-  $('#transaction-search').on('keydown', function () {
-    if (codeTimer) clearTimeout(codeTimer)
+  $('#search-q').on('keydown', function () {
+    if (searchTimer) clearTimeout(searchTimer)
   })
 
   $('#limit-page').on('keyup', function () {

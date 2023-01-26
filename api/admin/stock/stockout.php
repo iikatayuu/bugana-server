@@ -52,6 +52,23 @@ if (!empty($_GET['token'])) {
         die(json_encode($result));
       }
 
+      $products = [];
+      if (!empty($search)) {
+        $users_res = $conn->query("SELECT id FROM users WHERE name LIKE '%$search%'");
+        while ($user = $users_res->fetch_object()) {
+          $userid = $user->id;
+          $products_res = $conn->query("SELECT id FROM products WHERE user=$userid");
+          while ($product = $products_res->fetch_object()) {
+            $products[] = $product->id;
+          }
+        }
+
+        $products_res = $conn->query("SELECT id FROM products WHERE name LIKE '%$search%'");
+        while ($product = $products_res->fetch_object()) {
+          if (!in_array($product->id, $products)) $products[] = $product->id;
+        }
+      }
+
       $count_query = "SELECT COUNT(*) AS count FROM stocks";
       $query = "SELECT
           stocks.*,
@@ -63,7 +80,16 @@ if (!empty($_GET['token'])) {
         JOIN products ON products.id=stocks.product";
 
       $wheres = ['stocks.quantity < 0'];
-      if ($search) $wheres[] = "stocks.transaction_code LIKE '%$search%'";
+      if (count($products) > 0) {
+        $products_q = [];
+        for ($i = 0; $i < count($products); $i++) {
+          $productid = $products[$i];
+          $products_q[] = "stocks.product=$productid";
+        }
+
+        $products_q = implode(' OR ', $products_q);
+        $wheres[] = "($products_q)";
+      }
 
       $add_q = ' WHERE ' . implode(' AND ', $wheres);
       $query .= $add_q;
