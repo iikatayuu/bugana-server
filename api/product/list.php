@@ -79,9 +79,9 @@ if ($search) {
 
   if (count($ids) > 0) {
     $ids = implode(' OR ', $ids);
-    $wheres[] = "(name LIKE '%$search%' OR $ids)";
+    $wheres[] = "(products.name LIKE '%$search%' OR $ids)";
   } else {
-    $wheres[] = "name LIKE '%$search%'";
+    $wheres[] = "products.name LIKE '%$search%'";
   }
 }
 
@@ -102,6 +102,12 @@ $query .= $add_q;
 
 $page_q = (intval($page) - 1) * intval($limit);
 $products_res = $conn->query("$query LIMIT $page_q, $limit");
+
+if ($conn->errno) {
+  echo "$query LIMIT $page_q, $limit\n";
+  die($conn->error);
+}
+
 $count_res = $conn->query($count_query);
 $count = $count_res->fetch_object()->count;
 $products = [];
