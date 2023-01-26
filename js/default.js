@@ -38,6 +38,8 @@ const MONTHS_SHORT = [
 ]
 
 function dateFormat (d) {
+  if (!d) return ''
+
   let dateStr = ''
   const date = new Date(d)
   const hrs = date.getHours()
