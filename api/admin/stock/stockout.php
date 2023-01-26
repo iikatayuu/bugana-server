@@ -25,6 +25,7 @@ $result = [
 
 $page = !empty($_GET['page']) ? $_GET['page'] : '1';
 $limit = !empty($_GET['limit']) ? $conn->real_escape_string($_GET['limit']) : '10';
+$category = !empty($_GET['category']) ? $conn->real_escape_string($_GET['category']) : 'all';
 $search = !empty($_GET['search']) ? $conn->real_escape_string($_GET['search']) : null;
 $productsort = !empty($_GET['product_sort']) ? $conn->real_escape_string($_GET['product_sort']) : null;
 $farmersort = !empty($_GET['farmer_sort']) ? $conn->real_escape_string($_GET['farmer_sort']) : null;
@@ -69,6 +70,13 @@ if (!empty($_GET['token'])) {
         }
       }
 
+      if (!empty($category) && $category !== 'all') {
+        $products_res = $conn->query("SELECT id FROM products WHERE category='$category'");
+        while ($product = $products_res->fetch_object()) {
+          if (!in_array($product->id, $products)) $products[] = $product->id;
+        }
+      }
+
       $count_query = "SELECT COUNT(*) AS count FROM stocks";
       $query = "SELECT
           stocks.*,
@@ -89,6 +97,10 @@ if (!empty($_GET['token'])) {
 
         $products_q = implode(' OR ', $products_q);
         $wheres[] = "($products_q)";
+      }
+
+      if (!empty($category) && $category !== 'all' && count($products) === 0) {
+        $wheres[] = 'stocks.product=0';
       }
 
       $add_q = ' WHERE ' . implode(' AND ', $wheres);

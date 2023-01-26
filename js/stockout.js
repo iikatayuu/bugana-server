@@ -11,6 +11,7 @@ $(document).ready(function () {
   let farmerSort = ''
   let productSort = ''
   let stockOutSort = ''
+  let category = 'all'
   let page = 1
   let limit = parseInt($('#limit-page').val())
   let searchQ = $('#search-q').val()
@@ -22,6 +23,7 @@ $(document).ready(function () {
     params.set('token', token)
     params.set('page', page.toString())
     params.set('limit', limit.toString())
+    params.set('category', category)
     if (searchQ) params.set('search', searchQ)
     if (farmerSort) params.set('farmer.sort', farmerSort)
     if (productSort) params.set('product.sort', productSort)
@@ -64,20 +66,20 @@ $(document).ready(function () {
       const stock = response.stocks[i]
       const elem = $(tempItem).clone(true, true)
 
-      let category = ''
+      let categoryStr = ''
       let status = ''
 
       switch (stock.product.category) {
         case 'vegetable':
-          category = 'Vegetable'
+          categoryStr = 'Vegetable'
           break
 
         case 'root-crops':
-          category = 'Root Crops'
+          categoryStr = 'Root Crops'
           break
 
         case 'fruits':
-          category = 'Fruits'
+          categoryStr = 'Fruits'
           break
       }
 
@@ -93,7 +95,7 @@ $(document).ready(function () {
 
       const dateStr = dateFormat(stock.date)
       $(elem).find('.item-farmer-name').text(stock.username)
-      $(elem).find('.item-category').text(category)
+      $(elem).find('.item-category').text(categoryStr)
       $(elem).find('.item-product-name').text(stock.product.name)
       $(elem).find('.item-stock-out-date').text(dateStr)
       $(elem).find('.item-quantity').text(parseFloat(stock.quantity) * -1)
@@ -168,6 +170,13 @@ $(document).ready(function () {
   $('#sort-stockout-descending').click(function () {
     stockOutSort = 'desc'
     $('.dropdown-content.active').removeClass('active')
+    displayStocks()
+  })
+
+  $('#products-category-select').on('change', function () {
+    const value = $(this).val()
+    page = 1
+    category = value
     displayStocks()
   })
 

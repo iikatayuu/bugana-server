@@ -83,8 +83,19 @@ out_header('BUGANA Inventory', $styles, $scripts);
     </header>
 
     <div class="d-flex flex-space-between flex-align-center mt-4 mx-3">
-      <div>
+      <div class="flex-1">
         <input type="text" id="search-q" name="q" placeholder="Search Farmer or Product" class="form-control form-control-white box-shadow table-search" />
+      </div>
+      <div class="mr-2">
+        <a href="/manual-stockout.php" class="btn btn-secondary text-md" role="button">Manual Stock Out</a>
+      </div>
+      <div>
+        <select id="products-category-select" class="btn btn-sm btn-tertiary text-md py-1">
+          <option value="all" selected>Sort By: All</option>
+          <option value="vegetable">Sort By: Vegetable</option>
+          <option value="root-crops">Sort By: Root Crops</option>
+          <option value="fruits">Sort By: Fruits</option>
+        </select>
       </div>
     </div>
 
@@ -136,7 +147,7 @@ out_header('BUGANA Inventory', $styles, $scripts);
           </th>
           <th>Quantity</th>
           <th>Price</th>
-          <th>Total</th>
+          <th>Total Revenue</th>
           <th>Status</th>
         </tr>
       </thead>
