@@ -64,8 +64,13 @@ $(document).ready(function () {
       const transaction = transactions[i]
       const user = transaction.user
       const elem = $(tempTransaction).clone(true, true)
-      const totalAmount = parseFloat(transaction.total_amount) + (transaction.paymentoption === 'delivery' ? 50 : 0)
       const dateStr = dateFormat(transaction.date)
+      let totalAmount = parseFloat(transaction.total_amount)
+      if (transaction.paymentoption === 'delivery') {
+        const shippingRes = await $.getJSON('/api/shipping.php?brgy=' + transaction.user.addressbrgy)
+        const shipping = shippingRes.fee
+        totalAmount += shipping
+      }
 
       $(elem).find('.transaction-id').text(transaction.code)
       $(elem).find('.transaction-date').text(dateStr)
