@@ -41,15 +41,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if ($decoded !== null) {
     $userid = $decoded->userid;
-    $usertype = $decoded->type;
-    if ($usertype === 'headadmin') {
-      $conn->query("UPDATE transactions SET status='success' WHERE transaction_code='$code'");
-    } else {
-      $conn->query("UPDATE transactions SET status='success' WHERE user=$userid AND transaction_code='$code'");
+    $tx_res = $conn->query("SELECT * FROM transactions WHERE transaction_code='$code' LIMIT 1");
+    if ($tx_res->num_rows > 0) {
+      $tx = $tx_res->fetch_object();
+      if ($tx->status === 'approved') {
+        $conn->query("UPDATE transactions SET status='success' WHERE user=$userid AND transaction_code='$code'");
+        $result['success'] = true;
+        $result['message'] = '';
+      } else {
+        $result['message'] = 'Transaction is not approved yet';
+      }
     }
-
-    $result['success'] = true;
-    $result['message'] = '';
   }
 }
 

@@ -79,16 +79,16 @@ $(document).ready(function () {
       $(elem).find('.total-amount').text(totalAmount.toFixed(2))
       $(elem).find('.order-type').text(transaction.paymentoption === 'delivery' ? 'COD' : 'COP')
       $(elem).find('.order-status').attr({
-        src: '/imgs/status-' + (transaction.status === 'success' ? 'check.png' : 'pending.png'),
-        alt: transaction.status === 'success' ? 'Successful' : 'Pending'
+        src: '/imgs/status-' + (transaction.status === 'pending' ? 'pending.png' : 'check.png'),
+        alt: transaction.status === 'pending' ? 'Pending' : 'Successful'
       })
 
       if (transaction.status !== 'success') {
         $(elem).find('.order-status-container').click(async function (event) {
           event.preventDefault()
           event.stopPropagation()
-  
-          const response = await $.ajax('/api/transaction/receive.php', {
+
+          const response = await $.ajax('/api/admin/transaction/approve.php', {
             method: 'post',
             dataType: 'json',
             data: {
@@ -99,8 +99,8 @@ $(document).ready(function () {
 
           if (response.success) {
             $(this).find('.order-status').attr({
-              src: '/imgs/status-check.png',
-              alt: 'Successful'
+              src: response.approved ? '/imgs/status-check.png' : '/imgs/status-pending.png',
+              alt: response.approved ? 'Successful' : 'Pending'
             })
           }
         })
