@@ -151,7 +151,7 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
           <table class="w-100">
             <tr>
               <td>Total Sales:</td>
-              <td id="total-sales"></td>
+              <td><span id="total-sales">0</span> PHP</td>
               <td>
                 <a href="<?= '/sales-report.php?date=' . $date . '&detailed' ?>" class="details-link">View Details</a>
               </td>
@@ -159,13 +159,13 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
 
             <tr>
               <td>Total Delivery Charges:</td>
-              <td id="total-delivery-sales"></td>
+              <td><span id="total-delivery-sales">0</span> PHP</td>
               <td></td>
             </tr>
 
             <tr>
               <td>Unsold Products:</td>
-              <td id="unsold-products"></td>
+              <td id="unsold-products">0</td>
               <td>
                 <a href="<?= '/sales-report.php?date=' . $date . '&detailed&unsold' ?>" class="details-link">View Details</a>
               </td>
@@ -174,7 +174,7 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
             <tr>
               <td></td>
               <td>Total:</td>
-              <td id="report-total"></td>
+              <td><span id="report-total">0.00</span> PHP</td>
             </tr>
           </table>
         </div>
