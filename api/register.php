@@ -87,6 +87,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     die(json_encode($result));
   }
 
+  $name_res = $conn->query("SELECT * FROM users WHERE name='$name' LIMIT 1");
+  if ($name_res->num_rows > 0) {
+    $result['message'] = 'Name already exists';
+    die(json_encode($result));
+  }
+
   $phone_res = $conn->query("SELECT * FROM users WHERE mobile='$mobile' LIMIT 1");
   if ($phone_res->num_rows > 0) {
     $result['message'] = 'Phone number already exists';
