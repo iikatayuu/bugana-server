@@ -247,6 +247,7 @@ $(document).ready(function () {
       $(form).trigger('reset')
       await displayUsers()
       modal('close')
+      modal('open', '#modal-customer-added-successful')
     } else {
       $('#form-register-error').text(response.message)
     }
