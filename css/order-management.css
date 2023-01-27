@@ -19,6 +19,20 @@
   font-weight: 700;
 }
 
+#modal-delivery-fees table th {
+  padding: 8px;
+  background-color: var(--color-tertiary);
+  color: var(--color-tertiary-contrast);
+}
+
+#modal-delivery-fees table th:first-child {
+  border-top-left-radius: 4px;
+}
+
+#modal-delivery-fees table th:last-child {
+  border-top-right-radius: 4px;
+}
+
 .table-products tr th,
 .table-products tr td {
   padding-bottom: 18px;

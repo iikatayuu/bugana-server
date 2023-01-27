@@ -10,6 +10,7 @@ $(document).ready(function () {
   const tempDetails = $('#temp-transaction-details').prop('content')
   const tempDetailsTotal = $('#temp-details-total').prop('content')
   const tempPageBtn = $('#temp-page-btn').prop('content')
+  const tempShip = $('#temp-ship').prop('content')
   let category = 'all'
   let page = 1
   let limit = parseInt($('#limit-page').val())
@@ -213,6 +214,60 @@ $(document).ready(function () {
     modal('open', '#modal-order')
   }
 
+  async function displayFees () {
+    $('#delivery-fees').empty()
+
+    const fees = await $.getJSON('/api/allshipping.php')
+    for (let i = 0; i < fees.length; i++) {
+      const elem = $(tempShip).clone(true, true)
+      const fee = fees[i]
+      const brgy = fee.name
+      const shipping = fee.fee
+
+      $(elem).find('.brgy-name').text(brgy)
+      $(elem).find('.brgy-fees').text(shipping)
+      $(elem).find('.brgy-edit').attr('data-brgy', brgy).click(editBrgy)
+      $('#delivery-fees').append(elem)
+    }
+  }
+
+  async function editBrgy (event) {
+    event.preventDefault()
+
+    const brgy = $(this).attr('data-brgy')
+    $('#edit-brgy-name-input').val(brgy)
+    $('.edit-brgy-name').text(brgy)
+    modal('close')
+    modal('open', '#modal-shipping-edit')
+  }
+
+  $('#form-update').submit(async function (event) {
+    event.preventDefault()
+
+    const form = $(this).get(0)
+    const action = $(form).attr('action')
+    const method = $(form).attr('method')
+    const token = sessionStorage.getItem('token')
+    const formData = new FormData(form)
+    formData.append('token', token)
+
+    $(form).find('[type="submit"]').attr('disabled', true).text('Changing...')
+    const response = await $.ajax(action, {
+      method: method,
+      dataType: 'json',
+      data: formData,
+      processData: false,
+      contentType: false
+    })
+
+    $(form).find('[type="submit"]').attr('disabled', null).text('Confirm')
+    if (response.success) {
+      modal('close')
+      modal('open', '#modal-update-successful')
+      await displayFees()
+    }
+  })
+
   $('#transactions-category-select').on('change', function () {
     const value = $(this).val()
     page = 1
@@ -259,4 +314,5 @@ $(document).ready(function () {
   })
 
   displayTransactions()
+  displayFees()
 })

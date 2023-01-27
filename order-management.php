@@ -86,6 +86,10 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
       </div>
 
       <div>
+        <button type="button" class="btn btn-tertiary btn-sm text-md p-1 mr-2" data-modal="#modal-delivery-fees">View Delivery Fees</button>
+      </div>
+
+      <div>
         <select id="transactions-category-select" class="btn btn-sm btn-tertiary text-md py-1">
           <option value="all" selected>Sort By: All</option>
           <option value="success">Sort By: Done</option>
@@ -195,6 +199,40 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
     </div>
   </div>
 
+  <div id="modal-delivery-fees" class="modal">
+    <div class="card card-round-sm text-center p-0">
+      <table class="table-details">
+        <thead>
+          <tr>
+            <th>Barangay</th>
+            <th>Fees</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="delivery-fees"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="modal-update-successful" class="modal">
+    <div class="card card-round-sm card-tertiary text-center p-0">
+      <div class="d-flex flex-align-center mt-1 mx-2">
+        <div class="flex-1"></div>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-update-successful">
+            <img src="/imgs/circle-x.svg" alt="Exit modal" width="24" height="24" />
+          </button>
+        </div>
+      </div>
+
+      <div class="p-2">
+        <img src="/imgs/modal-check.svg" alt="Success" width="48" height="48" class="mb-2" />
+        <div>Delivery fee successfully updated!</div>
+      </div>
+    </div>
+  </div>
+
   <div id="modal-confirm-order" class="modal">
     <div class="card card-round-sm card-tertiary text-center p-0">
       <div class="d-flex flex-align-center mt-1 mx-2">
@@ -237,8 +275,47 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
     </div>
   </div>
 
+  <div id="modal-shipping-edit" class="modal">
+    <form action="/api/admin/update-ship.php" method="post" id="form-update" class="card card-round-sm card-tertiary text-center p-0">
+      <div class="d-flex flex-align-center mt-1 mx-2">
+        <div class="flex-1"></div>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-shipping-edit">
+            <img src="/imgs/circle-x.svg" alt="Exit modal" width="24" height="24" />
+          </button>
+        </div>
+      </div>
+
+      <div class="p-2 text-center">
+        <div class="mb-2"><span class="edit-brgy-name"></span></div>
+        <input type="hidden" id="edit-brgy-name-input" name="brgy-name" />
+
+        <div class="form-group mb-2">
+          <input type="text" name="amount" placeholder="Shipping fee" class="form-control p-1" />
+        </div>
+
+        <div class="d-flex flex-space-around mx-4">
+          <button type="button" class="btn btn-secondary btn-sm mr-2" data-modal="#modal-shipping-edit">Cancel</button>
+          <button type="submit" class="btn btn-secondary btn-sm">Confirm</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
   <template id="temp-page-btn">
     <button type="button" class="btn btn-background-secondary btn-round-sm btn-sm mr-2" data-page=""></button>
+  </template>
+
+  <template id="temp-ship">
+    <tr>
+      <td class="brgy-name"></td>
+      <td><span class="brgy-fees"></span> PHP</td>
+      <td>
+        <button type="button" class="brgy-edit btn btn-text">
+          <img src="/imgs/edit.svg" alt="Edit barangay" width="16" height="16" />
+        </button>
+      </td>
+    </tr>
   </template>
 
   <template id="temp-transaction">
