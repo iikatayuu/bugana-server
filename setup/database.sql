@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `shipping` (
   `name` varchar(255) NOT NULL COMMENT 'Barangay name',
   `fee` float(12,2) NOT NULL COMMENT 'Shipping fee',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `shipping`
