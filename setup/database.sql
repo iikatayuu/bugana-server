@@ -129,6 +129,50 @@ CREATE TABLE IF NOT EXISTS `transactions` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `shipping`
+--
+
+DROP TABLE IF EXISTS `shipping`;
+CREATE TABLE IF NOT EXISTS `shipping` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'Shipping fee ID',
+  `name` varchar(255) NOT NULL COMMENT 'Barangay name',
+  `fee` float(12,2) NOT NULL COMMENT 'Shipping fee',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `shipping`
+--
+
+INSERT INTO `shipping` (`id`, `name`, `fee`) VALUES
+(1, 'Abuanan', 45.00),
+(2, 'Alianza', 40.00),
+(3, 'Atipuluan', 40.00),
+(4, 'Bacong-Montilla', 30.00),
+(5, 'Bagroy', 50.00),
+(6, 'Balingasag', 50.00),
+(7, 'Binubuhan', 30.00),
+(8, 'Busay', 50.00),
+(9, 'Calumangan', 55.00),
+(10, 'Caridad', 45.00),
+(11, 'Don Jorge L. Araneta', 30.00),
+(12, 'Dulao', 50.00),
+(13, 'Ilijan', 30.00),
+(14, 'Lag-Asan', 50.00),
+(15, 'Ma-ao', 20.00),
+(16, 'Mailum', 30.00),
+(17, 'Malingin', 50.00),
+(18, 'Napoles', 50.00),
+(19, 'Pacol', 45.00),
+(20, 'Poblacion', 50.00),
+(21, 'Saga\r\nsa', 45.00),
+(22, 'Tabunan', 55.00),
+(23, 'Taloc', 55.00),
+(24, 'Sampinit', 55.00);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
