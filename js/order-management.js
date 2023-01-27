@@ -90,7 +90,10 @@ $(document).ready(function () {
 
       if (transaction.status !== 'success' && transaction.status !== 'rejected') {
         if (transaction.status !== 'approved') {
-          $(elem).find('.order-status-violation').attr('disabled', null).attr('data-tx', i).click(async function (event) {
+          $(elem).find('.order-status-violation').attr({
+            disabled: null,
+            'data-tx': i
+          }).click(async function (event) {
             event.preventDefault()
             currentTransaction = transaction
             addViolation()
@@ -102,7 +105,7 @@ $(document).ready(function () {
 
           currentTransaction = transaction
           const modalSelector = transaction.status === 'approved' ? '#modal-unconfirm-order' : '#modal-confirm-order'
-          $(modalSelector).find('[data-order]').click(confirmOrder.bind(this))
+          $(modalSelector).find('[data-order]').off('click').click(confirmOrder.bind(this))
           modal('open', modalSelector)
         })
       }
