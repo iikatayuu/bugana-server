@@ -84,8 +84,8 @@ out_header('BUGANA New Product', $styles, $scripts);
       <form action="/api/admin/product/add.php" method="post" id="form-product-add">
         <div class="card card-tertiary card-rect p-3">
           <div class="form-group mb-2">
-            <label for="product-farmer-code">Farmer Code:</label>
-            <input type="text" id="product-farmer-code" name="farmer-code" placeholder="Farmer Code" class="form-control mt-2" required />
+            <label for="product-farmer-name">Farmer Name:</label>
+            <input type="text" id="product-farmer-name" name="farmer-name" placeholder="Farmer Name" class="form-control mt-2" required />
           </div>
 
           <div class="d-flex mb-2">

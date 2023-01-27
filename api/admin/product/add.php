@@ -21,7 +21,7 @@ $result = [
 
 if (!empty($_POST['token'])) {
   $decoded = null;
-  $code = $conn->real_escape_string($_POST['farmer-code']);
+  $farmer_name = $conn->real_escape_string($_POST['farmer-name']);
   $name = $conn->real_escape_string($_POST['name']);
   $category = $conn->real_escape_string($_POST['category']);
   $description = $conn->real_escape_string($_POST['description']);
@@ -51,21 +51,16 @@ if (!empty($_POST['token'])) {
   if ($decoded !== null) {
     $usertype = $decoded->type;
     if ($usertype === 'admin' || $usertype === 'headadmin') {
-      if (!preg_match('/^(C|F)(\d{2})$/', $code)) {
-        $result['message'] = 'Invalid code';
-        die(json_encode($result));
-      }
-
       if (!preg_match('/^(\d+(\.\d+)?)$/', $price)) {
         $result['message'] = 'Invalid price';
         die(json_encode($result));
       }
 
-      $users_res = $conn->query("SELECT * FROM users WHERE code='$code' AND type='farmer' LIMIT 1");
+      $users_res = $conn->query("SELECT * FROM users WHERE name='$farmer_name' AND type='farmer' LIMIT 1");
       $userobj = null;
 
       if ($users_res->num_rows === 0) {
-        $result['message'] = 'User code does not exist';
+        $result['message'] = 'Farmer does not exist';
         die(json_encode($result));
       } else $userobj = $users_res->fetch_object();
 
