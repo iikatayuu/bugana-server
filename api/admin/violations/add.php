@@ -52,6 +52,13 @@ if (!empty($_POST['token'])) {
 
       $userid = $transaction->user;
       $conn->query("INSERT INTO violations (user, transaction_code) VALUES ($userid, '$transaction_id')");
+      $conn->query("UPDATE transactions SET status='rejected' WHERE transaction_code='$transaction_id'");
+
+      $violations_res = $conn->query("SELECT * FROM violations WHERE user=$userid");
+      $count = $violations_res->num_rows;
+      if ($count > 2) {
+        $conn->query("UPDATE users SET active=0 WHERE id=$userid");
+      }
 
       $result['success'] = true;
       $result['message'] = '';

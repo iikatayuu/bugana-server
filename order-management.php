@@ -100,10 +100,10 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
           <th>Transaction ID</th>
           <th>Transaction Date</th>
           <th>Customer Code</th>
-          <th>Address</th>
           <th>Total Amount</th>
           <th>Order Type</th>
           <th>Order Status</th>
+          <th>Actions</th>
         </tr>
       </thead>
 
@@ -195,20 +195,64 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
     </div>
   </div>
 
+  <div id="modal-confirm-order" class="modal">
+    <div class="card card-round-sm card-tertiary text-center p-0">
+      <div class="d-flex flex-align-center mt-1 mx-2">
+        <div class="flex-1"></div>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-confirm-order">
+            <img src="/imgs/circle-x.svg" alt="Exit modal" width="24" height="24" />
+          </button>
+        </div>
+      </div>
+
+      <div class="p-2 text-center">
+        <div class="mb-3">Confirm Order?</div>
+        <div class="d-flex flex-space-around mx-4">
+          <button type="button" class="btn btn-secondary mr-2" data-order="">Yes</button>
+          <button type="button" class="btn btn-secondary" data-modal="#modal-confirm-order">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-unconfirm-order" class="modal">
+    <div class="card card-round-sm card-tertiary text-center p-0">
+      <div class="d-flex flex-align-center mt-1 mx-2">
+        <div class="flex-1"></div>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-unconfirm-order">
+            <img src="/imgs/circle-x.svg" alt="Exit modal" width="24" height="24" />
+          </button>
+        </div>
+      </div>
+
+      <div class="p-2 text-center">
+        <div class="mb-3">Unconfirm Order?</div>
+        <div class="d-flex flex-space-around mx-4">
+          <button type="button" class="btn btn-secondary mr-2" data-order="">Yes</button>
+          <button type="button" class="btn btn-secondary" data-modal="#modal-unconfirm-order">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <template id="temp-page-btn">
     <button type="button" class="btn btn-background-secondary btn-round-sm btn-sm mr-2" data-page=""></button>
   </template>
 
   <template id="temp-transaction">
-    <tr class="transaction-action">
+    <tr>
       <td class="transaction-id"></td>
       <td class="transaction-date"></td>
-      <td class="customer-code"></td>
-      <td class="customer-address"></td>
+      <td class="customer-name"></td>
       <td><span class="total-amount"></span> PHP</td>
       <td class="order-type"></td>
-      <td class="order-status-container">
-        <img class="order-status" alt="" width="18" />
+      <td class="order-status-text"></td>
+      <td class="d-flex flex-align-center">
+        <img src="" alt="" width="18" class="order-status mr-1" />
+        <button type="button" class="order-status-violation btn btn-secondary btn-sm text-sm mr-1" disabled>Add Violation</button>
+        <a href="#" class="transaction-action">View Details</a>
       </td>
     </tr>
   </template>

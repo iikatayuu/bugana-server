@@ -15,6 +15,7 @@ $(document).ready(function () {
   let limit = parseInt($('#limit-page').val())
   let transactionId = $('#transaction-search').val()
   let transactions = []
+  let currentTransaction = null
 
   async function displayTransactions () {
     $('#transactions').empty()
@@ -72,37 +73,36 @@ $(document).ready(function () {
         totalAmount += shipping
       }
 
-      $(elem).find('.transaction-id').text(transaction.code)
+      let id = transaction.id
+      while (id.length < 6) id = `0${id}`
+
+      $(elem).find('.transaction-id').text(id)
       $(elem).find('.transaction-date').text(dateStr)
-      $(elem).find('.customer-code').text(user.code)
-      $(elem).find('.customer-address').text(user.addressstreet + ', ' + user.addresspurok + ', ' + user.addressbrgy)
+      $(elem).find('.customer-name').text(user.name)
       $(elem).find('.total-amount').text(totalAmount.toFixed(2))
       $(elem).find('.order-type').text(transaction.paymentoption === 'delivery' ? 'COD' : 'COP')
+      $(elem).find('.order-status-text').text(transaction.status === 'success' ? (transaction.paymentoption === 'delivery' ? 'Delivered' : 'Picked Up') : '')
       $(elem).find('.order-status').attr({
-        src: '/imgs/status-' + (transaction.status === 'pending' ? 'pending.png' : 'check.png'),
-        alt: transaction.status === 'pending' ? 'Pending' : 'Successful'
+        src: '/imgs/status-' + (transaction.status === 'success' ? 'check.png' : 'pending.png'),
+        alt: transaction.status === 'success' ? 'Successful' : 'Pending'
       })
 
-      if (transaction.status !== 'success') {
-        $(elem).find('.order-status-container').click(async function (event) {
-          event.preventDefault()
-          event.stopPropagation()
-
-          const response = await $.ajax('/api/admin/transaction/approve.php', {
-            method: 'post',
-            dataType: 'json',
-            data: {
-              code: transaction.code,
-              token: token
-            }
+      if (transaction.status !== 'success' && transaction.status !== 'rejected') {
+        if (transaction.status !== 'approved') {
+          $(elem).find('.order-status-violation').attr('disabled', null).attr('data-tx', i).click(async function (event) {
+            event.preventDefault()
+            currentTransaction = transaction
+            addViolation()
           })
+        }
 
-          if (response.success) {
-            $(this).find('.order-status').attr({
-              src: response.approved ? '/imgs/status-check.png' : '/imgs/status-pending.png',
-              alt: response.approved ? 'Successful' : 'Pending'
-            })
-          }
+        $(elem).find('.order-status').click(async function (event) {
+          event.preventDefault()
+
+          currentTransaction = transaction
+          const modalSelector = transaction.status === 'approved' ? '#modal-unconfirm-order' : '#modal-confirm-order'
+          $(modalSelector).find('[data-order]').click(confirmOrder.bind(this))
+          modal('open', modalSelector)
         })
       }
 
@@ -110,6 +110,35 @@ $(document).ready(function () {
 
       $('#transactions').append(elem)
     }
+  }
+
+  async function addViolation () {
+    const response = await $.ajax('/api/admin/violations/add.php', {
+      method: 'post',
+      dataType: 'json',
+      data: {
+        transactionid: currentTransaction.code,
+        token: token
+      }
+    })
+
+    if (response.success) window.location.href = '/customer-violation-reports.php'
+  }
+
+  async function confirmOrder (event) {
+    event.preventDefault()
+
+    const response = await $.ajax('/api/admin/transaction/approve.php', {
+      method: 'post',
+      dataType: 'json',
+      data: {
+        code: currentTransaction.code,
+        token: token
+      }
+    })
+
+    if (response.success) displayTransactions()
+    modal('close')
   }
 
   async function showOrder (event) {

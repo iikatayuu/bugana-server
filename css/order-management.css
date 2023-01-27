@@ -23,3 +23,7 @@
 .table-products tr td {
   padding-bottom: 18px;
 }
+
+.order-status {
+  cursor: pointer;
+}
