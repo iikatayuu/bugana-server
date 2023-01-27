@@ -84,8 +84,8 @@ $(document).ready(function () {
       $(elem).find('.order-type').text(transaction.paymentoption === 'delivery' ? 'COD' : 'COP')
       $(elem).find('.order-status-text').text(transaction.status === 'success' ? (transaction.paymentoption === 'delivery' ? 'Delivered' : 'Picked Up') : '')
       $(elem).find('.order-status').attr({
-        src: '/imgs/status-' + (transaction.status === 'success' ? 'check.png' : 'pending.png'),
-        alt: transaction.status === 'success' ? 'Successful' : 'Pending'
+        src: '/imgs/status-' + (transaction.status === 'success' || transaction.status === 'approved' ? 'check.png' : 'pending.png'),
+        alt: transaction.status === 'success' || transaction.status === 'approved' ? 'Successful' : 'Pending'
       })
 
       if (transaction.status !== 'success' && transaction.status !== 'rejected') {
