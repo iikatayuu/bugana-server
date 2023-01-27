@@ -55,61 +55,47 @@ $(document).ready(function () {
       const user = users[i]
       const transaction = user.transaction
 
-      $(elem).find('.user-code').text(user.code)
+      let id = transaction ? transaction.transaction_id : null
+      while (id !== null && id.length < 6) id = `0${id}`
+
       $(elem).find('.user-name').text(user.name)
       $(elem).find('.user-address').text(user.addressstreet + ', ' + user.addresspurok + ', ' + user.addressbrgy)
       $(elem).find('.user-contact').text(user.mobile)
       $(elem).find('.user-email').text(user.email)
-      $(elem).find('.user-transaction').text(transaction ? transaction.transaction_code : '')
+      $(elem).find('.user-transaction').text(id || '')
       $(elem).find('.counts').text(user.counts)
       $(elem).find('.user-actions').attr({
         'data-id': user.id,
-        disabled: parseInt(user.counts) > 1 ? null : true
-      }).click(banUser)
+        disabled: user.active === '0' ? null : true
+      }).click(unbanUserModal)
 
       $('#users').append(elem)
     }
   }
 
-  async function banUser (event) {
+  async function unbanUserModal (event) {
+    event.preventDefault()
     const userid = $(this).attr('data-id')
-    if (confirm('Are you sure?')) {
-      const formData = new FormData()
-      formData.set('token', token)
-      formData.set('id', userid)
-      await $.ajax('/api/admin/violations/ban.php', {
-        method: 'post',
-        data: formData,
-        contentType: false,
-        processData: false
-      })
-      await displayUsers()
-    }
+    $('#modal-confirm-unban').find('[data-user]').attr('data-user', userid)
+    modal('open', '#modal-confirm-unban')
   }
 
-  $('#form-add').submit(async function (event) {
+  $('[data-user]').click(async function (event) {
     event.preventDefault()
 
-    $('#form-add-error').empty()
-
-    const form = $(this).get(0)
-    const action = $(form).attr('action')
-    const method = $(form).attr('method')
-    const formData = new FormData(form)
-    formData.set('token', token)
-
-    const res = await $.ajax(action, {
-      method: method,
-      data: formData,
-      processData: false,
-      contentType: false
+    const userid = $(this).attr('data-user')
+    $('#modal-confirm-unban').find('button').attr('disabled', true)
+    const response = await $.ajax('/api/admin/violations/unban.php', {
+      method: 'post',
+      dataType: 'json',
+      data: { token: token, id: userid }
     })
 
-    if (res.success) {
+    $('#modal-confirm-unban').find('button').attr('disabled', null)
+    if (response.success) {
       await displayUsers()
-      modal('#modal-add', 'close')
-    } else {
-      $('#form-add-error').text(res.message)
+      modal('close')
+      modal('open', '#modal-unban-successful')
     }
   })
 

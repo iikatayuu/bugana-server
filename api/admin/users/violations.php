@@ -67,7 +67,7 @@ if (!empty($_GET['token'])) {
       $expose = [
         'id', 'code', 'username', 'email', 'mobile', 'name',
         'addressstreet', 'addresspurok', 'addressbrgy', 'type', 'created', 'lastlogin',
-        'counts'
+        'counts', 'active'
       ];
 
       while ($user = $users_res->fetch_object()) {
@@ -76,10 +76,11 @@ if (!empty($_GET['token'])) {
         $exposed['transaction'] = null;
 
         $userid = $user->id;
-        $last_transaction_res = $conn->query("SELECT transaction_code FROM violations WHERE user=$userid ORDER BY id DESC LIMIT 1");
+        $last_transaction_res = $conn->query("SELECT id, transaction_code FROM violations WHERE user=$userid ORDER BY id DESC LIMIT 1");
         if ($last_transaction_res->num_rows > 0) {
           $last_transaction = $last_transaction_res->fetch_object();
           $exposed['transaction'] = [
+            'transaction_id' => $last_transaction->id,
             'transaction_code' => $last_transaction->transaction_code
           ];
         }

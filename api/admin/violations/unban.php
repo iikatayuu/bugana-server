@@ -45,7 +45,7 @@ if (!empty($_POST['token'])) {
       }
 
       $user = $user_res->fetch_object();
-      $conn->query("UPDATE users SET active=0 WHERE id=$id");
+      $conn->query("UPDATE users SET active=1 WHERE id=$id");
 
       $result['success'] = true;
       $result['message'] = '';
