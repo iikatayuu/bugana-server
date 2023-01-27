@@ -102,7 +102,20 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
       <thead>
         <tr>
           <th>Transaction ID</th>
-          <th>Transaction Date</th>
+          <th>
+            <div class="d-flex flex-align-center flex-center">
+              <span class="mr-1">Transaction Date</span>
+              <div class="dropdown">
+                <button type="button" class="btn btn-text" data-dropdown="toggle">
+                  <img src="/imgs/down.svg" alt="Sort by transaction date date" width="12" />
+                </button>
+                <div class="dropdown-content">
+                  <button type="button" class="btn btn-text btn-block text-md py-1" id="sort-date-ascending">Oldest</button>
+                  <button type="button" class="btn btn-text btn-block text-md py-1" id="sort-date-descending">Latest</button>
+                </div>
+              </div>
+            </div>
+          </th>
           <th>Customer Code</th>
           <th>Total Amount</th>
           <th>Order Type</th>

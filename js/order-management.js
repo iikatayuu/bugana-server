@@ -11,6 +11,7 @@ $(document).ready(function () {
   const tempDetailsTotal = $('#temp-details-total').prop('content')
   const tempPageBtn = $('#temp-page-btn').prop('content')
   const tempShip = $('#temp-ship').prop('content')
+  let dateSort = ''
   let category = 'all'
   let page = 1
   let limit = parseInt($('#limit-page').val())
@@ -27,6 +28,7 @@ $(document).ready(function () {
     params.set('category', category)
     params.set('token', token)
     if (transactionId) params.set('search', transactionId)
+    if (dateSort) params.set('date.sort', dateSort)
 
     const response = await $.ajax(`/api/admin/transaction/list.php?${params.toString()}`, {
       method: 'get',
@@ -307,6 +309,18 @@ $(document).ready(function () {
 
   $('#limit-page').on('keydown', function () {
     if (limitTimer) clearTimeout(limitTimer)
+  })
+
+  $('#sort-date-ascending').click(function () {
+    dateSort = 'asc'
+    $('.dropdown-content.active').removeClass('active')
+    displayTransactions()
+  })
+
+  $('#sort-date-descending').click(function () {
+    dateSort = 'desc'
+    $('.dropdown-content.active').removeClass('active')
+    displayTransactions()
   })
 
   $(document).on('click', '[data-page]', function (event) {

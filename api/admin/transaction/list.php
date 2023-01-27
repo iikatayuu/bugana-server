@@ -44,6 +44,7 @@ if (!empty($_GET['token'])) {
       $limit = !empty($_GET['limit']) ? $conn->real_escape_string($_GET['limit']) : '10';
       $category = !empty($_GET['category']) ? $conn->real_escape_string($_GET['category']) : 'all';
       $search = !empty($_GET['search']) ? $conn->real_escape_string($_GET['search']) : null;
+      $datesort = !empty($_GET['date_sort']) ? $conn->real_escape_string($_GET['date_sort']) : null;
 
       if (!preg_match('/^(\d+)$/', $page)) {
         $result['message'] = 'Invalid page';
@@ -72,8 +73,16 @@ if (!empty($_GET['token'])) {
       $query .= $add_q;
       $count_query .= $add_q;
 
+      $orders = [];
+      if ($datesort && $datesort === 'asc') $orders[] = 'transactions.date ASC';
+      if ($datesort && $datesort === 'desc') $orders[] = 'transactions.date DESC';
+
+      $query .= '  GROUP BY transactions.transaction_code ';
+      $add_q = ' ORDER BY ' . (count($orders) > 0 ? implode(', ', $orders) : 'transactions.date DESC');
+      $query .= $add_q;
+
       $page_q = (intval($page) - 1) * intval($limit);
-      $transactions_res = $conn->query("$query GROUP BY transactions.transaction_code ORDER BY transactions.date DESC LIMIT $page_q, $limit");
+      $transactions_res = $conn->query("$query LIMIT $page_q, $limit");
       $count_res = $conn->query($count_query);
       $count = $count_res->fetch_object()->count;
       $transactions = [];
