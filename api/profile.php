@@ -43,7 +43,7 @@ if (!empty($_GET['token'])) {
       $user = $user_res->fetch_object();
       $profile = [];
       $expose = [
-        'id', 'username', 'email', 'mobile', 'name', 'gender', 'birthday',
+        'id', 'code', 'username', 'email', 'mobile', 'name', 'gender', 'birthday',
         'addressstreet', 'addresspurok', 'addressbrgy', 'type', 'created', 'lastlogin'
       ];
 
