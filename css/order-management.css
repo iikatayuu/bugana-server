@@ -41,3 +41,7 @@
 .order-status {
   cursor: pointer;
 }
+
+.order-details-violation {
+  color: #d62035;
+}

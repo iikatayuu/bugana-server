@@ -77,14 +77,25 @@ $(document).ready(function () {
       }
 
       let id = transaction.id
+      let statusText = ''
       while (id.length < 6) id = `0${id}`
+
+      switch (transaction.status) {
+        case 'success':
+          statusText = transaction.paymentoption === 'delivery' ? 'Delivered' : 'Picked Up'
+          break
+        
+        case 'rejected':
+          statusText = '<span class="order-details-violation">Violation</span>'
+          break
+      }
 
       $(elem).find('.transaction-id').text(id)
       $(elem).find('.transaction-date').text(dateStr)
       $(elem).find('.customer-name').text(user.name)
       $(elem).find('.total-amount').text(totalAmount.toFixed(2))
       $(elem).find('.order-type').text(transaction.paymentoption === 'delivery' ? 'COD' : 'COP')
-      $(elem).find('.order-status-text').text(transaction.status === 'success' ? (transaction.paymentoption === 'delivery' ? 'Delivered' : 'Picked Up') : '')
+      $(elem).find('.order-status-text').html(statusText)
       $(elem).find('.order-status').attr({
         src: '/imgs/status-' + (transaction.status === 'success' || transaction.status === 'approved' ? 'check.png' : 'pending.png'),
         alt: transaction.status === 'success' || transaction.status === 'approved' ? 'Successful' : 'Pending'
@@ -163,11 +174,29 @@ $(document).ready(function () {
     const user = tx.user
     const dateStr = dateFormat(tx.date)
     let grandTotal = 0
+    let txId = tx.id
+    let orderStatus = ''
+    while (txId.length < 6) txId = `0${txId}`
+
+    switch (tx.status) {
+      case 'success':
+        orderStatus = 'Received'
+        break
+
+      case 'rejected':
+        orderStatus = '<span class="order-details-violation">Violation</span>'
+        break
+      
+      case 'pending':
+      case 'approved':
+        orderStatus = 'Pending'
+        break
+    }
 
     $('#order-customer-name').text(user.name)
-    $('#transaction-id').text(code)
+    $('#transaction-id').text(txId)
     $('#transaction-date').text(dateStr)
-    $('#order-customer-code').text(user.code)
+    $('#transaction-order-status').html(orderStatus)
     $('#order-customer-address').text(user.addressstreet + ', ' + user.addresspurok + ', ' + user.addressbrgy)
     $('#order-type').text(tx.paymentoption === 'delivery' ? 'Cash On Delivery' : 'Cash On Pickup')
     $('#orders').empty()
@@ -196,7 +225,7 @@ $(document).ready(function () {
     const grandTotalElem = $(tempDetailsTotal).clone(true, true)
 
     $(totalAmountElem).find('.total-name').text('Total Name:')
-    $(totalAmountElem).find('.total-value').text(grandTotal.toFixed(2))
+    $(totalAmountElem).find('.total-value').text('₱' + grandTotal.toFixed(2))
     $('#orders').append(totalAmountElem)
 
     if (tx.paymentoption === 'delivery') {
@@ -213,7 +242,7 @@ $(document).ready(function () {
     } else $('.delivery').addClass('d-none')
 
     $(grandTotalElem).find('.total-name').text('Total Order Amount:')
-    $(grandTotalElem).find('.total-value').text(grandTotal.toFixed(2))
+    $(grandTotalElem).find('.total-value').text('₱' + grandTotal.toFixed(2))
     $('#orders').append(grandTotalElem)
 
     modal('open', '#modal-order')
