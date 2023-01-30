@@ -107,7 +107,7 @@ out_header('BUGANA Admin Dashboard', $styles, $scripts);
             <div class="d-flex">
               <div class="flex-1"><h6>Today:</h6></div>
               <div class="card-value">
-                <span class="total-orders-day">0</span> KG
+                <span class="total-orders-day">0</span>
               </div>
             </div>
             <div class="d-flex">
