@@ -44,7 +44,7 @@ if (!empty($_GET['token'])) {
 
     $query = "SELECT
         transactions.*,
-        products.id AS productid, products.name, products.user AS farmerid,
+        products.id AS productid, products.name, products.description, products.user AS farmerid,
         (SELECT users.name FROM users WHERE users.id=farmerid) AS userfullname,
         (SELECT users.username FROM users WHERE users.id=farmerid) AS username,
         (SELECT users.addressstreet FROM users WHERE users.id=farmerid) AS addressstreet,
@@ -57,7 +57,7 @@ if (!empty($_GET['token'])) {
     if ($farmer) {
       $query = "SELECT
           transactions.*,
-          products.id AS productid, products.name, products.user AS farmerid,
+          products.id AS productid, products.name, products.description, products.user AS farmerid,
           (SELECT users.name FROM users WHERE users.id=transactions.user) AS userfullname,
           (SELECT users.username FROM users WHERE users.id=transactions.user) AS username,
           (SELECT users.addressstreet FROM users WHERE users.id=transactions.user) AS addressstreet,
@@ -98,6 +98,7 @@ if (!empty($_GET['token'])) {
         'product' => [
           'id' => $transaction->productid,
           'name' => $transaction->name,
+          'description' => $transaction->description,
           'user' => $transaction->farmerid,
           'photos' => $photos
         ],
