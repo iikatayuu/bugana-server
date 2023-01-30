@@ -83,9 +83,11 @@ if (!empty($_GET['token'])) {
           products.user AS farmerid,
           products.name AS productname,
           products.category,
+          transactions.status AS trans_status,
           (SELECT name FROM users WHERE users.id=products.user) AS userfullname
         FROM stocks
-        JOIN products ON products.id=stocks.product";
+        JOIN products ON products.id=stocks.product
+        JOIN transactions ON transactions.transaction_code=stocks.transaction_code";
 
       $wheres = ['stocks.quantity < 0'];
       if (count($products) > 0) {
@@ -133,7 +135,7 @@ if (!empty($_GET['token'])) {
           'quantity' => $stock->quantity,
           'date' => $stock->date,
           'revenue' => $stock->amount,
-          'status' => $stock->status,
+          'status' => $stock->trans_status,
           'username' => $stock->userfullname,
           'product' => [
             'name' => $stock->productname,

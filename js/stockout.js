@@ -84,7 +84,16 @@ $(document).ready(function () {
       }
 
       switch (stock.status) {
+        case 'pending':
+          status = 'Pending'
+          break
+
+        case 'approved':
+          status = 'Approved'
+          break
+
         case 'sold':
+        case 'success':
           status = 'Sold'
           break
         
