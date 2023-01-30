@@ -36,7 +36,7 @@ if (!empty($_POST['token'])) {
 
   if ($decoded !== null) {
     $usertype = $decoded->type;
-    if ($usertype === 'headadmin') {
+    if ($usertype === 'headadmin' || $usertype === 'admin') {
       $product_name = !empty($_POST['product']) ? $conn->real_escape_string($_POST['product']) : null;
       if (!$product_name) {
         $response['message'] = 'Invalid params';
