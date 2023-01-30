@@ -248,6 +248,45 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
     </div>
   </div>
 
+  <div id="modal-confirm-violate" class="modal">
+    <div class="card card-round-sm card-tertiary text-center p-0">
+      <div class="d-flex flex-align-center mt-1 mx-2">
+        <div class="flex-1"></div>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-confirm-violate">
+            <img src="/imgs/circle-x.svg" alt="Exit modal" width="24" height="24" />
+          </button>
+        </div>
+      </div>
+
+      <div class="p-2 text-center">
+        <div class="mb-3">Confirm add violation to user?</div>
+        <div class="d-flex flex-space-around mx-4">
+          <button type="button" class="btn btn-secondary mr-2" data-violate>Yes</button>
+          <button type="button" class="btn btn-secondary" data-modal="#modal-confirm-violate">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-violate-successful" class="modal">
+    <div class="card card-round-sm card-tertiary text-center p-0">
+      <div class="d-flex flex-align-center mt-1 mx-2">
+        <div class="flex-1"></div>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-violate-successful">
+            <img src="/imgs/circle-x.svg" alt="Exit modal" width="24" height="24" />
+          </button>
+        </div>
+      </div>
+
+      <div class="p-2">
+        <img src="/imgs/modal-check.svg" alt="Success" width="48" height="48" class="mb-2" />
+        <div>User successfully added to violation!</div>
+      </div>
+    </div>
+  </div>
+
   <div id="modal-confirm-order" class="modal">
     <div class="card card-round-sm card-tertiary text-center p-0">
       <div class="d-flex flex-align-center mt-1 mx-2">

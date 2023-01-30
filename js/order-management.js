@@ -109,7 +109,7 @@ $(document).ready(function () {
           }).click(async function (event) {
             event.preventDefault()
             currentTransaction = transaction
-            addViolation()
+            showModalViolation()
           })
         }
 
@@ -129,6 +129,11 @@ $(document).ready(function () {
     }
   }
 
+  async function showModalViolation () {
+    modal('close')
+    modal('open', '#modal-confirm-violate')
+  }
+
   async function addViolation () {
     const response = await $.ajax('/api/admin/violations/add.php', {
       method: 'post',
@@ -139,8 +144,17 @@ $(document).ready(function () {
       }
     })
 
-    if (response.success) window.location.href = '/customer-violation-reports.php'
+    if (response.success) {
+      modal('close')
+      modal('open', '#modal-violate-successful')
+      window.location.href = '/customer-violation-reports.php'
+    }
   }
+
+  $('[data-violate]').click(async function (event) {
+    event.preventDefault()
+    addViolation()
+  })
 
   async function confirmOrder (event) {
     event.preventDefault()
