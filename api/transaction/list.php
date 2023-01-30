@@ -39,6 +39,9 @@ if (!empty($_GET['token'])) {
     $is_admin = $usertype === 'admin' || $usertype === 'headadmin';
     $userid = !empty($_GET['id']) && $is_admin ? $conn->real_escape_string($_GET['id']) : $decoded->userid;
     $type = !empty($_GET['type']) ? $conn->real_escape_string($_GET['type']) : null;
+    $pending = isset($_GET['pending']);
+    $farmer = isset($_GET['farmer']);
+
     $query = "SELECT
         transactions.*,
         products.id AS productid, products.name, products.user AS farmerid,
@@ -51,7 +54,7 @@ if (!empty($_GET['token'])) {
       JOIN products ON products.id=transactions.product
       WHERE transactions.user=$userid";
 
-    if (isset($_GET['farmer'])) {
+    if ($farmer) {
       $query = "SELECT
           transactions.*,
           products.id AS productid, products.name, products.user AS farmerid,
@@ -66,6 +69,7 @@ if (!empty($_GET['token'])) {
     }
 
     if ($type) $query .= " AND transactions.paymentoption='$type'";
+    if ($pending && !$farmer) $query .= " AND transactions.status<>'success'";
     $query .= " ORDER BY transactions.date DESC";
     $transactions_res = $conn->query($query);
 
