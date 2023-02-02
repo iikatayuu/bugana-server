@@ -19,7 +19,7 @@ $(document).ready(function () {
     if (res.success) {
       $('#total-sales').text(res.sales.total.toFixed(2))
       $('#total-delivery-sales').text(res.sales.delivery.toFixed(2))
-      $('#unsold-products').text(res.sales.unsold)
+      $('#unsold-products').text(res.sales.unsold.toFixed(2))
       $('#report-total').text(res.sales.grandtotal.toFixed(2))
     }
   }
