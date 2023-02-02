@@ -23,15 +23,29 @@ $result = [
   'pages' => 0
 ];
 
+$page = !empty($_GET['page']) ? $conn->real_escape_string($_GET['page']) : '1';
+$limit = !empty($_GET['limit']) ? $conn->real_escape_string($_GET['limit']) : '10';
+$view = !empty($_GET['view']) ? $conn->real_escape_string($_GET['view']) : 'all';
+$user = !empty($_GET['user']) ? strtoupper($conn->real_escape_string($_GET['user'])) : null;
+$usersort = !empty($_GET['user_sort']) ? $conn->real_escape_string($_GET['user_sort']) : null;
+$salessort = !empty($_GET['sales_sort']) ? $conn->real_escape_string($_GET['sales_sort']) : null;
+
 $query = "SELECT * FROM users WHERE ";
+if ($salessort) {
+  $query = "SELECT
+      users.*,
+      COALESCE(SUM(
+        (
+          SELECT COALESCE(SUM(transactions.amount), 0)
+          FROM transactions WHERE transactions.product=products.id
+        )
+      ), 0) AS sales
+    FROM users
+    JOIN products ON products.user=users.id WHERE ";
+}
+
 if (!empty($_GET['token'])) {
   $decoded = null;
-  $page = !empty($_GET['page']) ? $conn->real_escape_string($_GET['page']) : '1';
-  $limit = !empty($_GET['limit']) ? $conn->real_escape_string($_GET['limit']) : '10';
-  $view = !empty($_GET['view']) ? $conn->real_escape_string($_GET['view']) : 'all';
-  $user = !empty($_GET['user']) ? strtoupper($conn->real_escape_string($_GET['user'])) : null;
-  $usersort = !empty($_GET['user_sort']) ? $conn->real_escape_string($_GET['user_sort']) : null;
-  $salessort = !empty($_GET['sales_sort']) ? $conn->real_escape_string($_GET['sales_sort']) : null;
 
   try {
     $decoded = JWT::decode($_GET['token'], new Key(JWT_KEY, JWT_ALGO));
@@ -73,6 +87,10 @@ if (!empty($_GET['token'])) {
 
       if ($user) $wheres[] = "code='$user'";
       $add_q = implode(' AND ', $wheres);
+      $query .= $add_q;
+      $count_query .= $add_q;
+
+      $add_q = " GROUP BY users.id";
       $query .= $add_q;
       $count_query .= $add_q;
 
