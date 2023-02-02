@@ -26,7 +26,7 @@ $result = [
 $page = !empty($_GET['page']) ? $conn->real_escape_string($_GET['page']) : '1';
 $limit = !empty($_GET['limit']) ? $conn->real_escape_string($_GET['limit']) : '10';
 $view = !empty($_GET['view']) ? $conn->real_escape_string($_GET['view']) : 'all';
-$user = !empty($_GET['user']) ? strtoupper($conn->real_escape_string($_GET['user'])) : null;
+$username = !empty($_GET['user']) ? $conn->real_escape_string($_GET['user']) : null;
 $usersort = !empty($_GET['user_sort']) ? $conn->real_escape_string($_GET['user_sort']) : null;
 $salessort = !empty($_GET['sales_sort']) ? $conn->real_escape_string($_GET['sales_sort']) : null;
 
@@ -67,11 +67,6 @@ if (!empty($_GET['token'])) {
         die(json_encode($result));
       }
 
-      if ($user && !preg_match('/^((A|F|C)\d{2})$/', $user)) {
-        $result['message'] = 'Invalid code';
-        die(json_encode($result));
-      }
-
       $count_query = "SELECT COUNT(*) AS count FROM users WHERE ";
       $add_q = '';
       $wheres = [];
@@ -85,7 +80,7 @@ if (!empty($_GET['token'])) {
         die(json_encode($result));
       }
 
-      if ($user) $wheres[] = "code='$user'";
+      if ($username) $wheres[] = "name LIKE '%$username%'";
       $add_q = implode(' AND ', $wheres);
       $query .= $add_q;
       $count_query .= $add_q;
