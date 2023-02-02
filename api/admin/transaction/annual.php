@@ -41,8 +41,9 @@ if (!empty($_POST['token'])) {
       $year = intval(date('Y'));
       $months = [];
 
+      $result['debug'] = [];
       for ($i = 1; $i <= $month; $i++) {
-        $il = strval($month);
+        $il = strval($i);
         while (strlen($il) < 2) $il = "0$il";
 
         $month_time = strtotime("$year-$il-01");
