@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userid = $user->id;
     $email = $user->email;
     $name = $user->name;
-    $temp_pass = random_str();
+    $temp_pass = random_str(8);
     $hash = password_hash($temp_pass, PASSWORD_BCRYPT);
     $conn->query("UPDATE users SET temp_password='$hash' WHERE id=$userid");
 
