@@ -50,8 +50,8 @@ if (!empty($_GET['token'])) {
       $query = "SELECT
           transactions.*,
           products.id AS productid, products.name, products.user AS farmerid, products.price,
-          SUM(transactions.amount) AS amount,
-          SUM(transactions.quantity) AS quantity
+          COALESCE(SUM(transactions.amount), 0) AS amount,
+          COALESCE(SUM(transactions.quantity), 0) AS quantity
         FROM transactions
         JOIN products ON products.id=transactions.product
         WHERE transactions.status='success'";
@@ -105,7 +105,14 @@ if (!empty($_GET['token'])) {
         $transactions[] = $transactionitem;
       }
     } else {
-      $query = "SELECT stocks.*, products.id AS productid, products.name, products.user AS farmerid, products.price
+      $query = "SELECT
+          stocks.*,
+          products.id AS productid,
+          products.name,
+          products.user AS farmerid,
+          products.price,
+          COALESCE(SUM(stocks.amount), 0) AS amount,
+          COALESCE(SUM(stocks.quantity), 0) AS quantity
         FROM stocks
         JOIN products ON products.id=stocks.product WHERE stocks.status='perished'";
 
@@ -125,7 +132,7 @@ if (!empty($_GET['token'])) {
         $query .= " AND stocks.date BETWEEN '$year_start' AND '$year_end'";
       }
 
-      $query .= " ORDER BY stocks.date DESC";
+      $query .= " GROUP BY products.name ORDER BY stocks.date DESC";
       $transactions_res = $conn->query($query);
       $transactions = [];
       while ($transaction = $transactions_res->fetch_object()) {
