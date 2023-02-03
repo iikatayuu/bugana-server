@@ -134,8 +134,8 @@ out_header('BUGANA New Product', $styles, $scripts);
         </div>
 
         <div class="d-flex flex-space-around my-2">
-          <a href="/product-management.php" class="btn btn-lg btn-secondary" role="button">CANCEL</a>
           <button type="submit" class="btn btn-lg btn-secondary">ADD PRODUCT</button>
+          <a href="/product-management.php" class="btn btn-lg btn-secondary" role="button">CANCEL</a>
         </div>
       </form>
     </div>
