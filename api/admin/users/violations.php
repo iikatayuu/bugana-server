@@ -76,11 +76,20 @@ if (!empty($_GET['token'])) {
         $exposed['transaction'] = null;
 
         $userid = $user->id;
-        $last_transaction_res = $conn->query("SELECT id, transaction_code FROM violations WHERE user=$userid ORDER BY id DESC LIMIT 1");
+        $last_transaction_res = $conn->query(
+          "SELECT
+            violations.id,
+            violations.transaction_code,
+            transactions.id AS trans_id
+          FROM violations
+          INNER JOIN transactions ON transactions.transaction_code=violations.transaction_code
+          WHERE violations.user=$userid ORDER BY violations.id DESC LIMIT 1"
+        );
+
         if ($last_transaction_res->num_rows > 0) {
           $last_transaction = $last_transaction_res->fetch_object();
           $exposed['transaction'] = [
-            'transaction_id' => $last_transaction->id,
+            'transaction_id' => $last_transaction->trans_id,
             'transaction_code' => $last_transaction->transaction_code
           ];
         }
