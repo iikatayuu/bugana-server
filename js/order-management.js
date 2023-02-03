@@ -12,6 +12,7 @@ $(document).ready(function () {
   const tempPageBtn = $('#temp-page-btn').prop('content')
   const tempShip = $('#temp-ship').prop('content')
   let dateSort = ''
+  let brgySort = ''
   let category = 'all'
   let page = 1
   let limit = parseInt($('#limit-page').val())
@@ -29,6 +30,7 @@ $(document).ready(function () {
     params.set('token', token)
     if (transactionId) params.set('search', transactionId)
     if (dateSort) params.set('date.sort', dateSort)
+    if (brgySort) params.set('brgy.sort', brgySort)
 
     const response = await $.ajax(`/api/admin/transaction/list.php?${params.toString()}`, {
       method: 'get',
@@ -93,6 +95,7 @@ $(document).ready(function () {
       $(elem).find('.transaction-id').text(id)
       $(elem).find('.transaction-date').text(dateStr)
       $(elem).find('.customer-name').text(user.name)
+      $(elem).find('.customer-brgy').text(user.addressbrgy)
       $(elem).find('.total-amount').text(totalAmount.toFixed(2))
       $(elem).find('.order-type').text(transaction.paymentoption === 'delivery' ? 'COD' : 'COP')
       $(elem).find('.order-status-text').html(statusText)
@@ -362,6 +365,18 @@ $(document).ready(function () {
 
   $('#sort-date-descending').click(function () {
     dateSort = 'desc'
+    $('.dropdown-content.active').removeClass('active')
+    displayTransactions()
+  })
+
+  $('#sort-brgy-ascending').click(function () {
+    brgySort = 'asc'
+    $('.dropdown-content.active').removeClass('active')
+    displayTransactions()
+  })
+
+  $('#sort-brgy-descending').click(function () {
+    brgySort = 'desc'
     $('.dropdown-content.active').removeClass('active')
     displayTransactions()
   })

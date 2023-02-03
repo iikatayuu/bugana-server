@@ -45,6 +45,7 @@ if (!empty($_GET['token'])) {
       $category = !empty($_GET['category']) ? $conn->real_escape_string($_GET['category']) : 'all';
       $search = !empty($_GET['search']) ? $conn->real_escape_string($_GET['search']) : null;
       $datesort = !empty($_GET['date_sort']) ? $conn->real_escape_string($_GET['date_sort']) : null;
+      $brgysort = !empty($_GET['brgy_sort']) ? $conn->real_escape_string($_GET['brgy_sort']) : null;
 
       if (!preg_match('/^(\d+)$/', $page)) {
         $result['message'] = 'Invalid page';
@@ -76,6 +77,8 @@ if (!empty($_GET['token'])) {
       $orders = [];
       if ($datesort && $datesort === 'asc') $orders[] = 'transactions.date ASC';
       if ($datesort && $datesort === 'desc') $orders[] = 'transactions.date DESC';
+      if ($brgysort && $brgysort === 'asc') $orders[] = 'users.addressbrgy ASC';
+      if ($brgysort && $brgysort === 'desc') $orders[] = 'users.addressbrgy DESC';
 
       $query .= '  GROUP BY transactions.transaction_code ';
       $add_q = ' ORDER BY ' . (count($orders) > 0 ? implode(', ', $orders) : 'transactions.date DESC');

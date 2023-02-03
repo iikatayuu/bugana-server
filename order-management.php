@@ -107,7 +107,7 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
               <span class="mr-1">Transaction Date</span>
               <div class="dropdown">
                 <button type="button" class="btn btn-text" data-dropdown="toggle">
-                  <img src="/imgs/down.svg" alt="Sort by transaction date date" width="12" />
+                  <img src="/imgs/down.svg" alt="Sort by transaction date" width="12" />
                 </button>
                 <div class="dropdown-content">
                   <button type="button" class="btn btn-text btn-block text-md py-1" id="sort-date-ascending">Oldest</button>
@@ -117,6 +117,20 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
             </div>
           </th>
           <th>Customer Name</th>
+          <th>
+            <div class="d-flex flex-align-center flex-center">
+              <span class="mr-1">Barangay</span>
+              <div class="dropdown">
+                <button type="button" class="btn btn-text" data-dropdown="toggle">
+                  <img src="/imgs/down.svg" alt="Sort by barangay" width="12" />
+                </button>
+                <div class="dropdown-content">
+                  <button type="button" class="btn btn-text btn-block text-md py-1" id="sort-brgy-ascending">A-Z</button>
+                  <button type="button" class="btn btn-text btn-block text-md py-1" id="sort-brgy-descending">Z-A</button>
+                </div>
+              </div>
+            </div>
+          </th>
           <th>Total Amount</th>
           <th>Order Type</th>
           <th>Order Status</th>
@@ -377,6 +391,7 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
       <td class="transaction-id"></td>
       <td class="transaction-date"></td>
       <td class="customer-name"></td>
+      <td class="customer-brgy"></td>
       <td><span class="total-amount"></span> PHP</td>
       <td class="order-type"></td>
       <td class="order-status-text"></td>
