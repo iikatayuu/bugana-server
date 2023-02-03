@@ -87,7 +87,6 @@ if (!empty($_GET['token'])) {
 
       $add_q = " GROUP BY users.id";
       $query .= $add_q;
-      $count_query .= $add_q;
 
       $orders = [];
       if ($salessort && $salessort === 'asc') $orders[] = 'sales ASC';
