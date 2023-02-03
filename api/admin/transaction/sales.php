@@ -44,7 +44,7 @@ if (!empty($_GET['token'])) {
 
     $date = !empty($_GET['date']) ? $_GET['date'] : null;
     $unsold = !empty($_GET['unsold']) ? $_GET['unsold'] : null;
-    $month = !empty($_GET['month']) ? intval($_GET['month']) + 1 : null;
+    $month = !empty($_GET['month']) ? intval($_GET['month']) + 1 : 1;
 
     if (!$unsold) {
       $query = "SELECT

@@ -10,13 +10,24 @@ $is_detailed = isset($_GET['detailed']);
 $is_unsold = isset($_GET['unsold']);
 $date_name = '';
 $date_base = '';
+$month_n = '';
+
+if ($date === 'monthly') {
+  $month = isset($_GET['month']) ? intval($_GET['month']) + 1 : intval(date('m'));
+  $month = strval($month);
+  while (strlen($month) < 2) $month = "0$month";
+  $year = date('Y');
+  $timestamp = strtotime("$year-$month-01");
+  $month_n = date('F', $timestamp) . ' ';
+}
 
 if ($date === 'weekly') {
   $date_name = 'Weekly';
   $date_base = 'Week';
 } else if ($date === 'monthly') {
-  $date_name = 'Monthly';
-  $date_base = 'Month';
+  $month_name = empty($month_n) ? date('F') : $month_n;
+  $date_name = "$month_n Monthly";
+  $date_base = 'Monthly';
 } else if ($date === 'annual') {
   $date_name = 'Annual';
   $date_base = 'Annual';
@@ -107,7 +118,9 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
 
     <?php if ($is_detailed) { ?>
       <div class="d-flex flex-align-center my-2 mx-3">
-        <h6 class="dashboard-title flex-1">This <?= $date_base ?> <?= $is_unsold ? 'Unsold ' : '' ?> Sales</h6>
+        <h6 class="dashboard-title flex-1">
+          This <?= $month_n ?><?= $date_base ?> <?= $is_unsold ? 'Unsold ' : '' ?> Sales
+        </h6>
 
         <?php if (!$is_unsold) { ?>
         <button type="button" class="btn btn-secondary mr-2" data-modal="#modal-report">Generate <?= $date_base ?> Report</button>
