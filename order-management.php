@@ -116,7 +116,7 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
               </div>
             </div>
           </th>
-          <th>Customer Code</th>
+          <th>Customer Name</th>
           <th>Total Amount</th>
           <th>Order Type</th>
           <th>Order Status</th>
