@@ -90,7 +90,11 @@ $(document).ready(function () {
   }
 
   const currentDate = new Date()
-  $('#sales-report-table-date').text(`${MONTHS[currentDate.getMonth()]} ${currentDate.getDate()}, ${currentDate.getFullYear()}`)
+  $('#sales-report-table-date').text(
+    monthIndex === null
+      ? `${MONTHS[currentDate.getMonth()]} ${currentDate.getDate()}, ${currentDate.getFullYear()}`
+      : `${MONTHS[monthIndex]} ${currentDate.getFullYear()}`
+  )
 
   if (date === 'weekly') {
     const firstDate = new Date(currentDate)
