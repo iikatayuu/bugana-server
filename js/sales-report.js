@@ -14,6 +14,7 @@ $(document).ready(function () {
   const tempSale = $('#temp-sale').prop('content')
   const tempTotal = $('#temp-total').prop('content')
   const tempBreakdown = $('#temp-breakdown').prop('content')
+  let transactions = []
 
   async function displayTransactions () {
     $('#sales').empty()
@@ -31,6 +32,7 @@ $(document).ready(function () {
 
     if (!response.success) return
     let total = 0
+    transactions = response.transactions
     for (let i = 0; i < response.transactions.length; i++) {
       const transaction = response.transactions[i]
       const product = transaction.product
@@ -40,7 +42,10 @@ $(document).ready(function () {
       $(elem).find('.product-name').text(product.name)
       $(elem).find('.quantity-sold').text(transaction.quantity)
       $(elem).find('.product-revenue').text(transaction.amount)
-      $(elem).find('.product-details').attr('data-product', product.name).click(showProduct)
+      $(elem).find('.product-details').attr({
+        'data-product': product.name,
+        'data-index': i
+      }).click(showProduct)
 
       $('#sales').append(elem)
     }
@@ -56,6 +61,8 @@ $(document).ready(function () {
     event.preventDefault()
 
     const product = $(this).attr('data-product')
+    const index = $(this).attr('data-index')
+    const currentTx = transactions[index]
     const response = await $.ajax('/api/admin/product/breakdown.php', {
       method: 'post',
       dataType: 'json',
@@ -68,12 +75,13 @@ $(document).ready(function () {
     for (let i = 0; i < breakdown.length; i++) {
       const elem = $(tempBreakdown).clone(true, true)
       const farmerProduct = breakdown[i]
+      const totalAmount = currentTx.quantity * parseFloat(farmerProduct.price)
 
       $(elem).find('.bd-farmer-name').text(farmerProduct.name)
       $(elem).find('.bd-product-name').text(product)
       $(elem).find('.bd-product-price').text(farmerProduct.price)
-      $(elem).find('.bd-product-quantity').text(farmerProduct.quantity)
-      $(elem).find('.bd-total-amount').text(farmerProduct.totalAmount)
+      $(elem).find('.bd-product-quantity').text(currentTx.quantity)
+      $(elem).find('.bd-total-amount').text(totalAmount)
 
       $('#modal-product-breakdown-farmers').append(elem)
     }
