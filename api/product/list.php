@@ -58,6 +58,7 @@ $pricesort = !empty($_GET['price_sort']) ? $conn->real_escape_string($_GET['pric
 $farmersort = !empty($_GET['farmer_sort']) ? $conn->real_escape_string($_GET['farmer_sort']) : null;
 $stockinsort = !empty($_GET['stockin_sort']) ? $conn->real_escape_string($_GET['stockin_sort']) : null;
 $random = isset($_GET['random']);
+$exclude = isset($_GET['exclude']);
 
 if (!preg_match('/^(\d+)$/', $page)) {
   $result['message'] = 'Invalid page';
@@ -66,8 +67,24 @@ if (!preg_match('/^(\d+)$/', $page)) {
 
 $query = "SELECT products.*, users.name AS userfullname FROM products JOIN users ON users.id=products.user";
 $count_query = "SELECT COUNT(*) AS count FROM products";
-$wheres = [];
 
+if ($exclude) {
+  $query = "SELECT
+      products.*,
+      users.name AS userfullname,
+      COALESCE(SUM(stocks.quantity), 0) AS quantity
+    FROM products
+    JOIN users ON users.id=products.user
+    JOIN stocks ON stocks.product=products.id";
+  
+  $count_query = "SELECT
+      COUNT(products.id) AS count,
+      COALESCE(SUM(stocks.quantity), 0)
+    FROM products
+    JOIN stocks ON stocks.product=products.id";
+}
+
+$wheres = [];
 if ($category !== 'all' && $category !== '') $wheres[] = "category='$category'";
 if ($search) {
   $users_q_res = $conn->query("SELECT id FROM users WHERE name LIKE '%$search%'");
@@ -89,6 +106,12 @@ $add_q = count($wheres) > 0 ? ' WHERE ' . implode(' AND ', $wheres) : '';
 $query .= $add_q;
 $count_query .= $add_q;
 
+if ($exclude) {
+  $add_q = " GROUP BY products.id HAVING COALESCE(SUM(stocks.quantity), 0) > 0";
+  $query .= $add_q;
+  $count_query .= $add_q;
+}
+
 $orders = [];
 if ($productsort && $productsort === 'asc') $orders[] = 'name ASC';
 if ($productsort && $productsort === 'desc') $orders[] = 'name DESC';
@@ -103,13 +126,9 @@ $query .= $add_q;
 $page_q = (intval($page) - 1) * intval($limit);
 $products_res = $conn->query("$query LIMIT $page_q, $limit");
 
-if ($conn->errno) {
-  echo "$query LIMIT $page_q, $limit\n";
-  die($conn->error);
-}
-
 $count_res = $conn->query($count_query);
-$count = $count_res->fetch_object()->count;
+$count_obj = $count_res->fetch_object();
+$count = $count_obj || 0;
 $products = [];
 $imgpath = __DIR__ . '/../../userdata/products';
 
