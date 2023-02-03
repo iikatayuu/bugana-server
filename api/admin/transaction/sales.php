@@ -66,9 +66,8 @@ if (!empty($_GET['token'])) {
         $month_end = '';
 
         if (!$month) {
-          $month_days = date('t');
           $month_start = date('Y-m-01 00:00:00');
-          $month_end = date("Y-m-$month_days 23:59:59");
+          $month_end = date("Y-m-t 23:59:59");
         } else {
           $year = intval(date('Y'));
           $month = strval($month);
