@@ -88,7 +88,7 @@ out_header('BUGANA Individual Farmers Sales Report', $styles, $scripts);
 
     <div class="d-flex flex-space-between flex-align-center mx-5">
       <div>
-        <input type="text" id="farmer-search" name="q" placeholder="Search Farmer Code" class="form-control form-control-white box-shadow table-search" />
+        <input type="text" id="farmer-search" name="q" placeholder="Search Farmer Name" class="form-control form-control-white box-shadow table-search" />
       </div>
 
       <div class="pagination d-flex flex-align-center flex-center">

@@ -12,7 +12,7 @@ $(document).ready(function () {
   let userSort = ''
   let salesSort = ''
   let page = 1
-  let userCode = $('#user-search').val()
+  let userName = $('#user-search').val()
   let farmers = []
 
   async function displayFarmers () {
@@ -23,7 +23,7 @@ $(document).ready(function () {
     params.set('token', token)
     params.set('sales', '1')
     params.set('view', 'farmers')
-    if (userCode) params.set('user', userCode)
+    if (userName) params.set('user', userName)
     if (userSort) params.set('user.sort', userSort)
     if (salesSort) params.set('sales.sort', salesSort)
 
@@ -119,7 +119,7 @@ $(document).ready(function () {
     const value = $(this).val()
     clearTimeout(codeTimer)
     codeTimer = setTimeout(function () {
-      userCode = value
+      userName = value
       page = 1
       displayFarmers()
     }, 1250)
