@@ -29,15 +29,16 @@ SELECT
   (
     SELECT COUNT(violations.id) FROM violations WHERE violations.user=users.id
   ) AS counts
-FROM users WHERE type='customer' ORDER BY counts DESC
+FROM users WHERE
 EOD;
 
-$count_query = "SELECT COUNT(*) AS count FROM users WHERE type='customer'";
+$count_query = "SELECT COUNT(*) AS count FROM users WHERE";
 
 if (!empty($_GET['token'])) {
   $decoded = null;
   $page = !empty($_GET['page']) ? $conn->real_escape_string($_GET['page']) : '1';
   $limit = !empty($_GET['limit']) ? $conn->real_escape_string($_GET['limit']) : '10';
+  $search = !empty($_GET['search']) ? $conn->real_escape_string($_GET['search']) : null;
 
   try {
     $decoded = JWT::decode($_GET['token'], new Key(JWT_KEY, JWT_ALGO));
@@ -59,10 +60,20 @@ if (!empty($_GET['token'])) {
         die(json_encode($result));
       }
 
+      $wheres = ['type=\'customer\''];
+      if ($search) {
+        $wheres[] = "name LIKE '%$search%'";
+      }
+      $add_q = implode(' AND ', $wheres);
+      $query .= ' ' . $add_q;
+      $count_query .= ' ' . $add_q;
+
       $page_q = (intval($page) - 1) * intval($limit);
-      $users_res = $conn->query("$query LIMIT $page_q, $limit");
+      $users_res = $conn->query("$query ORDER BY counts DESC LIMIT $page_q, $limit");
       $count_res = $conn->query($count_query);
       $count = $count_res->fetch_object()->count;
+      $result['debug'] = "$query ORDER BY counts DESC LIMIT $page_q, $limit";
+      $result['debug1'] = $count_query;
       $users = [];
       $expose = [
         'id', 'code', 'username', 'email', 'mobile', 'name',

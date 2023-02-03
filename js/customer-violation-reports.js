@@ -10,6 +10,7 @@ $(document).ready(function () {
   const tempPageBtn = $('#temp-page-btn').prop('content')
   let page = 1
   let limit = parseInt($('#limit-page').val())
+  let userSearch = $('#customer-search').val()
   let users = []
 
   async function displayUsers() {
@@ -19,6 +20,7 @@ $(document).ready(function () {
     params.set('page', page.toString())
     params.set('limit', limit.toString())
     params.set('token', token)
+    if (userSearch) params.set('search', userSearch)
     const response = await $.getJSON(`/api/admin/users/violations.php?${params.toString()}`)
     if (!response.success) return
 
@@ -113,6 +115,21 @@ $(document).ready(function () {
 
   $('#limit-page').on('keydown', function () {
     if (limitTimer) clearTimeout(limitTimer)
+  })
+
+  let codeTimer = null
+  $('#customer-search').on('keyup', function () {
+    const value = $(this).val()
+    clearTimeout(codeTimer)
+    codeTimer = setTimeout(function () {
+      userSearch = value
+      page = 1
+      displayUsers()
+    }, 1250)
+  })
+
+  $('#customer-search').on('keydown', function () {
+    if (codeTimer) clearTimeout(codeTimer)
   })
 
   $(document).on('click', '[data-page]', function (event) {

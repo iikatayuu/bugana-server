@@ -78,6 +78,12 @@ out_header('BUGANA Customer Violation Reports', $styles, $scripts);
       <span class="admin-name"></span>
     </header>
 
+    <div class="d-flex flex-align-center mt-4 mx-3">
+      <div class="flex-1">
+        <input type="text" id="customer-search" name="q" placeholder="Search Customer Name" class="form-control form-control-white box-shadow table-search" />
+      </div>
+    </div>
+
     <table class="dashboard-table">
       <thead>
         <th>Full Name</th>
