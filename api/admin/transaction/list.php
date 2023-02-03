@@ -68,7 +68,6 @@ if (!empty($_GET['token'])) {
 
       $wheres = [];
       if ($category !== 'all' && $category !== '') $wheres[] = "transactions.status='$category'";
-      // if ($search) $wheres[] = "transactions.transaction_code LIKE '%$search%'";
       if ($search) {
         $query .= " AND users.name LIKE '%$search%'";
         $count_query .= " INNER JOIN users ON users.name LIKE '%$search%'";
