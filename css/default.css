@@ -1,4 +1,6 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@200&family=Poppins:wght@200&family=Roboto:wght@400;500&display=swap');
+
 * {
   box-sizing: border-box;
   font-family: 'Inika';
@@ -39,7 +41,12 @@
 }
 
 a { color: #000; }
-body { background-color: #f7fcf7;}
+body { background-color: #f7fcf7; }
+
+table tr th,
+table tr td {
+  font-family: 'Noto Sans', sans-serif;
+}
 
 .card {
   padding: 12px;
