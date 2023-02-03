@@ -162,8 +162,18 @@ out_header('BUGANA Individual Farmers Sales Report', $styles, $scripts);
   <div class="modal-container d-none"></div>
   <div id="modal-farmer" class="modal">
     <div class="card card-background p-4">
-      <h4 class="card-title mb-2 text-center farmer-details-name"></h4>
-      <h3 class="card-title mb-2 text-center">This Months Report</h3>
+      <div class="d-flex">
+        <div class="flex-1">
+          <h4 class="card-title mb-2 text-center farmer-details-name"></h4>
+          <h3 class="card-title mb-2 text-center">This Months Report</h3>
+        </div>
+
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-added-successful">
+            <img src="/imgs/circle-x.svg" alt="Exit modal" width="24" height="24" />
+          </button>
+        </div>
+      </div>
 
       <table class="dashboard-table">
         <thead>
