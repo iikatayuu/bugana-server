@@ -81,7 +81,7 @@ $(document).ready(function () {
       $(elem).find('.bd-product-name').text(product)
       $(elem).find('.bd-product-price').text(farmerProduct.price)
       $(elem).find('.bd-product-quantity').text(currentTx.quantity)
-      $(elem).find('.bd-total-amount').text(totalAmount)
+      $(elem).find('.bd-total-amount').text(totalAmount.toFixed(2))
 
       $('#modal-product-breakdown-farmers').append(elem)
     }
