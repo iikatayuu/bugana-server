@@ -143,7 +143,7 @@ $(document).ready(function () {
 
     const params = new URLSearchParams()
     params.set('token', token)
-    params.set('user', product.code)
+    params.set('user', product.userfullname)
     const farmers = await $.getJSON(`/api/admin/users.php?${params.toString()}`)
     const farmer = farmers.users[0]
     $('#stock-farmer').text(farmer.name)
