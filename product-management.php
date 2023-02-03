@@ -80,7 +80,7 @@ out_header('BUGANA Product Management', $styles, $scripts);
 
     <div class="d-flex flex-align-center mt-4 mx-3">
       <div class="flex-1">
-        <input type="text" id="user-search" name="q" placeholder="Search Farmer Code" class="form-control form-control-white box-shadow table-search" />
+        <input type="text" id="search-q" name="q" placeholder="Search Farmer or Product name" class="form-control form-control-white box-shadow table-search" />
       </div>
 
       <select id="products-category-select" class="btn btn-sm btn-tertiary text-md py-1 mr-2">

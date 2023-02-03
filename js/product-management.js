@@ -13,7 +13,7 @@ $(document).ready(function () {
   let category = 'all'
   let page = 1
   let limit = parseInt($('#limit-page').val())
-  let userCode = $('#user-search').val()
+  let searchQ = $('#search-q').val()
   let products = []
 
   async function displayProducts () {
@@ -23,7 +23,7 @@ $(document).ready(function () {
     params.set('page', page.toString())
     params.set('limit', limit.toString())
     params.set('category', category)
-    if (userCode) params.set('farmer', userCode)
+    if (searchQ) params.set('search', searchQ)
     if (productSort) params.set('product.sort', productSort)
     if (priceSort) params.set('price.sort', priceSort)
 
@@ -102,17 +102,17 @@ $(document).ready(function () {
   let codeTimer = null
   let limitTimer = null
 
-  $('#user-search').on('keyup', function () {
+  $('#search-q').on('keyup', function () {
     const value = $(this).val()
     clearTimeout(codeTimer)
     codeTimer = setTimeout(function () {
-      userCode = value
+      searchQ = value
       page = 1
       displayProducts()
     }, 1250)
   })
 
-  $('#user-search').on('keydown', function () {
+  $('#search-q').on('keydown', function () {
     if (codeTimer) clearTimeout(codeTimer)
   })
 

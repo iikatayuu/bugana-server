@@ -173,7 +173,9 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
 
             <tr>
               <td>Unsold Products:</td>
-              <td id="unsold-products">0</td>
+              <td>
+                <span id="unsold-products"></span> PHP
+              </td>
               <td>
                 <a href="<?= '/sales-report.php?date=' . $date . '&detailed&unsold' ?>" class="details-link">View Details</a>
               </td>

@@ -86,7 +86,7 @@ out_header('BUGANA User Management', $styles, $scripts);
     <div class="d-flex flex-align-center mt-4 mx-3">
       <h6 class="dashboard-title my-2 mx-3">Users</h6>
       <div class="flex-1">
-        <input type="text" id="user-search" name="q" placeholder="Search User Code" class="form-control form-control-white box-shadow table-search" />
+        <input type="text" id="user-search" name="q" placeholder="Search User's Name" class="form-control form-control-white box-shadow table-search" />
       </div>
 
       <div class="headadmin-btns d-none">

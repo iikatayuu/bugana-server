@@ -39,9 +39,12 @@ if (!empty($_GET['token'])) {
     $is_admin = $usertype === 'admin' || $usertype === 'headadmin';
     $userid = !empty($_GET['id']) && $is_admin ? $conn->real_escape_string($_GET['id']) : $decoded->userid;
     $type = !empty($_GET['type']) ? $conn->real_escape_string($_GET['type']) : null;
+    $pending = isset($_GET['pending']);
+    $farmer = isset($_GET['farmer']);
+
     $query = "SELECT
         transactions.*,
-        products.id AS productid, products.name, products.user AS farmerid,
+        products.id AS productid, products.name, products.description, products.user AS farmerid,
         (SELECT users.name FROM users WHERE users.id=farmerid) AS userfullname,
         (SELECT users.username FROM users WHERE users.id=farmerid) AS username,
         (SELECT users.addressstreet FROM users WHERE users.id=farmerid) AS addressstreet,
@@ -51,10 +54,10 @@ if (!empty($_GET['token'])) {
       JOIN products ON products.id=transactions.product
       WHERE transactions.user=$userid";
 
-    if (isset($_GET['farmer'])) {
+    if ($farmer) {
       $query = "SELECT
           transactions.*,
-          products.id AS productid, products.name, products.user AS farmerid,
+          products.id AS productid, products.name, products.description, products.user AS farmerid,
           (SELECT users.name FROM users WHERE users.id=transactions.user) AS userfullname,
           (SELECT users.username FROM users WHERE users.id=transactions.user) AS username,
           (SELECT users.addressstreet FROM users WHERE users.id=transactions.user) AS addressstreet,
@@ -66,6 +69,7 @@ if (!empty($_GET['token'])) {
     }
 
     if ($type) $query .= " AND transactions.paymentoption='$type'";
+    if ($pending && !$farmer) $query .= " AND transactions.status<>'success'";
     $query .= " ORDER BY transactions.date DESC";
     $transactions_res = $conn->query($query);
 
@@ -94,6 +98,7 @@ if (!empty($_GET['token'])) {
         'product' => [
           'id' => $transaction->productid,
           'name' => $transaction->name,
+          'description' => $transaction->description,
           'user' => $transaction->farmerid,
           'photos' => $photos
         ],

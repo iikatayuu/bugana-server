@@ -19,7 +19,7 @@ $(document).ready(function () {
 
   let page = 1
   let limit = parseInt($('#limit-page').val())
-  let userCode = $('#user-search').val()
+  let userName = $('#user-search').val()
   let users = []
 
   async function displayUsers () {
@@ -30,7 +30,7 @@ $(document).ready(function () {
     params.set('view', view)
     params.set('page', page.toString())
     params.set('limit', limit.toString())
-    if (userCode) params.set('user', userCode)
+    if (userName) params.set('user', userName)
 
     const response = await $.ajax('/api/admin/users.php?' + params.toString(), {
       method: 'get',
@@ -260,7 +260,7 @@ $(document).ready(function () {
     const value = $(this).val()
     clearTimeout(codeTimer)
     codeTimer = setTimeout(function () {
-      userCode = value
+      userName = value
       page = 1
       displayUsers()
     }, 1250)
