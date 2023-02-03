@@ -82,7 +82,7 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
 
     <div class="d-flex flex-align-center mt-4 mx-3">
       <div class="flex-1">
-        <input type="text" id="transaction-search" name="q" placeholder="Search Transaction ID" class="form-control form-control-white box-shadow table-search" />
+        <input type="text" id="customer-search" name="q" placeholder="Search Customer Name" class="form-control form-control-white box-shadow table-search" />
       </div>
 
       <div>

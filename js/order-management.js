@@ -16,7 +16,7 @@ $(document).ready(function () {
   let category = 'all'
   let page = 1
   let limit = parseInt($('#limit-page').val())
-  let transactionId = $('#transaction-search').val()
+  let userSearch = $('#customer-search').val()
   let transactions = []
   let currentTransaction = null
 
@@ -28,7 +28,7 @@ $(document).ready(function () {
     params.set('limit', limit.toString())
     params.set('category', category)
     params.set('token', token)
-    if (transactionId) params.set('search', transactionId)
+    if (userSearch) params.set('search', userSearch)
     if (dateSort) params.set('date.sort', dateSort)
     if (brgySort) params.set('brgy.sort', brgySort)
 
@@ -329,17 +329,17 @@ $(document).ready(function () {
   let codeTimer = null
   let limitTimer = null
 
-  $('#transaction-search').on('keyup', function () {
+  $('#customer-search').on('keyup', function () {
     const value = $(this).val()
     clearTimeout(codeTimer)
     codeTimer = setTimeout(function () {
-      transactionId = value
+      userSearch = value
       page = 1
       displayTransactions()
     }, 1250)
   })
 
-  $('#transaction-search').on('keydown', function () {
+  $('#customer-search').on('keydown', function () {
     if (codeTimer) clearTimeout(codeTimer)
   })
 

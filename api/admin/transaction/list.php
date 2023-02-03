@@ -64,11 +64,15 @@ if (!empty($_GET['token'])) {
           users.addressbrgy AS addressbrgy,
           COALESCE(SUM(transactions.amount), 0) AS total_amount
         FROM transactions
-        JOIN users ON users.id=transactions.user";
+        INNER JOIN users ON users.id=transactions.user";
 
       $wheres = [];
       if ($category !== 'all' && $category !== '') $wheres[] = "transactions.status='$category'";
-      if ($search) $wheres[] = "transactions.transaction_code LIKE '%$search%'";
+      // if ($search) $wheres[] = "transactions.transaction_code LIKE '%$search%'";
+      if ($search) {
+        $query .= " AND users.name LIKE '%$search%'";
+        $count_query .= " INNER JOIN users ON users.name LIKE '%$search%'";
+      }
 
       $add_q = count($wheres) > 0 ? ' WHERE ' . implode(' AND ', $wheres) : '';
       $query .= $add_q;
