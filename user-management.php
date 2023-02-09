@@ -119,7 +119,7 @@ out_header('BUGANA User Management', $styles, $scripts);
           <th>Email Address</th>
           <th>Date Created</th>
           <th>Last Login</th>
-          <th>Actions</th>
+          <th class="non-farmer-btns d-none">Actions</th>
         </tr>
       </thead>
 
@@ -457,7 +457,7 @@ out_header('BUGANA User Management', $styles, $scripts);
       <td class="user-email"></td>
       <td class="user-created"></td>
       <td class="user-lastlogin"></td>
-      <td class="user-actions">
+      <td class="user-actions non-farmer-btns d-none">
         none
       </td>
     </tr>

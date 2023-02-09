@@ -76,6 +76,11 @@ $(document).ready(function () {
       $(elem).find('.user-email').text(user.email)
       $(elem).find('.user-created').text(createdDate)
       $(elem).find('.user-lastlogin').text(lastloginDate)
+
+      if (user.type !== 'farmer') {
+        $(document).find('.non-farmer-btns').removeClass('d-none')
+      }
+
       if ((payload.type === 'headadmin' && user.type === 'customer') || (payload.type === 'admin' && user.type === 'farmer')) {
         const actionsElem = $(tempAction).clone(true, true)
         if (user.verified !== '0') $(actionsElem).find('.user-action-verify').addClass('d-none')
