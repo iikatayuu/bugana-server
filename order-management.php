@@ -397,10 +397,23 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
       <td class="order-type"></td>
       <td class="order-status-text"></td>
       <td class="order-received"></td>
-      <td class="d-flex flex-align-center">
-        <img src="" alt="" width="18" class="order-status mr-1" />
-        <button type="button" class="order-status-violation btn btn-secondary btn-sm text-sm mr-1" disabled>Add Violation</button>
-        <a href="#" class="transaction-action">View Details</a>
+      <td class="dropdown">
+        <div class="btn btn-primary btn-group text-md py-1" data-dropdown="toggle">
+          <span class="mr-1">Actions</span>
+          <div>
+            <button type="button" class="btn btn-text">
+              <img src="/imgs/down.svg" alt="Show actions" width="12" />
+            </button>
+
+            <div class="dropdown-content dropdown-round p-2">
+              <div class="d-flex flex-column flex-align-center order-actions">
+                <img src="" alt="" width="18" class="order-status mr-1 mb-1" />
+                <button type="button" class="order-status-violation btn btn-secondary btn-sm text-sm mr-1 mb-1" disabled>Add Violation</button>
+                <a href="#" class="transaction-action">View Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </td>
     </tr>
   </template>

@@ -142,6 +142,10 @@ table tr td {
 .dropdown-content button { border-bottom: 1px solid #ccc; }
 .dropdown-content button:last-child { border: 0; }
 
+.dropdown-round {
+  border-radius: 4px;
+}
+
 .tooltip {
   position: relative;
 }
@@ -232,6 +236,11 @@ select.btn {
 .btn-xs { padding: 0 8px; }
 .btn-sm { padding: 4px 12px; }
 .btn-lg { padding: 18px 32px; }
+
+.btn-group {
+  display: flex;
+  align-items: center;
+}
 
 .btn-block {
   display: block;

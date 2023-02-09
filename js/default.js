@@ -108,10 +108,10 @@ $(document).ready(function () {
     $('.modal-open').removeClass('modal-open')
   })
 
-  $('[data-dropdown="toggle"]').click(function (event) {
+  $(document).on('click', '[data-dropdown="toggle"]', function (event) {
     event.preventDefault()
 
-    $(this).parents('.dropdown').find('.dropdown-content').toggleClass('active')
+    $(event.target).parents('.dropdown').find('.dropdown-content').toggleClass('active')
   })
 
   $(document).click(function (event) {
