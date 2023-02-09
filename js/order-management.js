@@ -104,6 +104,11 @@ $(document).ready(function () {
         alt: transaction.status === 'success' || transaction.status === 'approved' ? 'Successful' : 'Pending'
       })
 
+      if (transaction.status === 'success') {
+        const latestDate = dateFormat(transaction.latest)
+        $('.order-received').text(latestDate)
+      }
+
       if (transaction.status !== 'success' && transaction.status !== 'rejected') {
         if (transaction.status !== 'approved') {
           $(elem).find('.order-status-violation').attr({

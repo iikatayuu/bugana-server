@@ -134,6 +134,7 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
           <th>Total Amount</th>
           <th>Order Type</th>
           <th>Order Status</th>
+          <th>Received Date</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -395,6 +396,7 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
       <td>Php <span class="total-amount"></span></td>
       <td class="order-type"></td>
       <td class="order-status-text"></td>
+      <td class="order-received"></td>
       <td class="d-flex flex-align-center">
         <img src="" alt="" width="18" class="order-status mr-1" />
         <button type="button" class="order-status-violation btn btn-secondary btn-sm text-sm mr-1" disabled>Add Violation</button>

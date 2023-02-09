@@ -108,6 +108,7 @@ if (!empty($_GET['token'])) {
           ],
           'quantity' => $transaction->quantity,
           'date' => $transaction->date,
+          'latest' => $transaction->updated,
           'amount' => $transaction->amount,
           'total_amount' => $transaction->total_amount,
           'paymentoption' => $transaction->paymentoption,
