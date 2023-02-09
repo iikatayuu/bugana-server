@@ -148,7 +148,7 @@ $(document).ready(function () {
     const farmer = farmers.users[0]
     $('#stock-farmer').text(farmer.name)
     $('#stock-product-name').text(currentProduct.name)
-    $('#stock-product-price').text(currentProduct.price)
+    $('#stock-product-price').text(commaNumber(currentProduct.price))
 
     for (let i = 0; i < product.stocksIn.length && i < 10; i++) {
       const stocks = product.stocksIn[i]

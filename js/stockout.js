@@ -108,8 +108,8 @@ $(document).ready(function () {
       $(elem).find('.item-product-name').text(stock.product.name)
       $(elem).find('.item-stock-out-date').text(dateStr)
       $(elem).find('.item-quantity').text(parseFloat(stock.quantity) * -1)
-      $(elem).find('.item-price').text(stock.product.price.toFixed(2))
-      $(elem).find('.item-product-revenue').text(stock.revenue)
+      $(elem).find('.item-price').text(commaNumber(stock.product.price.toFixed(2)))
+      $(elem).find('.item-product-revenue').text(commaNumber(stock.revenue))
       $(elem).find('.item-status').text(status)
       $('#inventory').append(elem)
     }

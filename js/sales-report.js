@@ -41,7 +41,7 @@ $(document).ready(function () {
       const elem = $(tempSale).clone(true, true)
       $(elem).find('.product-name').text(product.name)
       $(elem).find('.quantity-sold').text(transaction.quantity)
-      $(elem).find('.product-revenue').text(transaction.amount)
+      $(elem).find('.product-revenue').text(commaNumber(transaction.amount))
       $(elem).find('.product-details').attr({
         'data-product': product.name,
         'data-index': i
@@ -52,7 +52,7 @@ $(document).ready(function () {
 
     const totalElem = $(tempTotal).clone(true, true)
     const totalStr = total.toFixed(2)
-    $(totalElem).find('.sales-report-total-amount').text(totalStr)
+    $(totalElem).find('.sales-report-total-amount').text(commaNumber(totalStr))
     $('#report-total-sales').text(totalStr)
     $('#sales').append(totalElem)
   }
@@ -79,9 +79,9 @@ $(document).ready(function () {
 
       $(elem).find('.bd-farmer-name').text(farmerProduct.name)
       $(elem).find('.bd-product-name').text(product)
-      $(elem).find('.bd-product-price').text(farmerProduct.price)
+      $(elem).find('.bd-product-price').text(commaNumber(farmerProduct.price))
       $(elem).find('.bd-product-quantity').text(currentTx.quantity)
-      $(elem).find('.bd-total-amount').text(totalAmount.toFixed(2))
+      $(elem).find('.bd-total-amount').text(commaNumber(totalAmount.toFixed(2)))
 
       $('#modal-product-breakdown-farmers').append(elem)
     }

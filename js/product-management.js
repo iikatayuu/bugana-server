@@ -85,7 +85,7 @@ $(document).ready(function () {
       $(elem).find('.product-name').text(product.name)
       $(elem).find('.product-category').text(category)
       $(elem).find('.product-description').text(product.description)
-      $(elem).find('.product-price').text(product.price)
+      $(elem).find('.product-price').text(commaNumber(product.price))
       $(elem).find('.product-added').text(createdDate)
       $(elem).find('.product-edited').text(editedDate)
       $(elem).find('.product-action-edit').attr('href', (index, attr) => attr + product.id)

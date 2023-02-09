@@ -59,6 +59,15 @@ function dateFormat (d) {
   return dateStr
 }
 
+function commaNumber (number) {
+  const str = number.toString().split('.')
+  if (str[0] > 3) {
+    str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,')
+  }
+
+  return str.join('.')
+}
+
 function modal (action, target = '') {
   if (action === 'open') {
     $('.modal-container').removeClass('d-none')

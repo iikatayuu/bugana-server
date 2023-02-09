@@ -96,7 +96,7 @@ $(document).ready(function () {
       $(elem).find('.transaction-date').text(dateStr)
       $(elem).find('.customer-name').text(user.name)
       $(elem).find('.customer-brgy').text(user.addressbrgy)
-      $(elem).find('.total-amount').text(totalAmount.toFixed(2))
+      $(elem).find('.total-amount').text(commaNumber(totalAmount.toFixed(2)))
       $(elem).find('.order-type').text(transaction.paymentoption === 'delivery' ? 'COD' : 'COP')
       $(elem).find('.order-status-text').html(statusText)
       $(elem).find('.order-status').attr({
@@ -276,7 +276,7 @@ $(document).ready(function () {
       const shipping = fee.fee
 
       $(elem).find('.brgy-name').text(brgy)
-      $(elem).find('.brgy-fees').text(shipping)
+      $(elem).find('.brgy-fees').text(commaNumber(shipping))
       $(elem).find('.brgy-edit').attr('data-brgy', brgy).click(editBrgy)
       $('#delivery-fees').append(elem)
     }

@@ -17,10 +17,10 @@ $(document).ready(function () {
     })
 
     if (res.success) {
-      $('#total-sales').text(res.sales.total.toFixed(2))
-      $('#total-delivery-sales').text(res.sales.delivery.toFixed(2))
-      $('#unsold-products').text(res.sales.unsold.toFixed(2))
-      $('#report-total').text(res.sales.grandtotal.toFixed(2))
+      $('#total-sales').text(commaNumber(res.sales.total.toFixed(2)))
+      $('#total-delivery-sales').text(commaNumber(res.sales.delivery.toFixed(2)))
+      $('#unsold-products').text(commaNumber(res.sales.unsold.toFixed(2)))
+      $('#report-total').text(commaNumber(res.sales.grandtotal.toFixed(2)))
     }
   }
 
@@ -42,14 +42,14 @@ $(document).ready(function () {
         totalSales += monthSales
 
         $(elem).find('.annual-month-name').text(monthName)
-        $(elem).find('.annual-month-sales').text('Php ' + monthSales.toFixed(2))
+        $(elem).find('.annual-month-sales').text('Php ' + commaNumber(monthSales.toFixed(2)))
         $(elem).find('.annual-month-details').attr('href', 'sales-report.php?date=monthly&detailed&month=' + i)
         $('#annual-sales').append(elem)
       }
 
       const totalElem = $(tempAnnual).clone(true, true)
       $(totalElem).find('.annual-month-name').addClass('text-bold').text('TOTAL')
-      $(totalElem).find('.annual-month-sales').text('Php ' + totalSales.toFixed(2))
+      $(totalElem).find('.annual-month-sales').text('Php ' + commaNumber(totalSales.toFixed(2)))
       $(totalElem).find('.annual-month-details').attr('href', 'sales-report.php?date=annual&detailed')
       $('#annual-sales').append(totalElem)
     }
