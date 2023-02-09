@@ -193,14 +193,14 @@ out_header('BUGANA Manual Stock Out', $styles, $scripts);
         <div class="d-flex">
           <div class="flex-1 py-1 border border-left-0">Farmer: <span id="stock-farmer"></span></div>
           <div class="flex-1 py-1 border">Product: <span id="stock-product-name"></span></div>
-          <div class="flex-1 py-1 border border-right-0">Price: PHP<span id="stock-product-price"></span></div>
+          <div class="flex-1 py-1 border border-right-0">Price: Php<span id="stock-product-price"></span></div>
         </div>
         <table class="dashboard-table w-100 mx-0 mt-0 mb-2">
           <thead>
             <tr>
               <th class="text-sm">Date</th>
               <th class="text-sm">Remaining Days to Perish</th>
-              <th class="text-sm">Total Revenue (PHP)</th>
+              <th class="text-sm">Total Revenue (Php)</th>
               <th class="text-sm">Quantity (KG)</th>
             </tr>
           </thead>

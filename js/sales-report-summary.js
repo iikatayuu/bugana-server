@@ -42,14 +42,14 @@ $(document).ready(function () {
         totalSales += monthSales
 
         $(elem).find('.annual-month-name').text(monthName)
-        $(elem).find('.annual-month-sales').text(monthSales.toFixed(2) + ' PHP')
+        $(elem).find('.annual-month-sales').text('Php ' + monthSales.toFixed(2))
         $(elem).find('.annual-month-details').attr('href', 'sales-report.php?date=monthly&detailed&month=' + i)
         $('#annual-sales').append(elem)
       }
 
       const totalElem = $(tempAnnual).clone(true, true)
       $(totalElem).find('.annual-month-name').addClass('text-bold').text('TOTAL')
-      $(totalElem).find('.annual-month-sales').text(totalSales.toFixed(2) + ' PHP')
+      $(totalElem).find('.annual-month-sales').text('Php ' + totalSales.toFixed(2))
       $(totalElem).find('.annual-month-details').attr('href', 'sales-report.php?date=annual&detailed')
       $('#annual-sales').append(totalElem)
     }

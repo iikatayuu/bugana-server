@@ -377,7 +377,7 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
   <template id="temp-ship">
     <tr>
       <td class="brgy-name"></td>
-      <td><span class="brgy-fees"></span> PHP</td>
+      <td>Php <span class="brgy-fees"></span></td>
       <td>
         <button type="button" class="brgy-edit btn btn-text">
           <img src="/imgs/edit.svg" alt="Edit barangay" width="16" height="16" />
@@ -392,7 +392,7 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
       <td class="transaction-date"></td>
       <td class="customer-name"></td>
       <td class="customer-brgy"></td>
-      <td><span class="total-amount"></span> PHP</td>
+      <td>Php <span class="total-amount"></span></td>
       <td class="order-type"></td>
       <td class="order-status-text"></td>
       <td class="d-flex flex-align-center">

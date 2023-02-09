@@ -187,8 +187,8 @@ out_header('BUGANA Stock Out', $styles, $scripts);
       <td class="item-product-name"></td>
       <td class="item-stock-out-date"></td>
       <td><span class="item-quantity"></span> KG</td>
-      <td><span class="item-price"></span> PHP</td>
-      <td><span class="item-product-revenue"></span> PHP</td>
+      <td>Php <span class="item-price"></span></td>
+      <td>Php <span class="item-product-revenue"></span></td>
       <td class="item-status"></td>
     </tr>
   </template>
