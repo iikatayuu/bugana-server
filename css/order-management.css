@@ -45,3 +45,12 @@
 .order-details-violation {
   color: #d62035;
 }
+
+#view-terms {
+  max-width: 350px;
+  white-space: pre-wrap;
+}
+
+#edit-terms {
+  width: 350px;
+}

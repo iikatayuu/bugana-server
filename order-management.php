@@ -86,6 +86,7 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
       </div>
 
       <div>
+        <button type="button" class="btn btn-tertiary btn-sm text-md p-1 mr-1" data-modal="#modal-view-terms">View Terms</button>
         <button type="button" class="btn btn-tertiary btn-sm text-md p-1 mr-2" data-modal="#modal-delivery-fees">View Delivery Fees</button>
       </div>
 
@@ -261,6 +262,44 @@ $sort = !empty($_GET['sort']) ? $_GET['sort'] : 'all';
         <div>Delivery fee successfully updated!</div>
       </div>
     </div>
+  </div>
+
+  <div id="modal-view-terms" class="modal">
+    <div class="card card-round-sm text-center p-0">
+      <div class="card-title-tertiary d-flex flex-align-center pt-1 px-2">
+        <div class="flex-1">Current Terms:</div>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-view-terms">
+            <img src="/imgs/circle-x.svg" alt="Exit modal" width="24" height="24" />
+          </button>
+        </div>
+      </div>
+
+      <div id="view-terms" class="p-2"></div>
+      <button type="button" class="btn btn-secondary btn-sm text-md mx-auto" data-modal="#modal-edit-terms">Edit Terms</button>
+    </div>
+  </div>
+
+  <div id="modal-edit-terms" class="modal">
+    <form action="/api/admin/terms.php" method="post" id="form-terms" class="card card-round-sm text-center p-0">
+      <div class="card-title-tertiary d-flex flex-align-center pt-1 px-2">
+        <div class="flex-1">Edit Terms:</div>
+        <div class="modal-x">
+          <button type="button" class="btn btn-text" data-modal="#modal-edit-terms">
+            <img src="/imgs/circle-x.svg" alt="Exit modal" width="24" height="24" />
+          </button>
+        </div>
+      </div>
+
+      <div class="p-2">
+        <textarea id="edit-terms" name="terms" rows="9" value=""></textarea>
+      </div>
+
+      <div class="d-flex flex-space-around">
+        <button type="button" class="btn btn-secondary btn-sm text-md" data-modal="#modal-edit-terms">Cancel</button>
+        <button type="submit" class="btn btn-secondary btn-sm text-md">Save Changes</button>
+      </div>
+    </form>
   </div>
 
   <div id="modal-confirm-violate" class="modal">

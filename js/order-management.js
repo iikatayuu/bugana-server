@@ -287,6 +287,14 @@ $(document).ready(function () {
     }
   }
 
+  async function displayTerms () {
+    $('#view-terms').empty()
+
+    const terms = await $.getJSON('/api/getterms.php')
+    $('#view-terms').html(terms.terms)
+    $('#edit-terms').val(terms.terms)
+  }
+
   async function editBrgy (event) {
     event.preventDefault()
 
@@ -321,6 +329,32 @@ $(document).ready(function () {
       modal('close')
       modal('open', '#modal-update-successful')
       await displayFees()
+    }
+  })
+
+  $('#form-terms').submit(async function (event) {
+    event.preventDefault()
+
+    const form = $(this).get(0)
+    const action = $(form).attr('action')
+    const method = $(form).attr('method')
+    const token = sessionStorage.getItem('token')
+    const formData = new FormData(form)
+    formData.append('token', token)
+
+    $(form).find('[type="submit"]').attr('disabled', true).text('Saving...')
+    const response = await $.ajax(action, {
+      method: method,
+      dataType: 'json',
+      data: formData,
+      processData: false,
+      contentType: false
+    })
+
+    $(form).find('[type="submit"]').attr('disabled', null).text('Save Changes')
+    if (response.success) {
+      modal('close')
+      await displayTerms()
     }
   })
 
@@ -395,4 +429,5 @@ $(document).ready(function () {
 
   displayTransactions()
   displayFees()
+  displayTerms()
 })
