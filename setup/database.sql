@@ -108,6 +108,26 @@ CREATE TABLE IF NOT EXISTS `stocks` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `terms`
+--
+
+DROP TABLE IF EXISTS `terms`;
+CREATE TABLE IF NOT EXISTS `terms` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `terms` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `terms`
+--
+
+INSERT INTO `terms` (`id`, `terms`) VALUES
+(1, 'Upon confirming this purchase, you are agreeing to the following terms:\r\n1. Delivery hours is 12NN and 6PM\r\n2. Purchases are FINAL and CANNOT be CANCELED\r\n3. Your account will be:\r\nFIRST OFFENSE - WARNING\r\nSECOND OFFENSE - BAN\r\nIf purchases or transactions are NOT COMPLETED');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `transactions`
 --
 
