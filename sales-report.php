@@ -164,9 +164,9 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
 
       <template id="temp-total">
         <tr class="sales-report-total">
-          <td colspan="2"></td>
-          <td>TOTAL</td>
-          <td>Php <span class="sales-report-total-amount"></span></td>
+          <td></td>
+          <td data-print-style="text-align:center;">TOTAL</td>
+          <td data-print-style="text-align:center;">Php <span class="sales-report-total-amount"></span></td>
         </tr>
       </template>
     <?php } else if ($date !== 'annual') { ?>
