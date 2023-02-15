@@ -47,7 +47,7 @@ if (!empty($_POST['token'])) {
         $quantity_out = intval($stock->quantity) - intval($quantity);
         $amount = floatval($stock->price) * $quantity_out;
 
-        $conn->query("UPDATE stocks SET quantity=$quantity WHERE id=$id");
+        $conn->query("UPDATE stocks SET stocks=$quantity WHERE id=$id");
         $conn->query(
           "INSERT INTO stocks (product, quantity, stocks, amount, status, transaction_code)
           VALUES ($productid, -$quantity_out, $stockid, $amount, 'manual', '')"
