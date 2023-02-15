@@ -39,9 +39,20 @@ if (!empty($_POST['token'])) {
   if ($decoded !== null) {
     $usertype = $decoded->type;
     if ($usertype === 'admin' || $usertype === 'headadmin') {
-      $stocks_res = $conn->query("SELECT * FROM stocks WHERE id=$id LIMIT 1");
+      $stocks_res = $conn->query("SELECT stocks.*, products.price FROM stocks INNER JOIN products ON stocks.product=products.id WHERE stocks.id=$id LIMIT 1");
       if ($stocks_res->num_rows > 0) {
+        $stock = $stocks_res->fetch_object();
+        $stockid = $stock->id;
+        $productid = $stock->product;
+        $quantity_out = intval($stock->quantity) - intval($quantity);
+        $amount = floatval($stock->price) * $quantity_out;
+
         $conn->query("UPDATE stocks SET quantity=$quantity WHERE id=$id");
+        $conn->query(
+          "INSERT INTO stocks (product, quantity, stocks, amount, status, transaction_code)
+          VALUES ($productid, -$quantity_out, $stockid, $amount, 'manual', '')"
+        );
+
         $result['success'] = true;
         $result['message'] = '';
       } else {

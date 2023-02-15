@@ -100,6 +100,10 @@ $(document).ready(function () {
         case 'perished':
           status = 'Perished'
           break
+        
+        case 'manual':
+          status = 'Manual'
+          break
       }
 
       const dateStr = dateFormat(stock.date)
