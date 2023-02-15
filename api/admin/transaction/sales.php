@@ -56,7 +56,11 @@ if (!empty($_GET['token'])) {
         JOIN products ON products.id=transactions.product
         WHERE transactions.status='success'";
 
-      if ($date === 'weekly') {
+      if ($date === 'daily') {
+        $day_start = date('Y-m-d 00:00:00');
+        $day_end = date('Y-m-d 23:59:59');
+        $query .= " AND transactions.date BETWEEN '$day_start' AND '$day_end'";
+      } else if ($date === 'weekly') {
         $current_day = date('w');
         $week_start = date('Y-m-d 00:00:00', strtotime("-$current_day days"));
         $week_end = date('Y-m-d 23:59:59', strtotime('+' . (6 - intval($current_day)) . ' days'));
@@ -116,7 +120,11 @@ if (!empty($_GET['token'])) {
         FROM stocks
         JOIN products ON products.id=stocks.product WHERE stocks.status='perished'";
 
-      if ($date === 'weekly') {
+      if ($date === 'daily') {
+        $day_start = date('Y-m-d 00:00:00');
+        $day_end = date('Y-m-d 23:59:59');
+        $query .= " AND stocks.date BETWEEN '$day_start' AND '$day_end'";
+      } else if ($date === 'weekly') {
         $current_day = date('w');
         $week_start = date('Y-m-d 00:00:00', strtotime("-$current_day days"));
         $week_end = date('Y-m-d 23:59:59', strtotime('+' . (6 - intval($current_day)) . ' days'));

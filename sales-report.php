@@ -5,7 +5,7 @@ require_once 'includes/html.php';
 $styles = ['/css/dashboard.css', '/css/sales-report.css'];
 $scripts = ['/js/dashboard.js'];
 
-$date = !empty($_GET['date']) ? $_GET['date'] : 'weekly';
+$date = !empty($_GET['date']) ? $_GET['date'] : 'daily';
 $is_detailed = isset($_GET['detailed']);
 $is_unsold = isset($_GET['unsold']);
 $date_name = '';
@@ -21,7 +21,10 @@ if ($date === 'monthly') {
   $month_n = date('F', $timestamp) . ' ';
 }
 
-if ($date === 'weekly') {
+if ($date === 'daily') {
+  $date_name = 'Daily';
+  $date_base = 'Day';
+} else if ($date === 'weekly') {
   $date_name = 'Weekly';
   $date_base = 'Week';
 } else if ($date === 'monthly') {
@@ -67,6 +70,7 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
       <span>Sales Report</span>
     </a>
     <nav class="sidebar-nav">
+      <a href="/sales-report.php?date=daily" class="<?= $date === 'daily' ? 'active' : '' ?>">Daily</a>
       <a href="/sales-report.php?date=weekly" class="<?= $date === 'weekly' ? 'active' : '' ?>">Weekly</a>
       <a href="/sales-report.php?date=monthly" class="<?= $date === 'monthly' ? 'active' : '' ?>">Monthly</a>
       <a href="/sales-report.php?date=annual" class="<?= $date === 'annual' ? 'active' : '' ?>">Annual</a>

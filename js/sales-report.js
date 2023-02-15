@@ -96,6 +96,13 @@ $(document).ready(function () {
       : `${MONTHS[monthIndex]} ${currentDate.getFullYear()}`
   )
 
+  if (date === 'daily') {
+    const month = MONTHS[currentDate.getMonth()]
+    const fullDate = `${month} ${currentDate.getDate()}, ${currentDate.getFullYear()}`
+    $('#report-date').text(fullDate)
+    $('#report-month').text(`Day of ${fullDate}`)
+  }
+
   if (date === 'weekly') {
     const firstDate = new Date(currentDate)
     const day = firstDate.getDay()
