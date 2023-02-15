@@ -1,6 +1,10 @@
 <?php
 
 require_once '../includes/database.php';
+require_once '../includes/utils.php';
+
+header('Content-Type: application/json');
+cors();
 
 $terms_res = $conn->query("SELECT * FROM terms ORDER BY id DESC");
 $result = [
