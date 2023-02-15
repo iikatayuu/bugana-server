@@ -76,7 +76,7 @@ if (!empty($_POST['token'])) {
       $total = floatval($total_sales->sales);
       $delivery = floatval($total_sales->shipping);
       $unsold = floatval($perished->amount);
-      $grandtotal = $total + $delivery - $unsold;
+      $grandtotal = $total + $delivery;
 
       $result['success'] = true;
       $result['message'] = '';
