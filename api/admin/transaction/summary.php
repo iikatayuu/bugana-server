@@ -45,7 +45,13 @@ if (!empty($_POST['token'])) {
 
       $perished_query = "SELECT COALESCE(SUM(amount)) AS amount FROM stocks WHERE status='perished'";
 
-      if ($date === 'weekly') {
+      if ($date === 'daily') {
+        $day_start = date('Y-m-d 00:00:00');
+        $day_end = date('Y-m-d 23:59:59');
+        $add_query = " AND date BETWEEN '$day_start' AND '$day_end'";
+        $query .= $add_query;
+        $perished_query .= $add_query;
+      } else if ($date === 'weekly') {
         $current_day = date('w');
         $week_start = date('Y-m-d 00:00:00', strtotime("-$current_day days"));
         $week_end = date('Y-m-d 23:59:59', strtotime('+' . (6 - intval($current_day)) . ' days'));
