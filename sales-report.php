@@ -10,6 +10,7 @@ $is_detailed = isset($_GET['detailed']);
 $is_unsold = isset($_GET['unsold']);
 $date_name = '';
 $date_base = '';
+$date_prev = '';
 $month_n = '';
 
 if ($date === 'monthly') {
@@ -24,16 +25,24 @@ if ($date === 'monthly') {
 if ($date === 'daily') {
   $date_name = 'Daily';
   $date_base = 'Day';
+  $date_prev = 'Yesterday';
+  $date_present = 'Today';
 } else if ($date === 'weekly') {
   $date_name = 'Weekly';
   $date_base = 'Week';
+  $date_prev = 'Previous Week';
+  $date_present = 'Next Week';
 } else if ($date === 'monthly') {
   $month_name = empty($month_n) ? date('F') : $month_n;
   $date_name = "$month_n Monthly";
   $date_base = 'Monthly';
+  $date_prev = 'Last Month';
+  $date_present = 'Current Month';
 } else if ($date === 'annual') {
   $date_name = 'Annual';
   $date_base = 'Annual';
+  $date_prev = 'Last Year';
+  $date_present = 'Current Year';
 }
 
 if ($is_detailed) $scripts[] = '/js/sales-report.js';
@@ -170,6 +179,16 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
         </tr>
       </template>
     <?php } else if ($date !== 'annual') { ?>
+      <div class="d-flex flex-align-center flex-space-between p-2">
+        <?php if (!isset($_GET['prev'])) { ?><button type="button" class="btn btn-secondary btn-sm text-md" data-prev>
+          <img src="/imgs/left.svg" alt="Previous" /> Preview <?= $date_prev ?>
+        </button><?php } else { ?><div></div><?php } ?>
+
+        <?php if (isset($_GET['prev'])) { ?><button type="button" class="btn btn-secondary btn-sm text-md" data-present>
+          Preview <?= $date_present ?> <img src="/imgs/right.svg" alt="Next" />
+        </button><?php } else { ?><div></div><?php } ?>
+      </div>
+
       <div class="card card-rect text-center mx-auto my-5 p-0 w-50">
         <h3 class="card-title-secondary text-center p-1"><?= $date_name ?> Report</h3>
         <div class="table-summary p-2">

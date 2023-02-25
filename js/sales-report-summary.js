@@ -8,11 +8,16 @@ $(document).ready(function () {
 
   const searchParams = new URLSearchParams(window.location.search);
   const date = searchParams.get('date')
+  const prev = searchParams.get('prev')
 
   async function displayReport () {
     const res = await $.ajax('/api/admin/transaction/summary.php', {
       method: 'post',
-      data: { date: date, token: token },
+      data: {
+        date: date,
+        token: token,
+        prev: prev !== null
+      },
       dataType: 'json'
     })
 
@@ -54,6 +59,20 @@ $(document).ready(function () {
       $('#annual-sales').append(totalElem)
     }
   }
+
+  $('[data-prev]').click(async function () {
+    const params = new URLSearchParams(window.location.search)
+    params.set('prev', '1')
+    
+    window.location.href = window.location.pathname + '?' + params.toString()
+  })
+
+  $('[data-present]').click(async function () {
+    const params = new URLSearchParams(window.location.search)
+    params.delete('prev')
+    
+    window.location.href = window.location.pathname + '?' + params.toString()
+  })
 
   if (date !== 'annual') {
     displayReport()

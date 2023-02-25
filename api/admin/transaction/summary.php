@@ -38,6 +38,8 @@ if (!empty($_POST['token'])) {
     $usertype = $decoded->type;
     if ($usertype === 'headadmin' || $usertype === 'admin') {
       $date = !empty($_POST['date']) ? $conn->real_escape_string($_POST['date']) : 'weekly';
+      $prev = isset($_POST['prev']);
+
       $query = "SELECT
           COALESCE(SUM(amount), 0) AS sales,
           COALESCE(SUM(shipping), 0) AS shipping
@@ -46,28 +48,32 @@ if (!empty($_POST['token'])) {
       $perished_query = "SELECT COALESCE(SUM(amount)) AS amount FROM stocks WHERE status='perished'";
 
       if ($date === 'daily') {
-        $day_start = date('Y-m-d 00:00:00');
-        $day_end = date('Y-m-d 23:59:59');
+        $ts = $prev ? strtotime('-1 day') : gmtime();
+        $day_start = date('Y-m-d 00:00:00', $ts);
+        $day_end = date('Y-m-d 23:59:59', $ts);
         $add_query = " AND date BETWEEN '$day_start' AND '$day_end'";
         $query .= $add_query;
         $perished_query .= $add_query;
       } else if ($date === 'weekly') {
+        $ts = $prev ? strtotime('-1 week') : gmtime();
         $current_day = date('w');
-        $week_start = date('Y-m-d 00:00:00', strtotime("-$current_day days"));
-        $week_end = date('Y-m-d 23:59:59', strtotime('+' . (6 - intval($current_day)) . ' days'));
+        $week_start = date('Y-m-d 00:00:00', strtotime("-$current_day days", $ts));
+        $week_end = date('Y-m-d 23:59:59', strtotime('+' . (6 - intval($current_day)) . ' days', $ts));
         $add_query = " AND date BETWEEN '$week_start' AND '$week_end'";
         $query .= $add_query;
         $perished_query .= $add_query;
       } else if ($date === 'monthly') {
-        $month_days = date('t');
-        $month_start = date('Y-m-01 00:00:00');
-        $month_end = date("Y-m-$month_days 23:59:59");
+        $ts = $prev ? strtotime('-1 month') : gmtime();
+        $month_days = date('t', $ts);
+        $month_start = date('Y-m-01 00:00:00', $ts);
+        $month_end = date("Y-m-$month_days 23:59:59", $ts);
         $add_query = " AND date BETWEEN '$month_start' AND '$month_end'";
         $query .= $add_query;
         $perished_query .= $add_query;
       } else if ($date === 'annual') {
-        $year_start = date('Y-01-01 00:00:00');
-        $year_end = date("Y-12-31 23:59:59");
+        $ts = $prev ? strtotime('-1 year') : gmtime();
+        $year_start = date('Y-01-01 00:00:00', $ts);
+        $year_end = date("Y-12-31 23:59:59", $ts);
         $add_query = " AND date BETWEEN '$year_start' AND '$year_end'";
         $query .= $add_query;
         $perished_query .= $add_query;
