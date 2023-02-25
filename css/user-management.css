@@ -10,3 +10,8 @@
 #modal-confirm-reset {
   max-width: 250px;
 }
+
+.user-actions.d-none {
+  display: initial !important;
+  visibility: hidden;
+}
