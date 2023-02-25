@@ -63,22 +63,30 @@ $(document).ready(function () {
     const product = $(this).attr('data-product')
     const index = $(this).attr('data-index')
     const currentTx = transactions[index]
+    const data = { product, token }
+    if (unsold !== null) data.unsold = 1
+
     const response = await $.ajax('/api/admin/product/breakdown.php', {
       method: 'post',
       dataType: 'json',
-      data: { product, token }
+      data
     })
     if (!response.success) return
 
     const breakdown = response.breakdown
+    $('.bd-product-title').text(product)
+
     $('#modal-product-breakdown-farmers').empty()
     for (let i = 0; i < breakdown.length; i++) {
       const elem = $(tempBreakdown).clone(true, true)
       const farmerProduct = breakdown[i]
       const totalAmount = currentTx.quantity * parseFloat(farmerProduct.price)
+      const date = dateFormat2(farmerProduct.date)
 
       $(elem).find('.bd-farmer-name').text(farmerProduct.name)
       $(elem).find('.bd-product-name').text(product)
+      $(elem).find('.bd-product-date').text(date)
+      $(elem).find('.bd-remarks').text(farmerProduct.remarks)
       $(elem).find('.bd-product-price').text(commaNumber(farmerProduct.price))
       $(elem).find('.bd-product-quantity').text(currentTx.quantity)
       $(elem).find('.bd-total-amount').text(commaNumber(totalAmount.toFixed(2)))

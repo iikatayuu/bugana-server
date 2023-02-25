@@ -38,6 +38,8 @@ if (!empty($_POST['token'])) {
     $usertype = $decoded->type;
     if ($usertype === 'headadmin' || $usertype === 'admin') {
       $product_name = !empty($_POST['product']) ? $conn->real_escape_string($_POST['product']) : null;
+      $is_unsold = isset($_POST['unsold']);
+
       if (!$product_name) {
         $response['message'] = 'Invalid params';
         die(json_encode($response));
@@ -51,10 +53,25 @@ if (!empty($_POST['token'])) {
         FROM products
         JOIN users ON users.id=products.user
         WHERE products.name='$product_name'";
+      
+      if ($is_unsold) {
+        $query = "SELECT
+          products.*,
+          users.name AS username,
+          stocks.quantity AS quantity,
+          stocks.amount AS amount,
+          stocks.date AS stock_date,
+          stocks.status AS status
+          FROM products
+          JOIN users ON users.id=products.user
+          JOIN stocks ON stocks.product=products.id AND stocks.quantity < 0 AND stocks.status<>'sold'
+          WHERE products.name='$product_name'
+        ";
+      }
 
       $product_res = $conn->query($query);
       $breakdown = [];
-      
+
       while ($detail = $product_res->fetch_object()) {
         $username = $detail->username;
         $detail_item = [
@@ -63,6 +80,11 @@ if (!empty($_POST['token'])) {
           'quantity' => $detail->quantity,
           'totalAmount' => $detail->amount
         ];
+
+        if ($is_unsold) {
+          $detail_item['remarks'] = $detail->status;
+          $detail_item['date'] = $detail->stock_date;
+        }
 
         $breakdown[] = $detail_item;
       }

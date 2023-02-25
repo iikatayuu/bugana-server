@@ -59,6 +59,28 @@ function dateFormat (d) {
   return dateStr
 }
 
+function dateFormat2 (d) {
+  if (!d) return ''
+
+  let dateStr = ''
+  const date = new Date(d)
+  const hrs = date.getHours()
+  const meridian = hrs > 12 ? 'PM' : 'AM'
+  let hours = (hrs > 12 ? hrs - 12 : hrs).toString()
+  while (hours.length < 2) hours = `0${hours}`
+  let minutes = date.getMinutes().toString()
+  while (minutes.length < 2) minutes = `0${minutes}`
+
+  dateStr += hours + ':'
+  dateStr += minutes + ' '
+  dateStr += meridian + ' '
+  dateStr += MONTHS_SHORT[date.getMonth()] + '. '
+  dateStr += date.getDate() + ', '
+  dateStr += date.getFullYear()
+
+  return dateStr
+}
+
 function commaNumber (number) {
   const str = number.toString().split('.')
   if (str[0] > 3) {

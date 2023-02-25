@@ -286,14 +286,28 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
         </div>
       </div>
 
+      <?php if ($is_unsold) { ?>
+        <div class="bd-product-title"></div>
+      <?php } ?>
+
       <table class="table-details p-2">
         <thead>
           <tr>
+          <?php if (!$is_unsold) { ?>
             <th>Farmer Name</th>
             <th>Product Name</th>
             <th>Price</th>
             <th>Quantity</th>
             <th>Total Amount</th>
+          <?php } else { ?>
+            <th>Farmer Name</th>
+            <th>Date</th>
+            <th>Remarks</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total Amount</th>
+          </tr>
+          <?php } ?>
           </tr>
         </thead>
 
@@ -304,11 +318,20 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
 
   <template id="temp-breakdown">
     <tr>
+      <?php if (!$is_unsold) { ?>
       <td class="bd-farmer-name"></td>
       <td class="bd-product-name"></td>
       <td>Php <span class="bd-product-price"></span></td>
       <td><span class="bd-product-quantity"></span> KG</td>
       <td>Php <span class="bd-total-amount"></span></td>
+      <?php } else { ?>
+      <td class="bd-farmer-name"></td>
+      <td class="bd-product-date"></td>
+      <td class="bd-remarks"></td>
+      <td>Php <span class="bd-product-price"></span></td>
+      <td class="bd-product-quantity"></td>
+      <td>Php <span class="bd-total-amount"></span></td>
+      <?php } ?>
     </tr>
   </template>
 </main>
