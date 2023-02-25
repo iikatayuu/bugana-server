@@ -128,7 +128,7 @@ $products_res = $conn->query("$query LIMIT $page_q, $limit");
 
 $count_res = $conn->query($count_query);
 $count_obj = $count_res->fetch_object();
-$count = $count_obj || 0;
+$count = $count_obj->count > 0 ? $count_obj->count : 0;
 $products = [];
 $imgpath = __DIR__ . '/../../userdata/products';
 
@@ -136,7 +136,7 @@ while ($product = $products_res->fetch_object()) {
   $id = $product->id;
   $imgres = glob("$imgpath/$id-*.{jpg,jpeg,png}", GLOB_BRACE);
   $photos = [];
-  
+
   foreach ($imgres as $img) {
     $basename = pathinfo($img, PATHINFO_BASENAME);
     $photos[] = "/userdata/products/$basename";
