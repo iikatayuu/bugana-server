@@ -74,7 +74,7 @@ $(document).ready(function () {
     if (!response.success) return
 
     const breakdown = response.breakdown
-    $('.bd-product-title').text(product)
+    $('.bd-product-title-text').text(product)
 
     $('#modal-product-breakdown-farmers').empty()
     for (let i = 0; i < breakdown.length; i++) {
@@ -82,11 +82,22 @@ $(document).ready(function () {
       const farmerProduct = breakdown[i]
       const totalAmount = currentTx.quantity * parseFloat(farmerProduct.price)
       const date = dateFormat2(farmerProduct.date)
+      let remarks = ''
+
+      switch (farmerProduct.remarks) {
+        case 'perished':
+          remarks = 'Perished'
+          break
+        
+        case 'manual':
+          remarks = 'Manually'
+          break
+      }
 
       $(elem).find('.bd-farmer-name').text(farmerProduct.name)
       $(elem).find('.bd-product-name').text(product)
       $(elem).find('.bd-product-date').text(date)
-      $(elem).find('.bd-remarks').text(farmerProduct.remarks)
+      $(elem).find('.bd-remarks').text(remarks)
       $(elem).find('.bd-product-price').text(commaNumber(farmerProduct.price))
       $(elem).find('.bd-product-quantity').text(currentTx.quantity)
       $(elem).find('.bd-total-amount').text(commaNumber(totalAmount.toFixed(2)))

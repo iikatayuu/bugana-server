@@ -41,3 +41,9 @@
 #modal-product-breakdown .card {
   border: 1px solid #000;
 }
+
+.bd-product-title {
+  margin: 18px auto 12px 0;
+  text-transform: uppercase;
+  font-size: 24px;
+}
