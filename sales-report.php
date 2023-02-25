@@ -287,7 +287,7 @@ out_header("BUGANA $date_name Sales Report", $styles, $scripts);
       </div>
 
       <?php if ($is_unsold) { ?>
-        <div className="bd-product-title">"<span class="bd-product-title-text"></span>"</div>
+        <div class="bd-product-title">"<span class="bd-product-title-text"></span>"</div>
       <?php } ?>
 
       <table class="table-details p-2">
