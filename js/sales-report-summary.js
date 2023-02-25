@@ -11,13 +11,15 @@ $(document).ready(function () {
   const prev = searchParams.get('prev')
 
   async function displayReport () {
+    const data = {
+      date: date,
+      token: token
+    }
+
+    if (prev !== null) data.prev = 1
     const res = await $.ajax('/api/admin/transaction/summary.php', {
       method: 'post',
-      data: {
-        date: date,
-        token: token,
-        prev: prev !== null
-      },
+      data: data,
       dataType: 'json'
     })
 
