@@ -48,14 +48,14 @@ if (!empty($_POST['token'])) {
       $perished_query = "SELECT COALESCE(SUM(amount)) AS amount FROM stocks WHERE status='perished'";
 
       if ($date === 'daily') {
-        $ts = $prev ? strtotime('-1 day') : gmtime();
+        $ts = $prev ? strtotime('-1 day') : time();
         $day_start = date('Y-m-d 00:00:00', $ts);
         $day_end = date('Y-m-d 23:59:59', $ts);
         $add_query = " AND date BETWEEN '$day_start' AND '$day_end'";
         $query .= $add_query;
         $perished_query .= $add_query;
       } else if ($date === 'weekly') {
-        $ts = $prev ? strtotime('-1 week') : gmtime();
+        $ts = $prev ? strtotime('-1 week') : time();
         $current_day = date('w');
         $week_start = date('Y-m-d 00:00:00', strtotime("-$current_day days", $ts));
         $week_end = date('Y-m-d 23:59:59', strtotime('+' . (6 - intval($current_day)) . ' days', $ts));
@@ -63,7 +63,7 @@ if (!empty($_POST['token'])) {
         $query .= $add_query;
         $perished_query .= $add_query;
       } else if ($date === 'monthly') {
-        $ts = $prev ? strtotime('-1 month') : gmtime();
+        $ts = $prev ? strtotime('-1 month') : time();
         $month_days = date('t', $ts);
         $month_start = date('Y-m-01 00:00:00', $ts);
         $month_end = date("Y-m-$month_days 23:59:59", $ts);
@@ -71,7 +71,7 @@ if (!empty($_POST['token'])) {
         $query .= $add_query;
         $perished_query .= $add_query;
       } else if ($date === 'annual') {
-        $ts = $prev ? strtotime('-1 year') : gmtime();
+        $ts = $prev ? strtotime('-1 year') : time();
         $year_start = date('Y-01-01 00:00:00', $ts);
         $year_end = date("Y-12-31 23:59:59", $ts);
         $add_query = " AND date BETWEEN '$year_start' AND '$year_end'";
